@@ -5,7 +5,6 @@ span:-moz-last-node {
 .chat-box {
   height: 500px;
   overflow-y: scroll;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -18,7 +17,7 @@ span:-moz-last-node {
 .chat {
   display: inline-block;
   border-radius: 15px;
-  font-size: 0.9em;
+  font-size: 12px;
   padding: 5px 8px 6px;
 }
 
@@ -36,6 +35,10 @@ span:-moz-last-node {
 
 .last-row {
   margin-bottom: 10px;
+}
+
+.first-row {
+  margin-top: 10px;
 }
 
 .row {

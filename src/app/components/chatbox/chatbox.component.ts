@@ -37,6 +37,8 @@ export class ChatboxComponent implements OnInit {
 
     if (last) {
       ret = [ret, 'last-row'];
+    } else if (index === 0) {
+      ret = [ret, 'first-row'];
     }
     
     return ret;

@@ -22,6 +22,8 @@ export class ChatinputComponent implements AfterViewInit {
   }
 
   sendQuery(query) {
+    query = query.trim();
+    query = query.replace(/  /g," ");
     if(query !== "") {
       $("#inputDiv").text("");
       this.data.addMessage(query);
