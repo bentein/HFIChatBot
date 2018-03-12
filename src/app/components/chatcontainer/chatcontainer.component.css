@@ -8,14 +8,10 @@ hr {
 .bottom-right-fix {
     position:fixed;
     background-color:white;
-    bottom: -50vh;
+    bottom: 0px;
     right:50px;
     box-shadow: 0px 0px 10px 2px lightgrey;
     width: 25vw;
-}
-
-.show {
-    bottom:0px;
 }
 
 .close {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataManagerService } from '../../services/datamanager.service';
 
 @Component({
   selector: 'chatcontainer',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatcontainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private data:DataManagerService) { }
 
   ngOnInit() {
   }

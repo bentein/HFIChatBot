@@ -1,7 +1,12 @@
+span:-moz-last-node {
+  margin-bottom:10px;
+}
+
 .chat-box {
-  height: 50vh;
+  height: 500px;
   overflow-y: scroll;
-  z-index: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .row {
@@ -14,22 +19,78 @@
   display: inline-block;
   border-radius: 15px;
   font-size: 0.9em;
+  padding: 5px 8px 6px;
 }
 
 .received {
   background-color: rgb(241, 240, 240);
-  padding: 5px 8px 6px;
   margin-right: 30px;
 }
 
 .sent {
   color: white;
   background-color: rgb(64, 128, 255);
-  padding: 5px 8px 6px;
   margin-left: 30px;
   float: right;
 }
 
-.row {
-    padding:5px 7.5px;
+.last-row {
+  margin-bottom: 10px;
 }
+
+.row {
+    padding:3px 7.5px;
+}
+
+.sent-row-first {
+  padding-bottom: 1px;
+}
+
+.sent-row-first > span {
+  border-bottom-right-radius: 1px;
+}
+
+.received-row-first {
+  padding-bottom: 1px;
+}
+
+.received-row-first > span {
+  border-bottom-left-radius: 1px;
+}
+
+.sent-row-mid {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.sent-row-mid > span {
+  border-bottom-right-radius: 1px;
+  border-top-right-radius: 1px;
+}
+
+.received-row-mid {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.received-row-mid > span {
+  border-bottom-left-radius: 1px;
+  border-top-left-radius: 1px;
+}
+
+.sent-row-last {
+  padding-top: 1px;
+}
+
+.sent-row-last > span {
+  border-top-right-radius: 1px;
+}
+
+.received-row-last {
+  padding-top: 1px;
+}
+
+.received-row-last > span {
+  border-top-left-radius: 1px;
+}
+

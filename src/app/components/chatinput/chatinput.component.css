@@ -1,0 +1,22 @@
+.chat-input {
+  margin: 0;
+  box-shadow: 0px 0px 10px 1px lightgrey;
+  position: relative;
+  display: flex;
+}
+
+.button-container {
+  margin: 5px;
+}
+
+.input-container {
+  flex-grow: 1;
+}
+
+.input {
+  resize: none;
+  border: none;
+  outline: none;
+  margin:13px;
+  height:100%;
+}

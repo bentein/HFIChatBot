@@ -15,18 +15,12 @@ export class TitlebarComponent implements OnInit {
   }
 
   toggleChatBox($event) {
-    console.log("open");
-    $(".bottom-right-fix").toggleClass("show");
+    this.data.toggleChatBox();
   }
 
   closeChatBox($event) {
     event.stopPropagation();
-    console.log("close");
-    //$(".bottom-right-fix").toggleClass("close");
-    this.data.add({
-      type: 'sent',
-      content: 'test message'
-    });
+    $(".bottom-right-fix").toggleClass("close");
   }
 
 }

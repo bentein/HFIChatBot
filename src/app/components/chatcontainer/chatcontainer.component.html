@@ -1,4 +1,5 @@
 <div class="bottom-right-fix">
   <titlebar></titlebar>
-  <chatbox></chatbox>
+  <chatbox *ngIf="data.show"></chatbox>
+  <chatinput *ngIf="data.show"></chatinput>
 </div>

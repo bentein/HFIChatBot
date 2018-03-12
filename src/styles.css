@@ -5,3 +5,11 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
