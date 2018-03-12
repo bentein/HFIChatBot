@@ -1,0 +1,5 @@
+<div class="row chat-box">
+  <div class="row" *ngFor="let msg of data.messages">
+    <span class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}">{{msg.content}}</span>
+  </div>
+</div>
