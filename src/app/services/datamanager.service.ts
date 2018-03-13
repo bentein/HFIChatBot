@@ -3,37 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
 import * as $ from 'jquery';
+import * as Cookie from 'js-cookie';
 
 @Injectable()
 export class DataManagerService {
-  messages: any[];
+  
+  messages;
   newMessages: boolean;
   show: boolean;
   sessionId;
 
   constructor(private http: HttpClient) {
-    this.messages = [{
-      type: 'received',
-      content: 'Hei! Jeg er Torsk. Hva kan jeg hjelpe deg med?'
-    }, {
-      type: 'sent',
-      content: 'Hei.'
-    }, {
-      type: 'sent',
-      content: 'Jeg husker ikke mitt passord.'
-    }, {
-      type: 'sent',
-      content: 'Kan du hjelpe meg med å gjenopprette det?'
-    }, {
-      type: 'received',
-      content: 'Selvsagt! Hvilken bruker gjelder det?'
-    }, {
-      type: 'received',
-      content: 'Hallo? Er du der fortsatt?'
-    }];
+    this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
-    this.sessionId = Math.floor(Math.random()*900000) + 100000;
+    this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
+    Cookie.set('sessionId',this.sessionId);
   }
 
   toggleChatBox() {
@@ -50,12 +35,14 @@ export class DataManagerService {
 
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
-      console.log(responses);
       for (let i = 0; i < responses.length; i++) {
         this.addMessage({
           type: 'received',
           content: responses[i].speech
         });
+      }
+      if (ret.result.metadata.endConversation) {
+        this.generateNewSessionId();
       }
       console.log(ret);
       this.newMessages = true;
@@ -69,8 +56,16 @@ export class DataManagerService {
         content: message
       }
     }
-    this.messages.push(message);
-    this.newMessages = true;
+    if (message.content !== "") {
+      this.messages.push(message);
+      this.newMessages = true;
+      Cookie.set('messages',this.messages);
+    }
+  }
+
+  generateNewSessionId() {
+    this.sessionId = Math.floor(Math.random()*900000000) + 100000000;
+    Cookie.set('sessionId',this.sessionId);
   }
 
 }

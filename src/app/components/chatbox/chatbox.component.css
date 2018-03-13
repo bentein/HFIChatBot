@@ -2,16 +2,11 @@ span:-moz-last-node {
   margin-bottom:10px;
 }
 
-.chat-box {
-  height: 350px;
-  overflow-y: scroll;
-  margin-bottom: 10px;
-}
-
 .row {
   margin-bottom: 0;
   padding: 10px 20px;
   justify-content: space-between;
+  padding:3px 7.5px;
 }
 
 .chat {
@@ -19,6 +14,13 @@ span:-moz-last-node {
   border-radius: 15px;
   font-size: 12px;
   padding: 5px 8px 6px;
+}
+
+.chat-box {
+  height: 350px;
+  overflow-y: scroll;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .received {
@@ -34,15 +36,11 @@ span:-moz-last-node {
 }
 
 .last-row {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .first-row {
-  margin-top: 10px;
-}
-
-.row {
-    padding:3px 7.5px;
+  margin-top: 0px;
 }
 
 .sent-row-first {
