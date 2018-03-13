@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
 import * as $ from 'jquery';
 
@@ -7,11 +7,13 @@ import * as $ from 'jquery';
   templateUrl: './chatbox.component.html',
   styleUrls: ['./chatbox.component.css']
 })
-export class ChatboxComponent implements OnInit {
+export class ChatboxComponent implements AfterViewInit {
 
   constructor(private data: DataManagerService) {}
 
-  ngOnInit() {}
+  ngAfterViewInit() {
+    this.scrollToBottom(true);
+  }
 
   determineRowContainerClass(index, last) {
     let messages = this.data.messages;
@@ -44,11 +46,14 @@ export class ChatboxComponent implements OnInit {
     return ret;
   }
 
-  scrollToBottom() {
-    if (this.data.newMessages) {
+  scrollToBottom(force?) {
+    if (force) {
+      $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+    } else if (this.data.newMessages) {
       setTimeout(() => {
-        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight)
-      },50);
+        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+        this.setMessagesRead();
+      },0);
     }
   }
 
