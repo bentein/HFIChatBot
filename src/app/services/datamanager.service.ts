@@ -9,6 +9,7 @@ export class DataManagerService {
   messages: any[];
   newMessages: boolean;
   show: boolean;
+  sessionId;
 
   constructor(private http: HttpClient) {
     this.messages = [{
@@ -32,6 +33,7 @@ export class DataManagerService {
     }];
     this.newMessages = false;
     this.show = false;
+    this.sessionId = Math.floor(Math.random()*900000) + 100000;
   }
 
   toggleChatBox() {
@@ -44,7 +46,7 @@ export class DataManagerService {
         'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
       })
     };
-    const url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no&query=" + query + "&sessionId=12345";
+    const url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no&query=" + query + "&sessionId=" + this.sessionId;
 
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;

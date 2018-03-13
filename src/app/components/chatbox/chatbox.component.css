@@ -3,7 +3,7 @@ span:-moz-last-node {
 }
 
 .chat-box {
-  height: 500px;
+  height: 350px;
   overflow-y: scroll;
   margin-bottom: 10px;
 }

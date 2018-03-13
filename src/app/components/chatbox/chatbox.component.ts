@@ -45,7 +45,15 @@ export class ChatboxComponent implements OnInit {
   }
 
   scrollToBottom() {
-    $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+    if (this.data.newMessages) {
+      setTimeout(() => {
+        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight)
+      },50);
+    }
+  }
+
+  setMessagesRead() {
+    this.data.newMessages = false;
   }
 
 }

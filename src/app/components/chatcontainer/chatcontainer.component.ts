@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
 
 @Component({
@@ -6,11 +6,12 @@ import { DataManagerService } from '../../services/datamanager.service';
   templateUrl: './chatcontainer.component.html',
   styleUrls: ['./chatcontainer.component.css']
 })
-export class ChatcontainerComponent implements OnInit {
+export class ChatcontainerComponent implements AfterViewInit {
 
   constructor(private data:DataManagerService) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+
   }
 }
 

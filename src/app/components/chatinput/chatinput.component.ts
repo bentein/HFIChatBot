@@ -13,11 +13,16 @@ export class ChatinputComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $("#inputDiv").keypress(function(e){
-      if (e.which == 13) {
+    $("#inputDiv").keypress((e) => {
+      if (e.keyCode == 13) {
         $(".btn").click();
-      }
+      } 
       return e.which != 13;
+    });
+    $("#inputDiv").keydown((e) => {
+      if (e.keyCode == 27) {
+        this.data.show = false;
+      }
     });
   }
 
