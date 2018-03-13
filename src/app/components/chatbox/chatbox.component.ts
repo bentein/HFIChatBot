@@ -19,18 +19,24 @@ export class ChatboxComponent implements AfterViewInit {
     let messages = this.data.messages;
     let ret = messages[index].type;
 
-    if (index > 0 && index < messages.length) {
+    //console.log(index + ": " + messages[index].content);
+
+    if (index > 0 && index < messages.length -1) {
       if (messages[index - 1].type === messages[index].type) {
-        if (index < messages.length - 1 && messages[index + 1].type === messages[index].type) {
+        if (messages[index + 1].type === messages[index].type) {
           ret += '-row-mid';
         } else {
           ret += '-row-last';
         }
-      } else if (index < messages.length - 1 && messages[index - 1].type !== messages[index].type) {
+      } else if (messages[index - 1].type !== messages[index].type) {
         if (messages[index + 1].type === messages[index].type) {
           ret += '-row-first'
         }
-      }  
+      }
+    }
+
+    if (index === 0 && index < messages.length-1 && messages[index + 1].type === messages[index].type) {
+      ret += '-row-first';
     }
 
     if (ret === messages[index].type) {
@@ -38,9 +44,18 @@ export class ChatboxComponent implements AfterViewInit {
     }
 
     if (last) {
-      ret = [ret, 'last-row'];
-    } else if (index === 0) {
-      ret = [ret, 'first-row'];
+      if (ret === '') {
+        ret = 'last-row';
+      } else {
+        ret = [ret, 'last-row'];
+      }
+    } 
+    if (index === 0) {
+      if (ret === '') {
+        ret = 'first-row';
+      } else {
+        ret = [ret, 'first-row'];
+      }
     }
     
     return ret;

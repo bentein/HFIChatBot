@@ -35,7 +35,7 @@ i + label {
 }
 
 .shadow-bottom {
-    box-shadow: 0px 1px 10px 1px lightgrey;
+    box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.12);
     z-index: 10;
     position:relative;
 }
