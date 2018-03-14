@@ -14,7 +14,7 @@ export class TitlebarComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleChatBox($event) {
+  toggleChatBox($event) { 
     this.data.toggleChatBox();
   }
 
