@@ -9,6 +9,7 @@ import { ChatboxComponent } from './components/chatbox/chatbox.component';
 import { DataManagerService } from './services/datamanager.service';
 import { ChatinputComponent } from './components/chatinput/chatinput.component';
 import { AlternativComponent } from './components/alternativ/alternativ.component';
+import { AlternativesService } from './services/alternatives.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AlternativComponent } from './components/alternativ/alternativ.componen
     BrowserModule,
     HttpClientModule
   ],
-  providers: [DataManagerService],
+  providers: [DataManagerService, AlternativesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

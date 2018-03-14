@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlternativesService } from '../../services/alternatives.service';
 import { DataManagerService } from '../../services/datamanager.service';
 
 @Component({
@@ -13,9 +14,7 @@ export class AlternativComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggeAlternativBox($event) {
-    this.data.toggleAlternativBox();
-  }
+  
 
   
     

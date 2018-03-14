@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
+import { AlternativesService } from './alternatives.service';
 
 @Injectable()
 export class DataManagerService {
@@ -11,26 +12,20 @@ export class DataManagerService {
   messages;
   newMessages: boolean;
   show: boolean;
-  showAlternativ: boolean;
-  alternatives: string [];
   sessionId;
+  alternativesHandler:AlternativesService
 
   constructor(private http: HttpClient) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
-    this.showAlternativ = false;
-    this.alternatives = []; 
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     Cookie.set('sessionId',this.sessionId);
+    this.alternativesHandler = new AlternativesService();
   }
 
   toggleChatBox() {
     this.show = this.show ? false : true;
-  }
-
-  toggleAlternativBox() {
-    this.showAlternativ = this.showAlternativ ? false : true;
   }
 
   sendQuery(query: string) {
@@ -45,11 +40,11 @@ export class DataManagerService {
       let responses: any = ret.result.fulfillment.messages;
       for (let i = 0; i < responses.length; i++) {
 
-
         let re = /.option/gi;
         let str = responses[i].speech;
         if(str.search(re) != -1) {
-          this.alternatives = this.parseAlternatives(str);
+          this.alternativesHandler.sendNewAlternatives(str);
+          
         }
 
         this.addMessage({
@@ -63,20 +58,6 @@ export class DataManagerService {
       console.log(ret);
       this.newMessages = true;
     });
-  }
-
-  parseAlternatives(message) {
-    let list: string[] = [];
-    if(typeof message === "string" && message !== "") {
-      let splitt = message.split(".options");
-      let splitt2 = splitt[1].split(" ");
-      for(let i = 0; i < splitt2.length; i++) {
-        list.push(splitt2[i]);
-      }
-    }
-    console.log(list);
-    return list;
-    
   }
 
   addMessage(message) {
