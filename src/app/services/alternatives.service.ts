@@ -25,10 +25,9 @@ export class AlternativesService {
     this.alternatives = [];
   }
 
-  sendNewAlternatives(message) {
+  receiveNewAlternatives(message) {
     this.parseMessage(message);
     this.toggleShow();
-    console.log(this.show);
   }
 
   parseMessage(message) {

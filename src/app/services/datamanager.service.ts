@@ -43,13 +43,13 @@ export class DataManagerService {
         let re = /.option/gi;
         let str = responses[i].speech;
         if(str.search(re) != -1) {
-          this.alternativesHandler.sendNewAlternatives(str);
-          
+          this.alternativesHandler.receiveNewAlternatives(str);
+          str = this.removeAlternativeFromMessage(str);
         }
 
         this.addMessage({
           type: 'received',
-          content: responses[i].speech
+          content: str
         });
       }
       if (ret.result.metadata.endConversation) {
@@ -58,6 +58,13 @@ export class DataManagerService {
       console.log(ret);
       this.newMessages = true;
     });
+  }
+
+  removeAlternativeFromMessage(message) {
+    if(typeof message === "string" && message !== "") {
+      let splitt = message.split(".options");
+      return splitt[0];
+    }
   }
 
   addMessage(message) {
