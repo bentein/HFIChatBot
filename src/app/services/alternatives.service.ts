@@ -21,10 +21,14 @@ export class AlternativesService {
     this.show = this.show ? false : true;
   }
 
+  deleteAllAlternatives() {
+    this.alternatives = [];
+  }
+
   sendNewAlternatives(message) {
     this.parseMessage(message);
     this.toggleShow();
-    console.log(this.alternatives)
+    console.log(this.show);
   }
 
   parseMessage(message) {
@@ -35,6 +39,5 @@ export class AlternativesService {
         this.alternatives.push(splitt2[i]);
       }
     }
-    console.log(this.alternatives);
   }
 }

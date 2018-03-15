@@ -27,6 +27,7 @@ export class ChatinputComponent implements AfterViewInit {
   }
 
   sendQuery(query) {
+    console.log(query);
     query = query.trim();
     query = query.replace(/  /g," ");
     if(query !== "") {

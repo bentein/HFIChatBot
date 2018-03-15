@@ -1,23 +1,25 @@
 
-/* .alternativ-wrapper {
-  display: inline-block;
-  cursor: pointer;
-}
-
-.button-alternatives {
-  border: 1px solid green;
-  color: white;
-  background-color: blue;
-  padding: 2px 4px;
-} */
-
-
 .alternatives-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  background-color: red;
+  display: table;
+  width: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
-.alternativ-wrapper {
- 
+.button-container {
+  display: table-cell;
+  max-width: 0px;
+  text-align: center;
+}
+
+.btn {
+  text-decoration-style: none;
+  font-size: 12px;
+  width: 90%;
+  height: 30px;
+  text-align: center;
+  line-height: 15px;
+  margin: 0px;
+  padding: 0px;
+  
 }

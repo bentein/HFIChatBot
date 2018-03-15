@@ -16,6 +16,9 @@ export class TitlebarComponent implements OnInit {
 
   toggleChatBox($event) { 
     this.data.toggleChatBox();
+    if(this.data.alternativesHandler.alternatives.length !== 0) {
+      this.data.alternativesHandler.toggleShow();
+    }
   }
 
   closeChatBox($event) {
