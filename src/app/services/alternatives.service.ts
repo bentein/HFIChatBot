@@ -8,12 +8,12 @@ import * as Cookie from 'js-cookie';
 export class AlternativesService {
 
   message: string;
-  alternatives: string[];
+  alternatives;
   show: boolean;
 
   constructor() { 
     this.message = "";
-    this.alternatives = [];
+    this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
     this.show = false;
   }
 
@@ -23,6 +23,7 @@ export class AlternativesService {
 
   deleteAllAlternatives() {
     this.alternatives = [];
+    Cookie.set('alternatives', this.alternatives);
   }
 
   receiveNewAlternatives(message) {
@@ -38,5 +39,6 @@ export class AlternativesService {
         this.alternatives.push(splitt2[i]);
       }
     }
+    Cookie.set('alternatives', this.alternatives);
   }
 }
