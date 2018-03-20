@@ -48,7 +48,6 @@ export class DataManagerService {
       if (ret.result.metadata.endConversation) {
         this.generateNewSessionId();
       }
-      console.log(ret);
       this.newMessages = true;
     });
   }
