@@ -25,7 +25,15 @@ export class DataManagerService {
 
   // toggles whether chat box is visible
   toggleChatBox() {
-    this.show = this.show ? false : true;
+    if (this.show) {
+      let $elem = $("#chat-container").toggleClass("slideUp");
+      $elem.toggleClass("slideDown");
+      setTimeout(() => {
+        this.show = this.show ? false : true;
+      }, 200);
+    } else {
+      this.show = this.show ? false : true;
+    }
   }
 
   // calls DialogFlow api
