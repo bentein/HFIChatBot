@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class DataManagerService {
@@ -13,6 +14,7 @@ export class DataManagerService {
   show: boolean;
   sessionId;
 
+  // sets data from cookies if available
   constructor(private http: HttpClient) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
@@ -21,10 +23,12 @@ export class DataManagerService {
     Cookie.set('sessionId',this.sessionId);
   }
 
+  // toggles whether chat box is visible
   toggleChatBox() {
     this.show = this.show ? false : true;
   }
 
+  // calls DialogFlow api
   sendQuery(query: string) {
     const headers = {
       headers: new HttpHeaders({
@@ -49,6 +53,7 @@ export class DataManagerService {
     });
   }
 
+  // adds message to data array
   addMessage(message) {
     if (typeof message === "string") {
       message = {
@@ -63,8 +68,9 @@ export class DataManagerService {
     }
   }
 
+  // generate session ID as uuid
   generateNewSessionId() {
-    this.sessionId = Math.floor(Math.random()*900000000) + 100000000;
+    this.sessionId = uuid.v4();
     Cookie.set('sessionId',this.sessionId);
   }
 

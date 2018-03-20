@@ -19,8 +19,7 @@ export class ChatboxComponent implements AfterViewInit {
     let messages = this.data.messages;
     let ret = messages[index].type;
 
-    //console.log(index + ": " + messages[index].content);
-
+    // for comments that are not first or last in box
     if (index > 0 && index < messages.length -1) {
       if (messages[index - 1].type === messages[index].type) {
         if (messages[index + 1].type === messages[index].type) {
@@ -35,8 +34,14 @@ export class ChatboxComponent implements AfterViewInit {
       }
     }
 
+    // if comment is first of a chain and first in box
     if (index === 0 && index < messages.length-1 && messages[index + 1].type === messages[index].type) {
       ret += '-row-first';
+    }
+
+    // if comment is last of a chain and last in box
+    if (index > 0 && last && messages[index - 1].type === messages[index].type) {
+      ret += '-row-last';
     }
 
     if (ret === messages[index].type) {
