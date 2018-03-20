@@ -14,19 +14,25 @@ export class DataManagerService {
   newMessages: boolean;
   show: boolean;
   sessionId;
-  alternativesHandler:AlternativesService;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private alternativesHandler:AlternativesService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     Cookie.set('sessionId',this.sessionId);
-    this.alternativesHandler = new AlternativesService();
   }
 
   toggleChatBox() {
-    this.show = this.show ? false : true;
+    if (this.show) {
+      let $elem = $("#chat-container").toggleClass("slideUp");
+      $elem.toggleClass("slideDown");
+      setTimeout(() => {
+        this.show = this.show ? false : true;
+      }, 200);
+    } else {
+      this.show = this.show ? false : true;
+    }
   }
 
   sendQuery(query: string) {

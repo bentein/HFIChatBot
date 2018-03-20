@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
 import * as $ from 'jquery'
+import { AlternativesService } from '../../services/alternatives.service';
 
 @Component({
   selector: 'alternativ',
@@ -10,7 +11,7 @@ import * as $ from 'jquery'
 export class AlternativComponent implements OnInit {
 
   query:any;
-  constructor(private data:DataManagerService) { }
+  constructor(private data:DataManagerService, private alternativesHandler:AlternativesService) { }
 
   ngOnInit() {
   }
@@ -22,8 +23,8 @@ export class AlternativComponent implements OnInit {
     if(query !== "") {
       this.data.addMessage(query);
       this.data.sendQuery(query);
-      this.data.alternativesHandler.toggleShow();
-      this.data.alternativesHandler.deleteAllAlternatives();
+      this.alternativesHandler.toggleShow();
+      this.alternativesHandler.deleteAllAlternatives();
     }
   }
   

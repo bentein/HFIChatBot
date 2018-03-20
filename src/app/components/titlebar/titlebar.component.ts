@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { DataManagerService } from '../../services/datamanager.service';
+import { AlternativesService } from '../../services/alternatives.service';
 
 @Component({
   selector: 'titlebar',
@@ -9,15 +10,15 @@ import { DataManagerService } from '../../services/datamanager.service';
 })
 export class TitlebarComponent implements OnInit {
 
-  constructor(private data:DataManagerService) { }
+  constructor(private data:DataManagerService, private alternativesHandler:AlternativesService) { }
 
   ngOnInit() {
   }
 
   toggleChatBox($event) { 
     this.data.toggleChatBox();
-    if(this.data.alternativesHandler.alternatives.length !== 0) {
-      this.data.alternativesHandler.toggleShow();
+    if(this.alternativesHandler.alternatives.length !== 0) {
+      this.alternativesHandler.toggleShow();
     }
   }
 

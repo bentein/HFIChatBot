@@ -1,6 +1,9 @@
 <div class="bottom-right-fix chat-container">
   <titlebar></titlebar>
-  <chatbox *ngIf="data.show"></chatbox>
-  <alternativ *ngIf="data.alternativesHandler.show"></alternativ>
-  <chatinput *ngIf="data.show"></chatinput>
+
+  <div id="chat-container" *ngIf="data.show" class="slideUp">
+    <chatbox></chatbox>
+    <alternativ *ngIf="data.alternativesHandler.show"></alternativ>
+    <chatinput></chatinput>  
+  </div>
 </div>
