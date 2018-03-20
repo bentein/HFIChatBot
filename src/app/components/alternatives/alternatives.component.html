@@ -1,3 +1,5 @@
-<p>
-  alternatives works!
-</p>
+<div id="alternatives-wrapper" class="slideUpAlternatives alternatives-wrapper">
+  <div class="button-container" *ngFor="let alternatives of data.alternativesHandler.alternatives;">
+      <button #alternativ class="button-alternatives waves-effect waves-light btn" (click)="sendQuery(alternativ.innerText)">{{alternatives}}</button>
+  </div>
+</div>

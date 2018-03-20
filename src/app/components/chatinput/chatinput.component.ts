@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
 import * as $ from 'jquery';
+import { AlternativesService } from '../../services/alternatives.service';
 
 @Component({
   selector: 'chatinput',
@@ -9,13 +10,14 @@ import * as $ from 'jquery';
 })
 export class ChatinputComponent implements AfterViewInit {
   query:any;
-  constructor(private data:DataManagerService) {
+  constructor(private data:DataManagerService, private alternatives:AlternativesService) {
   }
 
   ngAfterViewInit() {
     $("#inputDiv").keypress((e) => {
       if (e.keyCode == 13) {
-        $(".btn").click();
+        $("#submit-btn").click();
+        this.alternatives.deleteAllAlternatives();
       } 
       return e.which != 13;
     });

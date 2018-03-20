@@ -2,6 +2,7 @@
   <titlebar></titlebar>
   <div id="chat-container" class="slideUp" *ngIf="data.show">
     <chatbox></chatbox>
+    <alternatives *ngIf="alternativesHandler.show"></alternatives>
     <chatinput></chatinput>
   </div>
 </div>

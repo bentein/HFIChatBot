@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
+import * as uuid from 'uuid';
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
-import * as uuid from 'uuid';
+import { AlternativesService } from './alternatives.service';
 
 @Injectable()
 export class DataManagerService {
@@ -14,8 +15,7 @@ export class DataManagerService {
   show: boolean;
   sessionId;
 
-  // sets data from cookies if available
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public alternativesHandler:AlternativesService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
@@ -23,7 +23,6 @@ export class DataManagerService {
     Cookie.set('sessionId',this.sessionId);
   }
 
-  // toggles whether chat box is visible
   toggleChatBox() {
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
@@ -36,7 +35,6 @@ export class DataManagerService {
     }
   }
 
-  // calls DialogFlow api
   sendQuery(query: string) {
     const headers = {
       headers: new HttpHeaders({
@@ -48,19 +46,34 @@ export class DataManagerService {
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       for (let i = 0; i < responses.length; i++) {
+
+        let re = /.option/gi;
+        let str = responses[i].speech;
+        if(str.search(re) != -1) {
+          this.alternativesHandler.receiveNewAlternatives(str);
+          str = this.removeAlternativeFromMessage(str);
+        }
+
         this.addMessage({
           type: 'received',
-          content: responses[i].speech
+          content: str
         });
       }
       if (ret.result.metadata.endConversation) {
         this.generateNewSessionId();
       }
+      console.log(ret);
       this.newMessages = true;
     });
   }
 
-  // adds message to data array
+  removeAlternativeFromMessage(message) {
+    if(typeof message === "string" && message !== "") {
+      let splitt = message.split(".options");
+      return splitt[0];
+    }
+  }
+
   addMessage(message) {
     if (typeof message === "string") {
       message = {
@@ -75,9 +88,8 @@ export class DataManagerService {
     }
   }
 
-  // generate session ID as uuid
   generateNewSessionId() {
-    this.sessionId = uuid.v4();
+    this.sessionId = Math.floor(Math.random()*900000000) + 100000000;
     Cookie.set('sessionId',this.sessionId);
   }
 
