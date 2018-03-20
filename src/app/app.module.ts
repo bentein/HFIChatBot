@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { ChatcontainerComponent } from './components/chatcontainer/chatcontainer.component';
@@ -22,7 +23,8 @@ import { AlternativesService } from './services/alternatives.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [DataManagerService, AlternativesService],
   bootstrap: [AppComponent]

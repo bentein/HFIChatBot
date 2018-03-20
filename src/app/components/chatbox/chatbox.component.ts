@@ -1,12 +1,18 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import * as $ from 'jquery';
 
 @Component({
   selector: 'chatbox',
   templateUrl: './chatbox.component.html',
-  styleUrls: ['./chatbox.component.css']
+  styleUrls: ['./chatbox.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+
+
 export class ChatboxComponent implements AfterViewInit {
 
   constructor(private data: DataManagerService) {}
@@ -15,6 +21,16 @@ export class ChatboxComponent implements AfterViewInit {
     this.scrollToBottom(true);
   }
 
+  determineAnimationSlide() {
+    if(this.data.show === true) {
+      console.log("UP")
+      return 'slideUp';
+    } else {
+      console.log("DOWN")
+      return 'sludeDown';
+    }
+  }
+  
   determineRowContainerClass(index, last) {
     let messages = this.data.messages;
     let ret = messages[index].type;
@@ -62,3 +78,5 @@ export class ChatboxComponent implements AfterViewInit {
   }
 
 }
+
+type BoxState = 'up' | 'down';

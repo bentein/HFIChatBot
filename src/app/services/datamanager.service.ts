@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import {trigger, state, style, transition, animate} from '@angular/animations';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
@@ -13,7 +14,7 @@ export class DataManagerService {
   newMessages: boolean;
   show: boolean;
   sessionId;
-  alternativesHandler:AlternativesService
+  alternativesHandler:AlternativesService;
 
   constructor(private http: HttpClient) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];

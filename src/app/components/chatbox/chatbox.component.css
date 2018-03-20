@@ -95,3 +95,32 @@ span:-moz-last-node {
   border-top-left-radius: 1px;
 }
 
+.slideUp {
+  animation: slideup 0.2s 1;
+  animation-direction: normal, reverse;
+}
+
+.slideDown {
+  animation: slidedown 0.2s 1;
+  animation-direction: normal, reverse;
+}
+
+@keyframes slideup {
+  from {
+    height: 0px; 
+  }
+
+  to {
+    height: 350px;
+  }
+}
+
+@keyframes slidedown {
+  from {
+    height: 350px; 
+  }
+
+  to {
+    height: 0px;
+  }
+}
