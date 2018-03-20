@@ -17,3 +17,34 @@ hr {
 .close {
     display:none;
 }
+
+
+.slideUp {
+  animation: slideup 0.2s 1;
+  animation-direction: normal, reverse;
+  height: auto;
+}
+
+.slideDown {
+    animation: slidedown 0.2s 1;
+    animation-direction: normal, reverse;
+    height: 0px;
+}
+
+@keyframes slideup {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 400px;
+  }
+}
+
+@keyframes slidedown {
+  from {
+    height: 400px;
+  }
+  to {
+    height: 0px;
+  }
+}
