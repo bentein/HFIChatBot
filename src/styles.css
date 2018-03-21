@@ -6,6 +6,12 @@ body {
     background-size: cover;
 }
 
+.word-break {
+    word-break: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
 .no-margin {
     margin: 0;
 }

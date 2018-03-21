@@ -5,8 +5,17 @@
   display: flex;
 }
 
+.col {
+  padding: 0;
+}
+
 .button-container {
-  margin: 5px;
+  padding: 0px 5px;
+  flex-grow: 0;
+}
+
+.btn {
+  margin: 10% 0px;
 }
 
 .input-container {
@@ -17,6 +26,6 @@
   resize: none;
   border: none;
   outline: none;
-  margin:13px;
+  padding:13px;
   height:100%;
 }
