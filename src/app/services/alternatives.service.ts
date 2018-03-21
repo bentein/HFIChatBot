@@ -10,23 +10,26 @@ export class AlternativesService {
   message: string;
   alternatives;
   show: boolean;
+  showAnimation: string;
 
   constructor() { 
     this.message = "";
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
-    this.show = this.alternatives !== [] ? true : false;
+    this.show = this.alternatives === [] ? false : true;
+    this.showAnimation = this.show === false ? 'out' : 'in';
   }
 
   toggleShow() {
     if(this.show) {
+      this.showAnimation = 'out';
       let $elem = $("#alternatives-wrapper").toggleClass("slideUpAlternatives");
       $elem.toggleClass("slideDownAlternatives");
-      console.log($elem)
       setTimeout(() => {
-        this.show = false;
+        this.show = this.show ? false : true;
       }, 2000);
     } else {
       this.show = this.show ? false : true;
+      this.showAnimation = 'in';
     }
   }
 

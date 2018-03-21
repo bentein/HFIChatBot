@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
 import * as $ from 'jquery'
 import { AlternativesService } from '../../services/alternatives.service';
@@ -11,7 +11,7 @@ import { AlternativesService } from '../../services/alternatives.service';
 export class AlternativesComponent implements OnInit {
 
   query:any;
-  constructor(private data:DataManagerService, private alternativesHandler:AlternativesService) { }
+  constructor(private data:DataManagerService, private alternativesHandler:AlternativesService) {}
 
   ngOnInit() {
   }
@@ -24,7 +24,9 @@ export class AlternativesComponent implements OnInit {
       this.data.addMessage(query);
       this.data.sendQuery(query);
       this.alternativesHandler.toggleShow();
-      this.alternativesHandler.deleteAllAlternatives();
+      setTimeout(() => {
+        this.alternativesHandler.deleteAllAlternatives();
+      }, 200);
     }
   }
 }

@@ -17,7 +17,7 @@ export class ChatinputComponent implements AfterViewInit {
     $("#inputDiv").keypress((e) => {
       if (e.keyCode == 13) {
         $("#submit-btn").click();
-        this.alternatives.deleteAllAlternatives();
+        
       } 
       return e.which != 13;
     });
@@ -33,6 +33,7 @@ export class ChatinputComponent implements AfterViewInit {
     query = query.replace(/  /g," ");
     if(query !== "") {
       $("#inputDiv").text("");
+      this.alternatives.deleteAllAlternatives();
       this.data.addMessage(query);
       this.data.sendQuery(query);
     }

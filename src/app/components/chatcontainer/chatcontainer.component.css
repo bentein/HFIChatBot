@@ -21,14 +21,12 @@ hr {
 
 .slideUp {
   animation: slideup 0.2s 1;
-  animation-direction: normal, reverse;
   height: auto;
 }
 
 .slideDown {
-    animation: slidedown 0.2s 1;
-    animation-direction: normal, reverse;
-    height: 0px;
+  animation: slidedown 0.2s 1;
+  height: 0px;
 }
 
 @keyframes slideup {

@@ -1,21 +1,25 @@
 
 .alternatives-wrapper {
-  width: 100%;
   display: flex;
   justify-content: space-evenly;
+  margin: 0px;
+  overflow: hidden;
 }
 
 .button-container {
   padding: 0px;
   margin: 0px;
+  width: 100%;
+  text-align: center;
 }
 
 .btn {
-  font-size: 12px;
-  width: 85px;
-  height: 40px;
+  font-size: 12px; 
+  height: 100%;
+  width: 90%;
   margin: 0px;
   padding: 0px;
+  min-height: 100%;
 }
 
 .slideUpAlternatives {
@@ -23,7 +27,7 @@
 }
 
 .slideDownAlternatives {
-    animation: slidedownalternatives 0.2s 1;
+  animation: slidedownalternatives 0.2s 1;
 }
 
 @keyframes slideupalternatives {
@@ -31,13 +35,22 @@
     height: 0px;
   }
   to {
-    height: 30px;
+    height: 36px;
   }
 }
 
 @keyframes slidedownalternatives {
   from {
-    height: 30px;
+    height: 36px;
+  }
+  to {
+    height: 0px;
+  }
+}
+
+@-webkit-keyframes slidedownalternatives {
+  from {
+    height: 36px;
   }
   to {
     height: 0px;

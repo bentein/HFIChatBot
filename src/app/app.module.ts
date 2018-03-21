@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -21,7 +22,7 @@ import { AlternativesService } from './services/alternatives.service';
     ChatinputComponent
   ],
   imports: [
-    BrowserModule,
+    [BrowserModule, BrowserAnimationsModule],
     HttpClientModule
   ],
   providers: [DataManagerService, AlternativesService],
