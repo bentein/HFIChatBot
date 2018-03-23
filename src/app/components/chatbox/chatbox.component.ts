@@ -5,7 +5,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'chatbox',
   templateUrl: './chatbox.component.html',
-  styleUrls: ['./chatbox.component.css']
+  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './chatbox.component.css']
 })
 export class ChatboxComponent implements AfterViewInit {
 
