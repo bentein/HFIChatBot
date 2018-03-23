@@ -23,7 +23,7 @@ export class ChatinputComponent implements AfterViewInit {
     });
     $("#inputDiv").keydown((e) => {
       if (e.keyCode == 27) {
-        this.data.show = false;
+        this.data.toggleChatBox();
       }
     });
   }
