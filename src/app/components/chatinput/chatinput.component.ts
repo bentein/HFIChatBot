@@ -5,7 +5,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'chatinput',
   templateUrl: './chatinput.component.html',
-  styleUrls: ['./chatinput.component.css']
+  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './chatinput.component.css']
 })
 export class ChatinputComponent implements AfterViewInit {
   query:any;

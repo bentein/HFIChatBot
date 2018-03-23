@@ -5,7 +5,7 @@ import { DataManagerService } from '../../services/datamanager.service';
 @Component({
   selector: 'titlebar',
   templateUrl: './titlebar.component.html',
-  styleUrls: ['./titlebar.component.css']
+  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './titlebar.component.css']
 })
 export class TitlebarComponent implements OnInit {
 
