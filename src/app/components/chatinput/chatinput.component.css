@@ -1,7 +1,7 @@
 /* @import url("../../../../node_modules/bootstrap/dist/css/bootstrap.css"); */
 
 button {
-  all: initial;
+  min-width:0px;
 }
 
 .chat-input {
