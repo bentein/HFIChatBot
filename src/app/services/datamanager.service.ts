@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
+import { ConversationLogicService } from './conversation-logic.service';
+ 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
@@ -13,6 +14,9 @@ export class DataManagerService {
   newMessages: boolean;
   show: boolean;
   sessionId;
+  activeContexts;
+  conversationLogic:ConversationLogicService;
+
 
   // sets data from cookies if available
   constructor(private http: HttpClient) {
@@ -21,6 +25,8 @@ export class DataManagerService {
     this.show = false;
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     Cookie.set('sessionId',this.sessionId);
+    this.activeContexts = null;
+    this.conversationLogic = new ConversationLogicService();
   }
 
   // toggles whether chat box is visible
@@ -43,7 +49,38 @@ export class DataManagerService {
         'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
       })
     };
+    //FJERNET &query
     const url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no&query=" + query + "&sessionId=" + this.sessionId;
+
+    this.http.get(url, headers).subscribe((ret: any) => {
+      let responses: any = ret.result.fulfillment.messages;
+      for (let i = 0; i < responses.length; i++) {
+        this.addMessage({
+          type: 'received',
+          content: responses[i].speech
+        });
+      }
+
+      if (ret.result.contexts !== null){
+        this.activeContexts = ret.result.contexts;
+      }
+
+      if (ret.result.metadata.endConversation) {
+        this.generateNewSessionId();
+      }
+      console.log(ret);
+      this.newMessages = true;
+    });
+  }
+
+  triggerEvent(event: string) {
+    const headers = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
+      })
+    };
+
+    const url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no&e=" + event + "&sessionId=" + this.sessionId;
 
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
@@ -80,5 +117,7 @@ export class DataManagerService {
     this.sessionId = uuid.v4();
     Cookie.set('sessionId',this.sessionId);
   }
+
+
 
 }

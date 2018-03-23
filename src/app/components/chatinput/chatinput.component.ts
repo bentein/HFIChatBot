@@ -32,7 +32,12 @@ export class ChatinputComponent implements AfterViewInit {
     if(query !== "") {
       $("#inputDiv").text("");
       this.data.addMessage(query);
-      this.data.sendQuery(query);
+
+      if (this.data.conversationLogic.processMessage(this.data.activeContexts, query))
+        this.data.triggerEvent(query);
+      else
+        this.data.sendQuery(query);
+      console.log(query);
     }
   }
 
