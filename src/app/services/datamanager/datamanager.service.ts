@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import {
   ConversationLogicService
-} from './conversation-logic.service';
+} from '../conversationlogic/conversation-logic.service';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
@@ -84,12 +84,8 @@ export class DataManagerService {
 
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
-      for (let i = 0; i < responses.length; i++) {
-        this.addMessage({
-          type: 'received',
-          content: responses[i].speech
-        });
-      }
+      this.addMessages(responses);
+      
       if (ret.result.metadata.endConversation) {
         this.generateNewSessionId();
       }

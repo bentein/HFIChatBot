@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { DataManagerService } from '../../services/datamanager.service';
+import { DataManagerService } from '../../services/datamanager/datamanager.service';
 
 @Component({
   selector: 'chatcontainer',

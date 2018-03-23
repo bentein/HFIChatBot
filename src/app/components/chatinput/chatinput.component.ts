@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { DataManagerService } from '../../services/datamanager.service';
-import { ConversationLogicService } from '../../services/conversation-logic.service';
+import { DataManagerService } from '../../services/datamanager/datamanager.service';
+import { ConversationLogicService } from '../../services/conversationlogic/conversation-logic.service';
 
 import * as $ from 'jquery';
 
