@@ -1,26 +1,30 @@
+/* @import url("../../../../node_modules/bootstrap/dist/css/bootstrap.css"); */
+
 span:-moz-last-node {
   margin-bottom:10px;
-}
-
-.row {
-  margin-bottom: 0;
-  padding: 10px 20px;
-  justify-content: space-between;
-  padding:3px 7.5px;
-}
-
-.chat {
-  display: inline-block;
-  border-radius: 15px;
-  font-size: 12px;
-  padding: 5px 8px 6px;
 }
 
 .chat-box {
   height: 350px;
   overflow-y: scroll;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0px;
+}
+
+.chat-box-padding {
+  padding: 0px 15px;
+}
+
+.row {
+  margin: 0;
+  justify-content: space-between;
+  padding:3px 0px;
+}
+
+.chat {
+  display: inline-block;
+  border-radius: 15px;
+  font-size: initial;
+  padding: 5px 8px 6px;
 }
 
 .received {
@@ -31,8 +35,8 @@ span:-moz-last-node {
 .sent {
   color: white;
   background-color: rgb(64, 128, 255);
+  float:right;
   margin-left: 30px;
-  float: right;
 }
 
 .last-row {

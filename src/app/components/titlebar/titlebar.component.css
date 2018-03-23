@@ -1,3 +1,5 @@
+/* @import url("../../../../node_modules/bootstrap/dist/css/bootstrap.css"); */
+
 i, label {
     user-select: none;
 }
@@ -10,6 +12,7 @@ label {
 
 i + label {
     margin-left: 5px;
+    margin-bottom: 0px;
 }
 
 .pointer {
@@ -17,7 +20,7 @@ i + label {
 }
 
 .row {
-    margin-bottom: 0;
+    margin: 0;
     padding: 10px 20px;
     justify-content: space-between;
 }
@@ -30,8 +33,9 @@ i + label {
     padding-left:0;
 }
 
-.close-icon {
+.close-label {
     padding-right:0;
+    flex-grow:0;
 }
 
 .shadow-bottom {

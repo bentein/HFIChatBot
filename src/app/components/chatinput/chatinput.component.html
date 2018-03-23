@@ -1,8 +1,8 @@
 <div class="row chat-input">
-  <div class="input-container">
-      <div #inputDiv id="inputDiv" contenteditable class="input"></div>
+  <div class="input-container col">
+      <div #inputDiv id="inputDiv" contenteditable="true" class="input-div word-break"></div>
   </div>
-  <div class="button-container valign-wrapper">  
-    <button class="btn waves-effect waves-light" (click)="sendQuery(inputDiv.innerText)">Send</button>
+  <div class="button-container col">  
+    <button class="btn btn-success" (click)="sendQuery(inputDiv.innerText)">Send</button>
   </div>
 </div>
