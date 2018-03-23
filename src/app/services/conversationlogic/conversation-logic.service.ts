@@ -39,4 +39,13 @@ export class ConversationLogicService {
     }
     return "";
   }
+
+  filterActionFromMessage(msg: string) {
+    if (msg.includes('.action')) {
+      let index = msg.indexOf(".action");
+      index += 8;
+      return msg.substr(index).split(" ");
+    }
+    return [""];
+  }
 }
