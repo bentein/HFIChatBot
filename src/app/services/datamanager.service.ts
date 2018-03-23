@@ -1,32 +1,38 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { ConversationLogicService } from './conversation-logic.service';
- 
+import {
+  Injectable
+} from '@angular/core';
+import {
+  HttpClient
+} from '@angular/common/http';
+import {
+  HttpHeaders
+} from '@angular/common/http';
+import {
+  ConversationLogicService
+} from './conversation-logic.service';
+
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 
 @Injectable()
 export class DataManagerService {
-  
+
   messages;
   newMessages: boolean;
   show: boolean;
   sessionId;
   activeContexts;
-  conversationLogic:ConversationLogicService;
 
 
   // sets data from cookies if available
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private convo: ConversationLogicService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
-    Cookie.set('sessionId',this.sessionId);
+    Cookie.set('sessionId', this.sessionId);
     this.activeContexts = null;
-    this.conversationLogic = new ConversationLogicService();
   }
 
   // toggles whether chat box is visible
@@ -49,27 +55,21 @@ export class DataManagerService {
         'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
       })
     };
-    //FJERNET &query
     const url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no&query=" + query + "&sessionId=" + this.sessionId;
 
     this.http.get(url, headers).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
-      for (let i = 0; i < responses.length; i++) {
-        this.addMessage({
-          type: 'received',
-          content: responses[i].speech
-        });
-      }
+      this.addMessages(responses);
 
-      if (ret.result.contexts !== null){
+      if (ret.result.contexts) {
         this.activeContexts = ret.result.contexts;
       }
 
       if (ret.result.metadata.endConversation) {
         this.generateNewSessionId();
       }
+
       console.log(ret);
-      this.newMessages = true;
     });
   }
 
@@ -108,16 +108,30 @@ export class DataManagerService {
     if (message.content !== "") {
       this.messages.push(message);
       this.newMessages = true;
-      Cookie.set('messages',this.messages);
+      Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
+    }
+  }
+
+  addMessages(responses) {
+    for (let i = 0; i < responses.length; i++) {
+      let message: string = responses[i].speech;
+      let $event = this.convo.filterEventFromMessage(message);
+      if ($event !== "") {
+        message = message.substr(0, message.indexOf(".event"));
+        message.trim();
+        this.triggerEvent($event);
+      }
+
+      this.addMessage({
+        type: 'received',
+        content: message
+      });
     }
   }
 
   // generate session ID as uuid
   generateNewSessionId() {
     this.sessionId = uuid.v4();
-    Cookie.set('sessionId',this.sessionId);
+    Cookie.set('sessionId', this.sessionId);
   }
-
-
-
 }

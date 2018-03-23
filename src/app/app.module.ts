@@ -8,6 +8,7 @@ import { TitlebarComponent } from './components/titlebar/titlebar.component';
 import { ChatboxComponent } from './components/chatbox/chatbox.component';
 import { DataManagerService } from './services/datamanager.service';
 import { ChatinputComponent } from './components/chatinput/chatinput.component';
+import { ConversationLogicService } from './services/conversation-logic.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,10 @@ import { ChatinputComponent } from './components/chatinput/chatinput.component';
     BrowserModule,
     HttpClientModule
   ],
-  providers: [DataManagerService],
+  providers: [
+    DataManagerService,
+    ConversationLogicService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

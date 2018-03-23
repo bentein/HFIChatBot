@@ -7,7 +7,10 @@ export class ConversationLogicService {
 
   messages;
 
-  constructor() {
+  constructor() {}
+
+  processMessageObject = {
+    "test_event" : true
   }
 
   processMessage(activeContexts, message) : Boolean {
@@ -26,5 +29,14 @@ export class ConversationLogicService {
       else
         return false;
     }
+  }
+
+  filterEventFromMessage(msg: string) {
+    if (msg.includes('.event')) {
+      let index = msg.indexOf(".event");
+      index += 7;
+      return msg.substr(index);
+    }
+    return "";
   }
 }

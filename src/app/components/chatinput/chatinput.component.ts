@@ -1,5 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager.service';
+import { ConversationLogicService } from '../../services/conversation-logic.service';
+
 import * as $ from 'jquery';
 
 @Component({
@@ -32,11 +34,7 @@ export class ChatinputComponent implements AfterViewInit {
     if(query !== "") {
       $("#inputDiv").text("");
       this.data.addMessage(query);
-
-      if (this.data.conversationLogic.processMessage(this.data.activeContexts, query))
-        this.data.triggerEvent(query);
-      else
-        this.data.sendQuery(query);
+      this.data.sendQuery(query);
       console.log(query);
     }
   }
