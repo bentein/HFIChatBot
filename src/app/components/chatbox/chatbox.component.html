@@ -1,6 +1,6 @@
 <div class="chat-box">
   <div class="row" *ngFor="let msg of data.messages; let i = index; let last = last" [ngClass]="determineRowContainerClass(i, last)">
-    <div class="col">
+    <div class="col chat-box-padding">
       <span class="chat word-break" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}">{{msg.content}}</span>
       <div *ngIf="last">{{scrollToBottom()}} </div>
     </div>
