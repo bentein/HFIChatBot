@@ -1,8 +1,9 @@
-<div class="row chat-input">
-  <div class="input-container col">
-      <div #inputDiv id="inputDiv" contenteditable="true" class="input-div word-break"></div>
+<div class="chat-input" fxLayout="row" fxLayoutAlign="space-between center">
+  <hr>
+  <div class="input-container" fxLayout="column" fxLayoutAlign="start stretch">
+    <div #inputDiv id="inputDiv" contenteditable="true" class="input-div word-break"></div>
   </div>
-  <div class="button-container col">  
+  <div class="button-container" fxLayout="column" fxLayoutAlign="start stretch">
     <button class="btn" (click)="sendQuery(inputDiv.innerText)">Send</button>
   </div>
 </div>

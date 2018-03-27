@@ -3,10 +3,12 @@
   display: inline-block;
   padding: 5px 8px 6px;
   font-size: initial;
-
   border-radius: 15px;
-
   margin: 0.5px 0px;
+}
+
+div.sent-wrapper {
+  margin-left: 50px;
 }
 
 div.sent-wrapper > span {
@@ -29,6 +31,10 @@ div.sent-wrapper > span:last-child {
 div.sent-wrapper > span:only-child {
   border-radius: 15px;
   margin: 3px 0px;
+}
+
+div.received-wrapper {
+  margin-right: 50px;
 }
 
 div.received-wrapper > span {
@@ -61,11 +67,9 @@ div.received-wrapper > span:only-child {
 
 .received {
   background-color: rgb(241, 240, 240);
-  margin-right: 30px;
 }
 
 .sent {
   color: white;
   background-color: rgb(64, 128, 255);
-  margin-left: 30px;
 }

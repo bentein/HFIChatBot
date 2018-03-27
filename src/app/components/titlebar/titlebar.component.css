@@ -1,25 +1,34 @@
 /* @import url("../../../../node_modules/bootstrap/dist/css/bootstrap.css"); */
 
-i, label {
-    user-select: none;
-    cursor: inherit;
+hr {
+  height: 12px;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  position: absolute;
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
 }
 
-i + label {
-    margin-left: 5px;
-    margin-bottom: 0px;
+i, label {
+  user-select: none;
+  cursor: inherit;
+}
+
+i+label {
+  margin-left: 5px;
+  margin-bottom: 0px;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .title-bar {
-    padding: 10px 10px;
+  padding: 10px 10px;
 }
 
 .shadows {
-    box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.12);
-    z-index: 10;
-    position:relative;
+  /* box-shadow: 0px 10px 10px -5px rgba(255,0,0,1); */
+  z-index: 10;
+  position: relative;
 }
