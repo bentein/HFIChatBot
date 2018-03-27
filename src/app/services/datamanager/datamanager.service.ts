@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
 import { ConversationLogicService } from '../conversationlogic/conversation-logic.service';
+import { ContextManagerService } from '../contextmanager/contextmanager.service';
+import { HttpService } from '../http/http.service';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
-import { ContextManagerService } from '../contextmanager/contextmanager.service';
 
 @Injectable()
 export class DataManagerService {
@@ -21,7 +22,7 @@ export class DataManagerService {
   url;
 
   // sets data from cookies if available
-  constructor(private http: HttpClient, private convo: ConversationLogicService, private context: ContextManagerService) {
+  constructor(private http: HttpClient, private http2: HttpService, private convo: ConversationLogicService, private context: ContextManagerService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     this.newMessages = false;
@@ -36,14 +37,7 @@ export class DataManagerService {
         }
       }
     }
-    
-    this.headers = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
-      })
-    };
-    this.url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
-    
+
     Cookie.set('sessionId', this.sessionId);
   }
   
@@ -63,9 +57,7 @@ export class DataManagerService {
 
   // calls DialogFlow api
   sendQuery(query: string) {
-    const url = this.url + "&query=" + query + "&sessionId=" + this.sessionId;
-
-    this.http.get(url, this.headers).subscribe((ret: any) => {
+    this.http2.sendQuery(query,this.sessionId).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
@@ -86,9 +78,7 @@ export class DataManagerService {
   }
 
   doEvent($event: string) {
-    const url = this.url + "&e=" + $event + "&sessionId=" + this.sessionId;
-
-    this.http.get(url, this.headers).subscribe((ret: any) => {
+    this.http2.sendEvent($event,this.sessionId).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       this.addMessages(responses);
       if (ret.result.metadata.endConversation) this.generateNewSessionId();
