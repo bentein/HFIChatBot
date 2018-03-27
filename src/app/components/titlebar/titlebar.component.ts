@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-import { DataManagerService } from '../../services/datamanager.service';
+import { DataManagerService } from '../../services/datamanager/datamanager.service';
 
 @Component({
   selector: 'titlebar',

@@ -1,5 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { DataManagerService } from '../../services/datamanager.service';
+import { DataManagerService } from '../../services/datamanager/datamanager.service';
+import { ConversationLogicService } from '../../services/conversationlogic/conversation-logic.service';
+
 import * as $ from 'jquery';
 
 @Component({
@@ -21,7 +23,7 @@ export class ChatinputComponent implements AfterViewInit {
     });
     $("#inputDiv").keydown((e) => {
       if (e.keyCode == 27) {
-        this.data.show = false;
+        this.data.toggleChatBox();
       }
     });
   }
@@ -33,6 +35,7 @@ export class ChatinputComponent implements AfterViewInit {
       $("#inputDiv").text("");
       this.data.addMessage(query);
       this.data.sendQuery(query);
+      console.log(query);
     }
   }
 

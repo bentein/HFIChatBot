@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DatamanagerService } from './datamanager.service';
+import { DataManagerService } from './datamanager.service';
 
 describe('DatamanagerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatamanagerService]
+      providers: [DataManagerService]
     });
   });
 
-  it('should be created', inject([DatamanagerService], (service: DatamanagerService) => {
+  it('should be created', inject([DataManagerService], (service: DataManagerService) => {
     expect(service).toBeTruthy();
   }));
 });
