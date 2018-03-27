@@ -4,12 +4,6 @@ i, label {
     user-select: none;
 }
 
-label {
-    font-size: initial;
-    color: initial;
-    cursor: pointer;
-}
-
 i + label {
     margin-left: 5px;
     margin-bottom: 0px;
@@ -19,26 +13,11 @@ i + label {
     cursor: pointer;
 }
 
-.row {
-    margin: 0;
-    padding: 10px 20px;
-    justify-content: space-between;
+.title-bar {
+    padding: 10px 10px;
 }
 
-.row::after {
-    content: initial;
-}
-
-.chat-label {
-    padding-left:0;
-}
-
-.close-label {
-    padding-right:0;
-    flex-grow:0;
-}
-
-.shadow-bottom {
+.shadows {
     box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.12);
     z-index: 10;
     position:relative;

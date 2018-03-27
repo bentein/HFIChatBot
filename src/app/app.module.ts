@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { ChatcontainerComponent } from './components/chatcontainer/chatcontainer.component';
@@ -21,7 +22,8 @@ import { ContextManagerService } from './services/contextmanager/contextmanager.
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [
     DataManagerService,

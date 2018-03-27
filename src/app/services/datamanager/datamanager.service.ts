@@ -49,6 +49,7 @@ export class DataManagerService {
   
   // toggles whether chat box is visible
   toggleChatBox() {
+    this.separateMessages();
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
       $elem.toggleClass("slideDown");
@@ -134,6 +135,26 @@ export class DataManagerService {
         content: message
       });
     }
+  }
+
+  separateMessages() {
+    let messageGroupArray = [new Array()];
+    let l = this.messages.length;
+    let pushIndex = 0;
+
+    if (l > 0) {
+      messageGroupArray[0].push(this.messages[pushIndex]);
+      for (let i = 1; i < l; i++) {
+        let message = this.messages[i];
+        if (message.type === messageGroupArray[pushIndex][0].type) {
+          messageGroupArray[pushIndex].push(message);
+        } else {
+          messageGroupArray[++pushIndex] = new Array();
+          messageGroupArray[pushIndex].push(message);
+        }
+      }
+    }
+    return messageGroupArray;
   }
 
   // generate session ID as uuid

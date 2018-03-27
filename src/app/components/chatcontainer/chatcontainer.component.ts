@@ -4,7 +4,7 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 @Component({
   selector: 'chatcontainer',
   templateUrl: './chatcontainer.component.html',
-  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './chatcontainer.component.css']
+  styleUrls: ['./chatcontainer.component.css']
 })
 export class ChatcontainerComponent implements AfterViewInit {
 
