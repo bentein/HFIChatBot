@@ -2,6 +2,7 @@
 
 i, label {
     user-select: none;
+    cursor: inherit;
 }
 
 i + label {

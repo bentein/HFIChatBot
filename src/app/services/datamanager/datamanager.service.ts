@@ -6,6 +6,8 @@ import { ConversationLogicService } from '../conversationlogic/conversation-logi
 import { ContextManagerService } from '../contextmanager/contextmanager.service';
 import { HttpService } from '../http/http.service';
 
+import { Message } from '../../classes/message';
+
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
@@ -13,7 +15,6 @@ import * as uuid from 'uuid';
 @Injectable()
 export class DataManagerService {
   messages;
-  sessionId;
   newMessages: boolean;
   show: boolean;
   actions;
@@ -22,9 +23,8 @@ export class DataManagerService {
   url;
 
   // sets data from cookies if available
-  constructor(private http: HttpClient, private http2: HttpService, private convo: ConversationLogicService, private context: ContextManagerService) {
+  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
-    this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     this.newMessages = false;
     this.show = false;
     
@@ -38,12 +38,10 @@ export class DataManagerService {
       }
     }
 
-    Cookie.set('sessionId', this.sessionId);
   }
   
   // toggles whether chat box is visible
   toggleChatBox() {
-    this.separateMessages();
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
       $elem.toggleClass("slideDown");
@@ -57,11 +55,11 @@ export class DataManagerService {
 
   // calls DialogFlow api
   sendQuery(query: string) {
-    this.http2.sendQuery(query,this.sessionId).subscribe((ret: any) => {
+    this.http.sendQuery(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
-      if (ret.result.metadata.endConversation) this.generateNewSessionId();
+      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
 
       console.log(ret);
     });
@@ -78,10 +76,10 @@ export class DataManagerService {
   }
 
   doEvent($event: string) {
-    this.http2.sendEvent($event,this.sessionId).subscribe((ret: any) => {
+    this.http.sendEvent($event).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       this.addMessages(responses);
-      if (ret.result.metadata.endConversation) this.generateNewSessionId();
+      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
   }
 
@@ -102,10 +100,8 @@ export class DataManagerService {
   // adds message to data array
   addMessage(message) {
     if (typeof message === "string") {
-      message = {
-        type: 'sent',
-        content: message
-      }
+      let d = new Date();
+      message = new Message(message, 'sent', d.getHours()  + ":" + d.getMinutes);
     }
     if (message.content !== "") {
       this.messages.push(message);
@@ -120,19 +116,18 @@ export class DataManagerService {
       message = this.detectEvent(message);
       message = this.detectAction(message);
 
-      this.addMessage({
-        type: 'received',
-        content: message
-      });
+      let d = new Date();
+      this.addMessage(new Message(message, 'received', d.getHours()  + ":" + d.getMinutes));
     }
   }
 
   separateMessages() {
-    let messageGroupArray = [new Array()];
+    let messageGroupArray = [];
     let l = this.messages.length;
     let pushIndex = 0;
 
     if (l > 0) {
+      messageGroupArray[0] = new Array();
       messageGroupArray[0].push(this.messages[pushIndex]);
       for (let i = 1; i < l; i++) {
         let message = this.messages[i];
@@ -147,9 +142,4 @@ export class DataManagerService {
     return messageGroupArray;
   }
 
-  // generate session ID as uuid
-  generateNewSessionId() {
-    this.sessionId = uuid.v4();
-    Cookie.set('sessionId', this.sessionId);
-  }
 }
