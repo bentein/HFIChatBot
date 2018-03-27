@@ -101,7 +101,7 @@ export class DataManagerService {
   addMessage(message) {
     if (typeof message === "string") {
       let d = new Date();
-      message = new Message(message, 'sent', d.getHours()  + ":" + d.getMinutes);
+      message = new Message(message, 'sent', d.getHours()  + ":" + d.getMinutes());
     }
     if (message.content !== "") {
       this.messages.push(message);
@@ -117,7 +117,7 @@ export class DataManagerService {
       message = this.detectAction(message);
 
       let d = new Date();
-      this.addMessage(new Message(message, 'received', d.getHours()  + ":" + d.getMinutes));
+      this.addMessage(new Message(message, 'received', d.getHours()  + ":" + d.getMinutes()));
     }
   }
 
