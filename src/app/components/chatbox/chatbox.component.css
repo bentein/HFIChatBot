@@ -16,19 +16,19 @@ div.sent-wrapper > span {
   border-bottom-right-radius: 5px;
 }
 
-div.sent-wrapper > span:first-child {
+div.sent-wrapper > span:first-of-type {
   border-radius: 15px;  
   border-bottom-right-radius: 5px;
   margin-top: 3px;
 }
 
-div.sent-wrapper > span:last-child {
+div.sent-wrapper > span:last-of-type {
   border-radius: 15px;  
   border-top-right-radius: 5px;
   margin-bottom: 3px;
 }
 
-div.sent-wrapper > span:only-child {
+div.sent-wrapper > span:only-of-type {
   border-radius: 15px;
   margin: 3px 0px;
 }
@@ -42,19 +42,19 @@ div.received-wrapper > span {
   border-bottom-left-radius: 5px;
 }
 
-div.received-wrapper > span:first-child {
+div.received-wrapper > span:first-of-type {
   border-radius: 15px;  
   border-bottom-left-radius: 5px;
   margin-top: 3px;
 }
 
-div.received-wrapper > span:last-child {
+div.received-wrapper > span:last-of-type {
   border-radius: 15px;  
   border-top-left-radius: 5px;
   margin-bottom: 3px;
 }
 
-div.received-wrapper > span:only-child {
+div.received-wrapper > span:only-of-type {
   border-radius: 15px;
   margin: 3px 0px;
 }
