@@ -109,13 +109,15 @@ export class DataManagerService {
       message = new Message(message, 'sent', d.getHours()  + ":" + d.getMinutes());
     }
     if (message.content !== "") {
-      this.messages.push(message);
+      this.pushMessage(message);
       this.newMessages = true;
       Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
     }
   }
 
-  pushToSeparatedList(message:Message) {
+  pushMessage(message:Message) {
+    this.messages.push(message);
+
     let outerLength = this.separatedMessages.length;
     let innerArray = this.separatedMessages[outerLength-1];
 
