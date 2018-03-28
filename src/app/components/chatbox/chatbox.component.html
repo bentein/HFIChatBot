@@ -1,7 +1,7 @@
 <div class="chat-box" fxLayout="column" fxLayoutAlign="start stretch">
   <div *ngFor="let group of data.separatedMessages; let last = last">
     <div fxLayout="column" fxLayoutAlign="{{group[0].type==='received' ? 'start start' : 'start end'}}" class="{{group[0].type + '-wrapper'}}">
-      <span *ngFor="let msg of group" class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}" title="{{msg.type==='sent' ? msg.time : ''}}">{{msg.content}}</span>
+      <span *ngFor="let msg of group" class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}" title="{{getTitle(msg)}}">{{msg.content}}</span>
     </div>
     <div *ngIf="last">{{scrollToBottom()}}</div>
   </div>

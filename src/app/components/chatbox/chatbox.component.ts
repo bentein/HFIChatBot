@@ -3,6 +3,7 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
+import { Message, getDay } from '../../classes/message';
 
 @Component({
   selector: 'chatbox',
@@ -32,7 +33,7 @@ export class ChatboxComponent implements AfterViewInit, AfterViewChecked {
   ngAfterViewChecked() {
     tippy('.sent', {
       arrow: 'small',
-      placement: 'right',
+      placement: 'left',
       duration: 0,
       popperOptions: {
         modifiers: {
@@ -45,6 +46,18 @@ export class ChatboxComponent implements AfterViewInit, AfterViewChecked {
         }
       }
     });
+  }
+
+  getTitle(message:Message) {
+    let ret = "";
+
+    if (getDay() === message.day) {
+      ret = message.time;
+    } else {
+      ret = message.day + " " + message.time;
+    }
+
+    if (message.type === "sent") return ret;
   }
 
   scrollToBottom(force?) {
