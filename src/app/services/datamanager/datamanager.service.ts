@@ -106,7 +106,7 @@ export class DataManagerService {
   addMessage(message) {
     if (typeof message === "string") {
       let d = new Date();
-      message = new Message(message, 'sent', d.getHours()  + ":" + d.getMinutes());
+      message = new Message(message, 'sent', this.getTime());
     }
     if (message.content !== "") {
       this.pushMessage(message);
@@ -117,16 +117,22 @@ export class DataManagerService {
 
   pushMessage(message:Message) {
     this.messages.push(message);
-
+    
     let outerLength = this.separatedMessages.length;
-    let innerArray = this.separatedMessages[outerLength-1];
-
-    if(innerArray[0].type === message.type) {
+    if (outerLength === 0)  {
+      this.separatedMessages[0] = (new Array());
+      let innerArray = this.separatedMessages[outerLength];
       innerArray.push(message);
     } else {
-      this.separatedMessages.push(new Array());
-      this.separatedMessages[outerLength].push(message);
+      let innerArray = this.separatedMessages[outerLength-1];    
+      if(innerArray[0].type === message.type) {
+        innerArray.push(message);
+      } else {
+        this.separatedMessages[outerLength] = (new Array());
+        this.separatedMessages[outerLength].push(message);
+      }
     }
+
   }
 
   addMessages(responses) {
@@ -135,9 +141,19 @@ export class DataManagerService {
       message = this.detectEvent(message);
       message = this.detectAction(message);
 
-      let d = new Date();
-      this.addMessage(new Message(message, 'received', d.getHours()  + ":" + d.getMinutes()));
+      this.addMessage(new Message(message, 'received', this.getTime()));
     }
+  }
+
+  getTime() {
+    let d = new Date();
+
+    let hh = (d.getHours() < 10 ? '0' : '') + d.getHours();
+    let mm = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+
+    let ret = hh + ":" + mm;
+
+    return ret;
   }
 
   separateMessages() {
