@@ -8,6 +8,7 @@ import * as $ from 'jquery';
   styleUrls: ['./chatbox.component.css']
 })
 export class ChatboxComponent implements AfterViewInit {
+  testArray = [["hey"], ["lame"], ["yo"]];
 
   constructor(private data: DataManagerService) {}
 

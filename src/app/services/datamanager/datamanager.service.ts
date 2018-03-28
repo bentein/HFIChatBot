@@ -15,8 +15,11 @@ import * as uuid from 'uuid';
 @Injectable()
 export class DataManagerService {
   messages;
+  separatedMessages;
+
   newMessages: boolean;
   show: boolean;
+  
   actions;
 
   headers;
@@ -37,6 +40,8 @@ export class DataManagerService {
         }
       }
     }
+
+    this.separatedMessages = this.separateMessages();
 
   }
   
@@ -107,6 +112,18 @@ export class DataManagerService {
       this.messages.push(message);
       this.newMessages = true;
       Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
+    }
+  }
+
+  pushToSeparatedList(message:Message) {
+    let outerLength = this.separatedMessages.length;
+    let innerArray = this.separatedMessages[outerLength-1];
+
+    if(innerArray[0].type === message.type) {
+      innerArray.push(message);
+    } else {
+      this.separatedMessages.push(new Array());
+      this.separatedMessages[outerLength].push(message);
     }
   }
 
