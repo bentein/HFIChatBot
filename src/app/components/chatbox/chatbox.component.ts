@@ -28,6 +28,8 @@ export class ChatboxComponent implements AfterViewInit {
         }
       }
     });
+
+    setTimeout(()=>this.data.updateTooltips(),200);
   }
 
   scrollToBottom(force?) {
@@ -39,27 +41,8 @@ export class ChatboxComponent implements AfterViewInit {
         this.setMessagesRead();
       },0);
     }
-    this.updateTooltip();
   }
-
-  updateTooltip() {
-    tippy('.sent', {
-      arrow: 'small',
-      placement: 'left',
-      duration: 0,
-      popperOptions: {
-        modifiers: {
-          preventOverflow: {
-            enabled: false
-          },
-          hide: {
-            enabled: false
-          }
-        }
-      }
-    });
-  }
-
+  
   getTitle(message:Message) {
     let ret = "";
 

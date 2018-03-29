@@ -11,6 +11,7 @@ import { Message } from '../../classes/message';
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
+import * as tippy from 'tippy.js';
 
 @Injectable()
 export class DataManagerService {
@@ -47,6 +48,7 @@ export class DataManagerService {
   
   // toggles whether chat box is visible
   toggleChatBox() {
+    this.disableTooltips();
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
       $elem.toggleClass("slideDown");
@@ -110,6 +112,7 @@ export class DataManagerService {
     }
     if (message.content !== "") {
       this.pushMessage(message);
+      this.updateTooltips();
       this.newMessages = true;
       Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
     }
@@ -143,6 +146,38 @@ export class DataManagerService {
 
       this.addMessage(new Message(message, 'received'));
     }
+  }
+
+  updateTooltips() {
+    tippy('.sent', {
+      arrow: 'small',
+      placement: 'right',
+      duration: 0,
+      popperOptions: {
+        modifiers: {
+          preventOverflow: {
+            enabled: false
+          },
+          hide: {
+            enabled: false
+          }
+        }
+      }
+    });
+  }
+
+  enableTooltips() {
+    let tip:any = document.querySelectorAll(".sent");
+    tip.forEach((el) => {
+      if (el._tippy) el._tippy.enable();
+    });
+  }
+  
+  disableTooltips() {
+    let tip:any = document.querySelectorAll(".sent");
+    tip.forEach((el) => {
+      if (el._tippy) el._tippy.disable();
+    });
   }
 
   getTime() {

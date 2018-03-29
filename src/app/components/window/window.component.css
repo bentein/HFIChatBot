@@ -1,16 +1,13 @@
-
-
-.chat-container {
-  padding: 0;
-  background-color: white;
+.window {
   width: 25vw;
   max-width: 350px !important;
+  background-color: white;
 }
 
 .bottom-right-fix {
   position: fixed;
   bottom: 0px;
-  right: 50px;
+  right: 150px;
 }
 
 .shadows {
@@ -38,13 +35,13 @@
     height: 0px;
   }
   to {
-    height: 385px;
+    height: 386px;
   }
 }
 
 @keyframes slidedown {
   from {
-    height: 385px;
+    height: 386px;
   }
   to {
     height: 0px;
