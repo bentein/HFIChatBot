@@ -1,17 +1,17 @@
-import { Component, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
+
+import { Message, getDay } from '../../classes/message';
 
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
-import { Message, getDay } from '../../classes/message';
 
 @Component({
   selector: 'chatbox',
   templateUrl: './chatbox.component.html',
   styleUrls: ['./chatbox.component.css']
 })
-export class ChatboxComponent implements AfterViewInit, AfterViewChecked {
-  testArray = [["hey"], ["lame"], ["yo"]];
+export class ChatboxComponent implements AfterViewInit {
 
   constructor(private data: DataManagerService) {}
 
@@ -30,7 +30,19 @@ export class ChatboxComponent implements AfterViewInit, AfterViewChecked {
     });
   }
 
-  ngAfterViewChecked() {
+  scrollToBottom(force?) {
+    if (force) {
+      $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+    } else if (this.data.newMessages) {
+      setTimeout(() => {
+        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+        this.setMessagesRead();
+      },0);
+    }
+    this.updateTooltip();
+  }
+
+  updateTooltip() {
     tippy('.sent', {
       arrow: 'small',
       placement: 'left',
@@ -60,23 +72,8 @@ export class ChatboxComponent implements AfterViewInit, AfterViewChecked {
     if (message.type === "sent") return ret;
   }
 
-  scrollToBottom(force?) {
-    if (force) {
-      $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
-    } else if (this.data.newMessages) {
-      setTimeout(() => {
-        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
-        this.setMessagesRead();
-      },0);
-    }
-  }
-
   setMessagesRead() {
     this.data.newMessages = false;
-  }
-
-  createTooltip($event) {
-    console.log($event.srcElement);
   }
 
 }
