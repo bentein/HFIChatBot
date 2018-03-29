@@ -20,6 +20,7 @@ export class DataManagerService {
 
   newMessages: boolean;
   show: boolean;
+  hideApplication: boolean;
   
   actions;
 
@@ -31,6 +32,7 @@ export class DataManagerService {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.newMessages = false;
     this.show = false;
+    this.hideApplication = false;
     
     this.actions = {
       "hasProvided" : ($events, parameter) => {

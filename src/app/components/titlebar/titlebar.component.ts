@@ -19,7 +19,7 @@ export class TitlebarComponent implements OnInit {
 
   closeChatBox($event) {
     event.stopPropagation();
-    $(".bottom-right-fix").toggleClass("close");
+    this.data.hideApplication = true;
   }
 
 }
