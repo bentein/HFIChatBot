@@ -33,19 +33,7 @@ export class DataManagerService {
     this.newMessages = false;
     this.show = false;
     this.hideApplication = false;
-    
-    this.actions = {
-      "hasProvided" : ($events, parameter) => {
-        if(this.context.hasContextAttribute(parameter)) {
-          this.doEvent($events[0]);
-        } else {
-          this.doEvent($events[1]);
-        }
-      }
-    }
-
     this.separatedMessages = this.separateMessages();
-
   }
   
   // toggles whether chat box is visible
@@ -74,38 +62,6 @@ export class DataManagerService {
     });
   }
 
-  detectEvent(message: string) {
-    let $event = this.convo.filterEventFromMessage(message);
-    if ($event !== "") {
-      message = message.substr(0, message.indexOf(".event"));
-      message.trim();
-      this.doEvent($event);
-    }
-    return message;
-  }
-
-  doEvent($event: string) {
-    this.http.sendEvent($event).subscribe((ret: any) => {
-      let responses: any = ret.result.fulfillment.messages;
-      this.addMessages(responses);
-      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
-    });
-  }
-
-  detectAction(message: string) {
-    let $action = this.convo.filterActionFromMessage(message);
-    if ($action[0] !== "") {
-      message = message.substr(0, message.indexOf(".action"));
-      message.trim();
-      this.doAction($action[0],[$action[2],$action[3]],$action[1] ? $action[1] : undefined);
-    }
-    return message;
-  }
-
-  doAction($action: string, $events: string[], parameter?: string) {
-    if(parameter) this.actions[$action]($events,parameter);
-  }
-
   // adds message to data array
   addMessage(message) {
     if (typeof message === "string") {
@@ -120,7 +76,27 @@ export class DataManagerService {
     }
   }
 
-  pushMessage(message:Message) {
+  addMessages(responses) {
+    for (let i = 0; i < responses.length; i++) {
+      let message: string = responses[i].speech;
+
+      message = this.convo.doEvent(message, (ret: any) => {
+        let responses: any = ret.result.fulfillment.messages;
+        this.addMessages(responses);
+        if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
+      });
+
+      message = this.convo.doAction(message, (ret: any) => {
+        let responses: any = ret.result.fulfillment.messages;
+        this.addMessages(responses);
+        if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
+      });
+
+      this.addMessage(new Message(message, 'received'));
+    }
+  }
+
+  private pushMessage(message:Message) {
     this.messages.push(message);
     
     let outerLength = this.separatedMessages.length;
@@ -138,16 +114,6 @@ export class DataManagerService {
       }
     }
 
-  }
-
-  addMessages(responses) {
-    for (let i = 0; i < responses.length; i++) {
-      let message: string = responses[i].speech;
-      message = this.detectEvent(message);
-      message = this.detectAction(message);
-
-      this.addMessage(new Message(message, 'received'));
-    }
   }
 
   updateTooltips() {
