@@ -21,19 +21,14 @@ export class DataManagerService {
   newMessages: boolean;
   show: boolean;
   hideApplication: boolean;
-  
-  actions;
-
-  headers;
-  url;
 
   // sets data from cookies if available
   constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
+    this.separatedMessages = this.separateMessages();
     this.newMessages = false;
     this.show = false;
     this.hideApplication = false;
-    this.separatedMessages = this.separateMessages();
   }
   
   // toggles whether chat box is visible
