@@ -7,15 +7,15 @@
 }
 
 .profile-image-wrapper {
-  margin-bottom: 1px;
+  margin-bottom: 2px;
   margin-right: 5px;
 }
 
 .profile-image {
-  width:25px;
-  height:25px;
-  background-color: red;
+  width:31px;
+  height:31px;
   border-radius: 20px;
+  display: block;
 }
 
 div.sent-wrapper {
