@@ -1,101 +1,75 @@
 /* @import url("../../../../node_modules/bootstrap/dist/css/bootstrap.css"); */
+.chat {
+  display: inline-block;
+  padding: 5px 8px 6px;
+  font-size: initial;
+  border-radius: 15px;
+  margin: 0.5px 0px;
+}
 
-span:-moz-last-node {
-  margin-bottom:10px;
+div.sent-wrapper {
+  margin-left: 50px;
+}
+
+div.sent-wrapper > span {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+div.sent-wrapper > span:first-of-type {
+  border-radius: 15px;  
+  border-bottom-right-radius: 5px;
+  margin-top: 3px;
+}
+
+div.sent-wrapper > span:last-of-type {
+  border-radius: 15px;  
+  border-top-right-radius: 5px;
+  margin-bottom: 3px;
+}
+
+div.sent-wrapper > span:only-of-type {
+  border-radius: 15px;
+  margin: 3px 0px;
+}
+
+div.received-wrapper {
+  margin-right: 50px;
+}
+
+div.received-wrapper > span {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+div.received-wrapper > span:first-of-type {
+  border-radius: 15px;  
+  border-bottom-left-radius: 5px;
+  margin-top: 3px;
+}
+
+div.received-wrapper > span:last-of-type {
+  border-radius: 15px;  
+  border-top-left-radius: 5px;
+  margin-bottom: 3px;
+}
+
+div.received-wrapper > span:only-of-type {
+  border-radius: 15px;
+  margin: 3px 0px;
 }
 
 .chat-box {
   height: 350px;
   overflow-y: scroll;
-  padding: 10px 0px;
-}
-
-.chat-box-padding {
-  padding: 0px 15px;
-}
-
-.row {
-  margin: 0;
-  justify-content: space-between;
-  padding:3px 0px;
-}
-
-.chat {
-  display: inline-block;
-  border-radius: 15px;
-  font-size: initial;
-  padding: 5px 8px 6px;
+  padding: 10px 15px;
 }
 
 .received {
   background-color: rgb(241, 240, 240);
-  margin-right: 30px;
 }
 
 .sent {
   color: white;
   background-color: rgb(64, 128, 255);
-  float:right;
-  margin-left: 30px;
 }
-
-.last-row {
-  margin-bottom: 0px;
-}
-
-.first-row {
-  margin-top: 0px;
-}
-
-.sent-row-first {
-  padding-bottom: 1px;
-}
-
-.sent-row-first > span {
-  border-bottom-right-radius: 1px;
-}
-
-.received-row-first {
-  padding-bottom: 1px;
-}
-
-.received-row-first > span {
-  border-bottom-left-radius: 1px;
-}
-
-.sent-row-mid {
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-.sent-row-mid > span {
-  border-bottom-right-radius: 1px;
-  border-top-right-radius: 1px;
-}
-
-.received-row-mid {
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-.received-row-mid > span {
-  border-bottom-left-radius: 1px;
-  border-top-left-radius: 1px;
-}
-
-.sent-row-last {
-  padding-top: 1px;
-}
-
-.sent-row-last > span {
-  border-top-right-radius: 1px;
-}
-
-.received-row-last {
-  padding-top: 1px;
-}
-
-.received-row-last > span {
-  border-top-left-radius: 1px;
-}
-

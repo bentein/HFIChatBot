@@ -1,11 +1,15 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
+
+import { Message, getDay } from '../../classes/message';
+
 import * as $ from 'jquery';
+import * as tippy from 'tippy.js';
 
 @Component({
   selector: 'chatbox',
   templateUrl: './chatbox.component.html',
-  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './chatbox.component.css']
+  styleUrls: ['./chatbox.component.css']
 })
 export class ChatboxComponent implements AfterViewInit {
 
@@ -13,57 +17,19 @@ export class ChatboxComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.scrollToBottom(true);
-  }
 
-  determineRowContainerClass(index, last) {
-    let messages = this.data.messages;
-    let ret = messages[index].type;
-
-    // for comments that are not first or last in box
-    if (index > 0 && index < messages.length -1) {
-      if (messages[index - 1].type === messages[index].type) {
-        if (messages[index + 1].type === messages[index].type) {
-          ret += '-row-mid';
-        } else {
-          ret += '-row-last';
-        }
-      } else if (messages[index - 1].type !== messages[index].type) {
-        if (messages[index + 1].type === messages[index].type) {
-          ret += '-row-first'
+    $(".chat-box").on('scroll', () => {
+      const elems:any = document.querySelectorAll('.tippy-popper');
+      for (let i = 0; i < elems.length; i++ ) {
+        const instance = elems[i]._tippy;
+        if (instance.state.visible) {
+          instance.popperInstance.disableEventListeners();
+          instance.hide();
         }
       }
-    }
+    });
 
-    // if comment is first of a chain and first in box
-    if (index === 0 && index < messages.length-1 && messages[index + 1].type === messages[index].type) {
-      ret += '-row-first';
-    }
-
-    // if comment is last of a chain and last in box
-    if (index > 0 && last && messages[index - 1].type === messages[index].type) {
-      ret += '-row-last';
-    }
-
-    if (ret === messages[index].type) {
-      ret = '';
-    }
-
-    if (last) {
-      if (ret === '') {
-        ret = 'last-row';
-      } else {
-        ret = [ret, 'last-row'];
-      }
-    } 
-    if (index === 0) {
-      if (ret === '') {
-        ret = 'first-row';
-      } else {
-        ret = [ret, 'first-row'];
-      }
-    }
-    
-    return ret;
+    setTimeout(()=>this.data.updateTooltips(),200);
   }
 
   scrollToBottom(force?) {
@@ -75,6 +41,18 @@ export class ChatboxComponent implements AfterViewInit {
         this.setMessagesRead();
       },0);
     }
+  }
+  
+  getTitle(message:Message) {
+    let ret = "";
+
+    if (getDay() === message.day) {
+      ret = message.time;
+    } else {
+      ret = message.day + " " + message.time;
+    }
+
+    if (message.type === "sent") return ret;
   }
 
   setMessagesRead() {

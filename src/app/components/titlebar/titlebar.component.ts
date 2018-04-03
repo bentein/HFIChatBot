@@ -5,14 +5,13 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 @Component({
   selector: 'titlebar',
   templateUrl: './titlebar.component.html',
-  styleUrls: ['../../../../node_modules/bootstrap/dist/css/bootstrap.css', './titlebar.component.css']
+  styleUrls: ['./titlebar.component.css']
 })
 export class TitlebarComponent implements OnInit {
 
   constructor(private data:DataManagerService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   toggleChatBox($event) {
     this.data.toggleChatBox();
@@ -20,7 +19,7 @@ export class TitlebarComponent implements OnInit {
 
   closeChatBox($event) {
     event.stopPropagation();
-    $(".bottom-right-fix").toggleClass("close");
+    this.data.hideApplication = true;
   }
 
 }
