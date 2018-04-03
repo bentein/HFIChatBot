@@ -1,8 +1,19 @@
 <div class="chat-box">
   <div *ngFor="let group of data.separatedMessages; let last = last">
-    <div fxLayout="column" fxLayoutAlign="{{group[0].type==='received' ? 'start start' : 'start end'}}" class="{{group[0].type + '-wrapper'}}">
-      <span *ngFor="let msg of group" class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}" title="{{getTitle(msg)}}">{{msg.content}}</span>
+    <div fxLayout="row" fxLayoutAlign="{{group[0].type==='received' ? 'start end' : 'end end'}}">
+      
+      <div *ngIf="group[0].type==='received'" class="profile-image-wrapper">
+        <div class="profile-image"></div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="{{group[0].type==='received' ? 'start start' : 'start end'}}" class="{{group[0].type + '-wrapper'}}">
+        <span *ngFor="let msg of group" class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received'}" title="{{getTitle(msg)}}">{{msg.content}}</span>
+      </div>
+      
     </div>
+
+    
+
     <div *ngIf="last">{{scrollToBottom()}}</div>
   </div>
 </div>
