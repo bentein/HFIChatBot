@@ -17,16 +17,11 @@ i+label {
   margin-bottom: 0px;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 .title-bar {
+  height: 36px;
   padding: 10px 10px;
 }
 
-.shadows {
-  /* box-shadow: 0px 10px 10px -5px rgba(255,0,0,1); */
-  z-index: 10;
-  position: relative;
+.pointer {
+  cursor: pointer;
 }

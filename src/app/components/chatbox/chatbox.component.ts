@@ -41,6 +41,7 @@ export class ChatboxComponent implements AfterViewInit {
         this.setMessagesRead();
       },0);
     }
+    this.data.updateTooltips();
   }
   
   getTitle(message:Message) {

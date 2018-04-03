@@ -65,7 +65,6 @@ export class DataManagerService {
     }
     if (message.content !== "") {
       this.pushMessage(message);
-      this.updateTooltips();
       this.newMessages = true;
       Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
     }
