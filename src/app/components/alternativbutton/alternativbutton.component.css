@@ -1,0 +1,20 @@
+.alternatives-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.button-container {
+    padding: 0px;
+    padding-bottom: 8px;
+    margin: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.alternativ-btn {
+    font-size: 12px;
+    height: 100%;
+    width: 90%;
+}

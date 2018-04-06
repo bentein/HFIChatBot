@@ -12,6 +12,8 @@ import { ChatinputComponent } from './components/chatinput/chatinput.component';
 import { ConversationLogicService } from './services/conversationlogic/conversation-logic.service';
 import { ContextManagerService } from './services/contextmanager/contextmanager.service';
 import { HttpService } from './services/http/http.service'
+import { AlternativButtonLogicService } from './services/alternativbuttonlogic/alternativ-button-logic.service';
+import { AlternativbuttonComponent } from './components/alternativbutton/alternativbutton.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { HttpService } from './services/http/http.service'
     WindowComponent,
     TitlebarComponent,
     ChatboxComponent,
-    ChatinputComponent
+    ChatinputComponent,
+    AlternativbuttonComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { HttpService } from './services/http/http.service'
     HttpService,
     DataManagerService,
     ConversationLogicService,
-    ContextManagerService
+    ContextManagerService,
+    AlternativButtonLogicService
   ],
   bootstrap: [AppComponent]
 })

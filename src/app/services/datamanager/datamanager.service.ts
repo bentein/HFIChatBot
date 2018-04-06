@@ -12,6 +12,8 @@ import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
+import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
+import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 
 @Injectable()
 export class DataManagerService {
@@ -23,7 +25,7 @@ export class DataManagerService {
   hideApplication: boolean;
 
   // sets data from cookies if available
-  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService) {
+  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
@@ -73,6 +75,12 @@ export class DataManagerService {
   addMessages(responses) {
     for (let i = 0; i < responses.length; i++) {
       let message: string = responses[i].speech;
+
+      let re = /.option/gi;
+      if(message.search(re) != -1) {
+        this.alternativesHandler.receiveNewAlternatives(message);
+        message = this.removeAlternativesFromMessage(message);
+      }
 
       message = this.convo.doEvent(message, (ret: any) => {
         let responses: any = ret.result.fulfillment.messages;
@@ -172,6 +180,13 @@ export class DataManagerService {
       }
     }
     return messageGroupArray;
+  }
+
+  removeAlternativesFromMessage(message) {
+    if(typeof message === "string" && message !== "") {
+      let actualMessage = message.split(".option");
+      return actualMessage[0];
+    }
   }
 
 }
