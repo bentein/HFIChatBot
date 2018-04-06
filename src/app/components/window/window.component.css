@@ -35,13 +35,13 @@
     height: 0px;
   }
   to {
-    height: 406px;
+    height: 386px;
   }
 }
 
 @keyframes slidedown {
   from {
-    height: 406px;
+    height: 386px;
   }
   to {
     height: 0px;
