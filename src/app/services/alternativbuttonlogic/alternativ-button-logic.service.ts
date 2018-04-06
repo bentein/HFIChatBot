@@ -27,22 +27,20 @@ export class AlternativButtonLogicService {
     Cookie.set('alternatives', this.alternatives);
   }
 
-  //Make 
-  receiveNewAlternatives(message) {
-    this.parseMessage(message);
+  //Create new Alternatives
+  receiveNewAlternatives(newAlternatives) {
+    this.parseAlternatives(newAlternatives);
     if(!this.show) {
       this.toggleShow();
     }
   }
 
-  //Parse all alternatives from message
-  parseMessage(message) {
-    if(typeof message === "string" && message !== "") {
-      let splitt = message.split(".options");
-      let allAlternatives = splitt[1].split(" ");
-      for(let i = 1; i < allAlternatives.length; i++) {
-        this.alternatives.push(allAlternatives[i]);
-      }
+  //Parse all alternatives
+  parseAlternatives(newAlternatives) {
+    newAlternatives = newAlternatives.trim();
+    let allAlternatives = newAlternatives.split(" ");
+    for(let i = 0; i < allAlternatives.length; i++) {
+      this.alternatives.push(allAlternatives[i]);
     }
     Cookie.set('alternatives', this.alternatives);
   }

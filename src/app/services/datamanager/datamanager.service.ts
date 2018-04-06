@@ -180,20 +180,13 @@ export class DataManagerService {
 
   //Check if message contains alternatives. If so, make alternatives
   checkForAlternatives(message) {
-    let re = /.option/gi;
+    let re = /.options/gi;
       if(message.search(re) != -1) {
-        this.alternativesHandler.receiveNewAlternatives(message);
-        message = this.removeAlternativesFromMessage(message);
+        let splitt = message.split(re);
+        this.alternativesHandler.receiveNewAlternatives(splitt[1]);
+        message = splitt[0];
       }
     return message;
-  }
-
-  //Remove alternatives from response
-  removeAlternativesFromMessage(message) {
-    if(typeof message === "string" && message !== "") {
-      let actualMessage = message.split(".option");
-      return actualMessage[0];
-    }
   }
 
 }
