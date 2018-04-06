@@ -76,11 +76,7 @@ export class DataManagerService {
     for (let i = 0; i < responses.length; i++) {
       let message: string = responses[i].speech;
 
-      let re = /.option/gi;
-      if(message.search(re) != -1) {
-        this.alternativesHandler.receiveNewAlternatives(message);
-        message = this.removeAlternativesFromMessage(message);
-      }
+      message = this.checkForAlternatives(message);
 
       message = this.convo.doEvent(message, (ret: any) => {
         let responses: any = ret.result.fulfillment.messages;
@@ -182,6 +178,17 @@ export class DataManagerService {
     return messageGroupArray;
   }
 
+  //Check if message contains alternatives. If so, make alternatives
+  checkForAlternatives(message) {
+    let re = /.option/gi;
+      if(message.search(re) != -1) {
+        this.alternativesHandler.receiveNewAlternatives(message);
+        message = this.removeAlternativesFromMessage(message);
+      }
+    return message;
+  }
+
+  //Remove alternatives from response
   removeAlternativesFromMessage(message) {
     if(typeof message === "string" && message !== "") {
       let actualMessage = message.split(".option");

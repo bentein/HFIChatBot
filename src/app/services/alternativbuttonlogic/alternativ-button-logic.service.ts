@@ -16,30 +16,32 @@ export class AlternativButtonLogicService {
     this.show = this.alternatives === [] ? false : true;
   }
 
+  //Toggle show message
   toggleShow() {
     this.show = this.show ? false : true;
   }
 
+  //Delete all alternatives
   deleteAllAlternatives() {
     this.alternatives = [];
     Cookie.set('alternatives', this.alternatives);
   }
 
+  //Make 
   receiveNewAlternatives(message) {
     this.parseMessage(message);
     if(!this.show) {
       this.toggleShow();
     }
-    console.log(this.alternatives);
   }
 
+  //Parse all alternatives from message
   parseMessage(message) {
     if(typeof message === "string" && message !== "") {
       let splitt = message.split(".options");
       let allAlternatives = splitt[1].split(" ");
       for(let i = 1; i < allAlternatives.length; i++) {
         this.alternatives.push(allAlternatives[i]);
-        console.log(allAlternatives[i]);
       }
     }
     Cookie.set('alternatives', this.alternatives);
