@@ -57,8 +57,6 @@ export class DataManagerService {
 
       console.log(ret);
     });
-
-    this.alternativesHandler.deleteAllAlternatives();
   }
 
   // adds message to data array

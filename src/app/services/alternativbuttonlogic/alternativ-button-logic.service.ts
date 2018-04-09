@@ -8,21 +8,25 @@ export class AlternativButtonLogicService {
 
   message: string;
   alternatives;
+  show: boolean;
 
   constructor() { 
     this.message = "";
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
+    this.show = this.alternatives === [] ? false : true;
   }
 
   //Delete all alternatives
   deleteAllAlternatives() {
     this.alternatives = [];
     Cookie.set('alternatives', this.alternatives);
+    if(this.show) { this.toggleShow() };
   }
 
   //Create new Alternatives
   receiveNewAlternatives(newAlternatives) {
     this.parseAlternatives(newAlternatives);
+    if(!this.show) { this.toggleShow() };
   }
 
   //Parse all alternatives
@@ -44,6 +48,10 @@ export class AlternativButtonLogicService {
         message = splitt[0];
       }
     return message;
+  }
+
+  toggleShow() {
+    this.show = this.toggleShow ? true : false;
   }
 
 }

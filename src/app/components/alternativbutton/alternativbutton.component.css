@@ -11,10 +11,24 @@
     margin: 0px;
     width: 100%;
     text-align: center;
+
+    height: 40px;
 }
 
 .alternativ-btn {
-    font-size: 12px;
+    font-size: 14px;
     height: 100%;
     width: 90%;
+
+    color: rgb(67,121,218);
+    background: none;
+    border: 1px solid rgb(67,121,218)
+
 }
+
+.alternativ-btn:hover {
+    background-color: rgb(67,121,218);
+
+    color: white;
+}
+

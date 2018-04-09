@@ -4,6 +4,7 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 import { ConversationLogicService } from '../../services/conversationlogic/conversation-logic.service';
 
 import * as $ from 'jquery';
+import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
   selector: 'chatinput',
@@ -12,7 +13,7 @@ import * as $ from 'jquery';
 })
 export class ChatinputComponent implements AfterViewInit {
   query:any;
-  constructor(private data:DataManagerService) {
+  constructor(private data:DataManagerService, private alternativHandler:AlternativButtonLogicService) {
   }
 
   ngAfterViewInit() {
@@ -36,6 +37,7 @@ export class ChatinputComponent implements AfterViewInit {
       $("#inputDiv").text("");
       this.data.addMessage(query);
       this.data.sendQuery(query);
+      this.alternativHandler.show = false;
       console.log(query);
     }
   }
