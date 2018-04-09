@@ -8,17 +8,10 @@ export class AlternativButtonLogicService {
 
   message: string;
   alternatives;
-  show: boolean;
 
   constructor() { 
     this.message = "";
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
-    this.show = this.alternatives === [] ? false : true;
-  }
-
-  //Toggle show message
-  toggleShow() {
-    this.show = this.show ? false : true;
   }
 
   //Delete all alternatives
@@ -30,9 +23,6 @@ export class AlternativButtonLogicService {
   //Create new Alternatives
   receiveNewAlternatives(newAlternatives) {
     this.parseAlternatives(newAlternatives);
-    if(!this.show) {
-      this.toggleShow();
-    }
   }
 
   //Parse all alternatives
@@ -43,6 +33,17 @@ export class AlternativButtonLogicService {
       this.alternatives.push(allAlternatives[i]);
     }
     Cookie.set('alternatives', this.alternatives);
+  }
+
+  //Check if message contains alternatives. If so, make alternatives
+  checkForAlternatives(message) {
+    let re = /.options/gi;
+      if(message.search(re) != -1) {
+        let splitt = message.split(re);
+        this.receiveNewAlternatives(splitt[1]);
+        message = splitt[0];
+      }
+    return message;
   }
 
 }

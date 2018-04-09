@@ -23,7 +23,6 @@ export class AlternativbuttonComponent implements OnInit {
     if(query !== "") {
       this.data.addMessage(query);
       this.data.sendQuery(query);
-      this.alternativesHandler.toggleShow();
       this.alternativesHandler.deleteAllAlternatives();
     }
   }

@@ -47,7 +47,7 @@ export class DataManagerService {
     }
   }
 
-  // calls DialogFlow api
+  // calls DialogFlow api and delete alternativ-btns
   sendQuery(query: string) {
     this.http.sendQuery(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
@@ -57,6 +57,8 @@ export class DataManagerService {
 
       console.log(ret);
     });
+
+    this.alternativesHandler.deleteAllAlternatives();
   }
 
   // adds message to data array
@@ -76,7 +78,7 @@ export class DataManagerService {
     for (let i = 0; i < responses.length; i++) {
       let message: string = responses[i].speech;
 
-      message = this.checkForAlternatives(message);
+      message = this.alternativesHandler.checkForAlternatives(message);
 
       message = this.convo.doEvent(message, (ret: any) => {
         let responses: any = ret.result.fulfillment.messages;
@@ -176,17 +178,6 @@ export class DataManagerService {
       }
     }
     return messageGroupArray;
-  }
-
-  //Check if message contains alternatives. If so, make alternatives
-  checkForAlternatives(message) {
-    let re = /.options/gi;
-      if(message.search(re) != -1) {
-        let splitt = message.split(re);
-        this.alternativesHandler.receiveNewAlternatives(splitt[1]);
-        message = splitt[0];
-      }
-    return message;
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
+import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
   selector: 'window',
@@ -8,7 +9,7 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 })
 export class WindowComponent implements AfterViewInit {
 
-  constructor(private data:DataManagerService) { }
+  constructor(private data:DataManagerService, private alternativHandler:AlternativButtonLogicService) { }
 
   ngAfterViewInit() {
 
