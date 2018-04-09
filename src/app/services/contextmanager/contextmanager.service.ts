@@ -11,9 +11,16 @@ export class ContextManagerService {
 
   }
 
-  hasContextAttribute(parameter: string) {
+  hasContextAttribute(attribute: string) {
     for (let i = 0; i < this.contexts.length; i++) {
-      if (this.contexts[i].parameters[parameter] !== "") return true;
+      if (this.contexts[i].parameters[attribute] !== "") return true;
+    }
+    return false;
+  }
+
+  contextAttributeIs(attribute: string, value: string) {
+    for (let i = 0; i < this.contexts.length; i++) {
+      if (this.contexts[i].parameters[attribute] === value) return true;
     }
     return false;
   }

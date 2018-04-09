@@ -52,8 +52,6 @@ export class DataManagerService {
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
       if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
-
-      console.log(ret);
     });
   }
 
@@ -84,6 +82,8 @@ export class DataManagerService {
         let responses: any = ret.result.fulfillment.messages;
         this.addMessages(responses);
         if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
+
+        console.log(ret);
       });
 
       this.addMessage(new Message(message, 'received'));

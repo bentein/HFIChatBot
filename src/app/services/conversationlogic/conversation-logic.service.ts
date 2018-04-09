@@ -10,11 +10,18 @@ export class ConversationLogicService {
 
   constructor(private context: ContextManagerService, private http: HttpService) {
     this.actions = {
-      "hasProvided" : ($events, callback) => {
-        if(this.context.hasContextAttribute($events[0])) {
-          return this.http.sendEvent($events[1]).subscribe(callback);
+      "hasProvided" : ($parameters, callback) => {
+        if(this.context.hasContextAttribute($parameters[0])) {
+          this.http.sendEvent($parameters[1]).subscribe(callback);
         } else {
-          return this.http.sendEvent($events[2]).subscribe(callback);
+          this.http.sendEvent($parameters[2]).subscribe(callback);
+        }
+      },
+      "attributeIs" : ($parameters, callback) => {
+        if(this.context.contextAttributeIs($parameters[0],$parameters[1])) {
+          this.http.sendEvent($parameters[2]).subscribe(callback);
+        } else {
+          this.http.sendEvent($parameters[3]).subscribe(callback);
         }
       }
     }
