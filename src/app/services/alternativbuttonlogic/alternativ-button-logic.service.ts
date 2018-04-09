@@ -23,8 +23,9 @@ export class AlternativButtonLogicService {
     if(this.show) { this.toggleShow() };
   }
 
-  //Create new Alternatives
+  //Create new Alternatives and delete old ones
   receiveNewAlternatives(newAlternatives) {
+    this.deleteAllAlternatives();
     this.parseAlternatives(newAlternatives);
     if(!this.show) { this.toggleShow() };
   }
