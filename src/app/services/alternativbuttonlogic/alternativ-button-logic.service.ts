@@ -6,12 +6,10 @@ import * as Cookie from 'js-cookie';
 @Injectable()
 export class AlternativButtonLogicService {
 
-  message: string;
   alternatives;
   show: boolean;
 
   constructor() { 
-    this.message = "";
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
     this.show = this.alternatives === [] ? false : true;
   }
@@ -23,7 +21,7 @@ export class AlternativButtonLogicService {
     if(this.show) { this.toggleShow() };
   }
 
-  //Create new Alternatives and delete old ones
+  //Create new Alternatives
   receiveNewAlternatives(newAlternatives) {
     this.deleteAllAlternatives();
     this.parseAlternatives(newAlternatives);
@@ -51,6 +49,7 @@ export class AlternativButtonLogicService {
     return message;
   }
 
+  //Toggle Show
   toggleShow() {
     this.show = this.toggleShow ? true : false;
   }
