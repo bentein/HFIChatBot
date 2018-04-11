@@ -27,6 +27,7 @@
     "@types/jquery": "^3.3.1",
     "@types/js-cookie": "^2.1.0",
     "core-js": "^2.4.1",
+    "is-image-url": "^1.1.8",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "rxjs": "^5.5.6",

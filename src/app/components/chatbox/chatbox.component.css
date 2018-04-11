@@ -85,3 +85,12 @@ div.received-wrapper > span:only-of-type {
   color: white;
   background-color: rgb(64, 128, 255);
 }
+
+.image-received {
+  display: block;
+  width: 160px;
+  border-radius: 15px;
+
+  padding: 0px;
+  margin: -2px -8px -6px;
+}

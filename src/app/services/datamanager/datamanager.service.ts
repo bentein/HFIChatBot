@@ -14,21 +14,26 @@ import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 @Injectable()
 export class DataManagerService {
   messages;
+  imageURLs;
   separatedMessages;
 
   newMessages: boolean;
+  newImage: boolean;
   show: boolean;
   hideApplication: boolean;
 
   // sets data from cookies if available
-  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService) {
+  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
+    this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
+    this.newImage = false;
     this.show = false;
     this.hideApplication = false;
   }
@@ -72,6 +77,28 @@ export class DataManagerService {
     }
   }
 
+  // check for image 
+  haveImage(message) {
+    let re = /.image/gi;
+    if(message.search(re) != -1) {
+      return true;
+    } else return false;
+  }
+
+  //split image and text 
+  splitImageAndText(message) {
+    let re = /.image/gi;
+    if(message.search(re) != -1) {
+      let splitt = message.split(re);
+      this.addMessage(new Message(splitt[0], 'received'));
+      this.addMessage(new Message(splitt[1], 'image-received'));
+    }
+  }
+
+  getImg(img) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(img);
+  }
+
   addMessages(responses) {
     for (let i = 0; i < responses.length; i++) {
       let message: string = responses[i].speech;
@@ -90,7 +117,11 @@ export class DataManagerService {
         if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
       });
 
-      this.addMessage(new Message(message, 'received'));
+      if(this.haveImage(message)) {
+        this.splitImageAndText(message);
+      } else {
+        this.addMessage(new Message(message, 'received'));
+      }
     }
   }
 
