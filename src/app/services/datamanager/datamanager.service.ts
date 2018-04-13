@@ -137,12 +137,13 @@ export class DataManagerService {
       let innerArray = this.separatedMessages[outerLength-1];    
       if(innerArray[0].type === message.type) {
         innerArray.push(message);
+      } else if(innerArray[0].type !== 'send' && message.type === 'image-received') {
+        innerArray.push(message);
       } else {
         this.separatedMessages[outerLength] = (new Array());
         this.separatedMessages[outerLength].push(message);
       }
     }
-
   }
 
   updateTooltips() {
@@ -198,7 +199,10 @@ export class DataManagerService {
       messageGroupArray[0].push(this.messages[pushIndex]);
       for (let i = 1; i < l; i++) {
         let message = this.messages[i];
-        if (message.type === messageGroupArray[pushIndex][0].type) {
+
+        if(message.type === messageGroupArray[pushIndex][0].type) {
+          messageGroupArray[pushIndex].push(message);
+        } else if(message.type === 'image-received' && messageGroupArray[pushIndex][0].type !== 'send') {
           messageGroupArray[pushIndex].push(message);
         } else {
           messageGroupArray[++pushIndex] = new Array();
@@ -206,6 +210,8 @@ export class DataManagerService {
         }
       }
     }
+
+    console.log(messageGroupArray);
     return messageGroupArray;
   }
 
