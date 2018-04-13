@@ -60,4 +60,21 @@ export class ChatboxComponent implements AfterViewInit {
     this.data.newMessages = false;
   }
 
+  
+
+  imgFullscreen(src) {
+    let bigImg = document.getElementById('img01');
+    bigImg.setAttribute('src', src);
+
+    let modal = document.getElementById('myModal');
+
+    modal.style.display = "block";
+  }
+
+  closeModal() {
+    let modal = document.getElementById('myModal');
+
+    modal.style.display = "none";
+  }
+
 }

@@ -14,7 +14,6 @@ import { ContextManagerService } from './services/contextmanager/contextmanager.
 import { HttpService } from './services/http/http.service'
 import { AlternativButtonLogicService } from './services/alternativbuttonlogic/alternativ-button-logic.service';
 import { AlternativbuttonComponent } from './components/alternativbutton/alternativbutton.component';
-import { ChatimageComponent } from './components/chatimage/chatimage.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { ChatimageComponent } from './components/chatimage/chatimage.component';
     TitlebarComponent,
     ChatboxComponent,
     ChatinputComponent,
-    AlternativbuttonComponent,
-    ChatimageComponent
+    AlternativbuttonComponent
   ],
   imports: [
     BrowserModule,
