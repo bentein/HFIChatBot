@@ -61,7 +61,7 @@ export class ChatboxComponent implements AfterViewInit {
   }
 
   imgFullscreen(src) {
-    document.getElementById('img01').setAttribute('src', src);
+    document.getElementById('modalImg').setAttribute('src', src);
     document.getElementById('myModal').style.display = "block";
   }
 
