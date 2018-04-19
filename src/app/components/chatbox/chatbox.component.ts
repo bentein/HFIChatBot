@@ -60,6 +60,7 @@ export class ChatboxComponent implements AfterViewInit {
     this.data.newMessages = false;
   }
 
+  //Set Modal Image Source and Displays Modal
   imgFullscreen(src) {
     document.getElementById('modalImg').setAttribute('src', src);
     document.getElementById('myModal').style.display = "block";

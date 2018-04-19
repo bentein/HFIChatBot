@@ -15,6 +15,7 @@ export class WindowComponent implements AfterViewInit {
 
   }
 
+  //Close Modal
   closeModal() {
     document.getElementById('myModal').style.display = "none";
   }
