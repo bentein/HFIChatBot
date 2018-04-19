@@ -14,5 +14,9 @@ export class WindowComponent implements AfterViewInit {
   ngAfterViewInit() {
 
   }
+
+  closeModal() {
+    document.getElementById('myModal').style.display = "none";
+  }
 }
 

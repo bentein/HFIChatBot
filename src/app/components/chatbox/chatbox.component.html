@@ -11,11 +11,6 @@
           <span *ngIf="msg.type!=='image-received'">{{msg.content}}</span>
           <img *ngIf="msg.type==='image-received'" class="image-received-wrapper" [src]="data.getImg(msg.content)" (click)="imgFullscreen(msg.content)">
 
-          <div id="myModal" class="modal">
-            <span (click)="closeModal()" class="close">&times;</span>
-            <img class="modal-content" id="modalImg">
-          </div>
-
         </span>
       </div>
     </div>
