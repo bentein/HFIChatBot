@@ -5,6 +5,7 @@ import { Message, getDay } from '../../classes/message';
 
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
+import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
   selector: 'chatbox',
@@ -13,10 +14,11 @@ import * as tippy from 'tippy.js';
 })
 export class ChatboxComponent implements AfterViewInit {
 
-  constructor(private data: DataManagerService) {}
+  constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService) {}
 
   ngAfterViewInit() {
-    this.scrollToBottom(true);
+    setTimeout(() => this.scrollToBottom(true), 100);
+    //this.scrollToBottom(true);
 
     $(".chat-box").on('scroll', () => {
       const elems:any = document.querySelectorAll('.tippy-popper');

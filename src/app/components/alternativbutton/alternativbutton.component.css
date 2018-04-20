@@ -1,18 +1,17 @@
 .alternatives-wrapper {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin: 0px;
     overflow: hidden;
 }
 
 .button-container {
     padding: 0px;
-    padding-bottom: 8px;
-    margin: 0px;
+    margin-top: 10px;
     width: 100%;
     text-align: center;
 
-    height: 40px;
+    height: 30px;
 }
 
 .alternativ-btn {
@@ -22,12 +21,13 @@
 
     color: rgb(67,121,218);
     background: none;
-    border: 1px solid rgb(67,121,218)
+    border: 1px solid rgb(64, 128, 255);
+    border-radius: 15px;
 
 }
 
 .alternativ-btn:hover {
-    background-color: rgb(67,121,218);
+    background-color: rgb(64, 128, 255);
 
     color: white;
 }
