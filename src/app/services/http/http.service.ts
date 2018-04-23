@@ -36,6 +36,7 @@ export class HttpService {
   generateNewSessionId() {
     this.sessionId = uuid.v4();
     Cookie.set('sessionId', this.sessionId);
+    return this.sessionId;
   }
 
 }
