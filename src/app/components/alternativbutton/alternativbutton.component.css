@@ -19,9 +19,9 @@
     height: 100%;
     width: 90%;
 
-    color: rgb(67,121,218);
-    background: none;
-    border: 1px solid rgb(64, 128, 255);
+    color: white;
+    background-color: rgb(81, 192, 137);
+    border: 15px;
     border-radius: 15px;
 
 }
