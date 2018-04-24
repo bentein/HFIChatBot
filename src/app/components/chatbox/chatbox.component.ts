@@ -17,8 +17,7 @@ export class ChatboxComponent implements AfterViewInit {
   constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService) {}
 
   ngAfterViewInit() {
-    setTimeout(() => this.scrollToBottom(true), 100);
-    //this.scrollToBottom(true);
+    this.scrollToBottom(true);
 
     $(".chat-box").on('scroll', () => {
       const elems:any = document.querySelectorAll('.tippy-popper');
@@ -31,7 +30,7 @@ export class ChatboxComponent implements AfterViewInit {
       }
     });
 
-    setTimeout(()=>this.data.updateTooltips(),200);
+    setTimeout(() => { this.scrollToBottom(true); }, 100);
   }
 
   scrollToBottom(force?) {
