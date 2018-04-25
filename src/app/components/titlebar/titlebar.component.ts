@@ -13,10 +13,12 @@ export class TitlebarComponent implements OnInit {
 
   ngOnInit() {}
 
+  // Toogle chatbox 
   toggleChatBox($event) {
     this.data.toggleChatBox();
   }
 
+  // Close 
   closeChatBox($event) {
     event.stopPropagation();
     this.data.hideApplication = true;
