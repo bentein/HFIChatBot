@@ -33,7 +33,7 @@ export class AlternativButtonLogicService {
   //Parse all alternatives
   parseAlternatives(newAlternatives) {
     newAlternatives = newAlternatives.trim();
-    let allAlternatives = newAlternatives.split(" ");
+    let allAlternatives = newAlternatives.split(" | ");
     for(let i = 0; i < allAlternatives.length; i++) {
       this.alternatives.push(allAlternatives[i]);
     }
