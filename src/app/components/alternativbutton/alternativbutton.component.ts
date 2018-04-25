@@ -16,6 +16,7 @@ export class AlternativbuttonComponent implements OnInit {
   ngOnInit() {
   }
 
+  //Send alternativ btn message to Dialogflow
   sendQuery(query) {
     console.log(query);
     query = query.trim();

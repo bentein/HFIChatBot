@@ -33,6 +33,7 @@ export class ChatboxComponent implements AfterViewInit {
     setTimeout(() => { this.scrollToBottom(true); }, 100);
   }
 
+  //Scroll chat-box to bootom.
   scrollToBottom(force?) {
     if (force) {
       $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
@@ -57,6 +58,7 @@ export class ChatboxComponent implements AfterViewInit {
     if (message.type === "sent") return ret;
   }
 
+  //Set new messages as false.  
   setMessagesRead() {
     this.data.newMessages = false;
   }
