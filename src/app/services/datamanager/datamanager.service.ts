@@ -140,22 +140,18 @@ export class DataManagerService {
     } else {
       let innerArray = this.separatedMessages[outerLength-1];
       if(innerArray[0].type === message.type) {
-        console.log("First: " + innerArray[0].type);
         innerArray.push(message);
       } else if(innerArray[0].type !== 'sent' && message.type === 'image-received') {
-        console.log("Second: " + message.type + " " + innerArray[0].type);
         innerArray.push(message);
       } else if(message.type === 'received' && innerArray[0].type !== 'sent') {
-        console.log("Third: " + innerArray[0].type + " " + innerArray[0].type);
         innerArray.push(message);
       } else {
-        console.log("Last: " + innerArray[0].type);
         this.separatedMessages[outerLength] = (new Array());
         this.separatedMessages[outerLength].push(message);
       }
     }
   }
-  
+
   updateTooltips() {
     tippy('.sent', {
       arrow: 'small',
@@ -211,23 +207,18 @@ export class DataManagerService {
         let message = this.messages[i];
 
         if(message.type === messageGroupArray[pushIndex][0].type) {
-          console.log("First:" + message.type);
           messageGroupArray[pushIndex].push(message);
         } else if(message.type === 'image-received' && messageGroupArray[pushIndex][0].type !== 'sent') {
-          console.log("Second: " + message.type + " " + messageGroupArray[pushIndex][0].type);
           messageGroupArray[pushIndex].push(message);
         } else if(message.type === 'received' && messageGroupArray[pushIndex][0].type !== 'sent') {
-          console.log("Thrid: " + message.type + " " + messageGroupArray[pushIndex][0].type);
           messageGroupArray[pushIndex].push(message);
         } else {
-          console.log("Last: " + message.type);
           messageGroupArray[++pushIndex] = new Array();
           messageGroupArray[pushIndex].push(message);
         }
       }
     }
 
-    console.log(messageGroupArray);
     return messageGroupArray;
   }
 
