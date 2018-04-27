@@ -73,14 +73,12 @@ div.received-wrapper > span:only-of-type {
 }
 
 div.received-wrapper > span > img {
-
   border-radius: 15px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
   width: 160px;
   margin: -5px -8px -11px;
-
 }
 
 div.received-wrapper > span:first-of-type > img {
@@ -97,6 +95,52 @@ div.received-wrapper > span:only-of-type > img {
   border-radius: 15px;
 }
 
+div.image-received-wrapper > span > img {
+  border-radius: 15px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  width: 160px;
+  margin: -5px -8px -11px;
+}
+
+div.image-received-wrapper > span:first-of-type > img {
+  border-radius: 15px;  
+  border-bottom-left-radius: 5px;
+}
+
+div.image-received-wrapper > span:last-of-type > img {
+  border-radius: 15px;  
+  border-top-left-radius: 5px;
+}
+
+div.image-received-wrapper > span:only-of-type > img {
+  border-radius: 15px;
+}
+
+/* ---- */
+
+div.image-received-wrapper > span {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+div.image-received-wrapper > span:first-of-type {
+  border-radius: 15px;  
+  border-bottom-left-radius: 5px;
+  margin-top: 3px;
+}
+
+div.image-received-wrapper > span:last-of-type {
+  border-radius: 15px;  
+  border-top-left-radius: 5px;
+  margin-bottom: 3px;
+}
+
+div.image-received-wrapper > span:only-of-type {
+  border-radius: 15px;
+  margin: 3px 0px;
+}
 
 .chat-box {
   height: 350px;

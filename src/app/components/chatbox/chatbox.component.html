@@ -2,11 +2,11 @@
   <div *ngFor="let group of data.separatedMessages; let last = last">
     <div fxLayout="row" fxLayoutAlign="{{group[0].type!=='sent' ? 'start end' : 'end end'}}">
       
-      <div *ngIf="group[0].type==='received'" class="profile-image-wrapper">
+      <div *ngIf="group[0].type!=='sent'" class="profile-image-wrapper">
         <img src="http://localhost:4200/assets/avatar1.png" class="profile-image">
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="{{group[0].type!=='send' ? 'start start' : 'start end'}}" class="{{group[0].type + '-wrapper'}}">
+      <div fxLayout="column" fxLayoutAlign="{{group[0].type!=='sent' ? 'start start' : 'start end'}}" class="{{group[0].type + '-wrapper'}}">
         <span *ngFor="let msg of group" class="chat" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received','image-received':msg.type==='image-received'}" title="{{getTitle(msg)}}">
           <span *ngIf="msg.type!=='image-received'" [innerHTML]="detectURLInMessage(msg.content)" class="chat-message"></span>
           <img *ngIf="msg.type==='image-received'" class="image-received-wrapper" [src]="data.getImg(msg.content)" (click)="imgFullscreen(msg.content)">

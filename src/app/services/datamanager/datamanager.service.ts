@@ -15,6 +15,7 @@ import * as tippy from 'tippy.js';
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { findLast } from '@angular/compiler/src/directive_resolver';
 
 @Injectable()
 export class DataManagerService {
@@ -37,7 +38,7 @@ export class DataManagerService {
     this.show = false;
     this.hideApplication = false;
   }
-  
+
   // toggles whether chat box is visible
   toggleChatBox() {
     this.disableTooltips();
@@ -75,7 +76,7 @@ export class DataManagerService {
     }
   }
 
-  // check for image 
+  // check for image
   haveImage(message) {
     let re = /.image/gi;
     if(message.search(re) != -1) {
@@ -83,14 +84,17 @@ export class DataManagerService {
     } else return false;
   }
 
-  //split image and text 
+  //split image and text
   splitImageAndText(message) {
-    let re = /.image/gi;
-    if(message.search(re) != -1) {
-      let splitt = message.split(re);
-      this.addMessage(new Message(splitt[0], 'received'));
-      this.addMessage(new Message(splitt[1], 'image-received'));
-    }
+    let splitt = message.split(/.image/gi);
+    console.log(splitt[0].length);
+    console.log(splitt[0]);
+    console.log(splitt[1].trim());
+    if(splitt[0].length !== 0) {
+      console.log("dsgsfsdf");
+      this.addMessage(new Message(splitt[0].trim(), 'received'));
+    };
+    this.addMessage(new Message(splitt[1].trim(), 'image-received'));
   }
 
   getImg(img) {
@@ -127,25 +131,31 @@ export class DataManagerService {
 
   private pushMessage(message:Message) {
     this.messages.push(message);
-    
+
     let outerLength = this.separatedMessages.length;
     if (outerLength === 0)  {
       this.separatedMessages[0] = (new Array());
       let innerArray = this.separatedMessages[outerLength];
       innerArray.push(message);
     } else {
-      let innerArray = this.separatedMessages[outerLength-1];    
+      let innerArray = this.separatedMessages[outerLength-1];
       if(innerArray[0].type === message.type) {
+        console.log("First: " + innerArray[0].type);
         innerArray.push(message);
-      } else if(innerArray[0].type !== 'send' && message.type === 'image-received') {
+      } else if(innerArray[0].type !== 'sent' && message.type === 'image-received') {
+        console.log("Second: " + message.type + " " + innerArray[0].type);
+        innerArray.push(message);
+      } else if(message.type === 'received' && innerArray[0].type !== 'sent') {
+        console.log("Third: " + innerArray[0].type + " " + innerArray[0].type);
         innerArray.push(message);
       } else {
+        console.log("Last: " + innerArray[0].type);
         this.separatedMessages[outerLength] = (new Array());
         this.separatedMessages[outerLength].push(message);
       }
     }
   }
-
+  
   updateTooltips() {
     tippy('.sent', {
       arrow: 'small',
@@ -170,7 +180,7 @@ export class DataManagerService {
       if (el._tippy) el._tippy.enable();
     });
   }
-  
+
   disableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -201,10 +211,16 @@ export class DataManagerService {
         let message = this.messages[i];
 
         if(message.type === messageGroupArray[pushIndex][0].type) {
+          console.log("First:" + message.type);
           messageGroupArray[pushIndex].push(message);
-        } else if(message.type === 'image-received' && messageGroupArray[pushIndex][0].type !== 'send') {
+        } else if(message.type === 'image-received' && messageGroupArray[pushIndex][0].type !== 'sent') {
+          console.log("Second: " + message.type + " " + messageGroupArray[pushIndex][0].type);
+          messageGroupArray[pushIndex].push(message);
+        } else if(message.type === 'received' && messageGroupArray[pushIndex][0].type !== 'sent') {
+          console.log("Thrid: " + message.type + " " + messageGroupArray[pushIndex][0].type);
           messageGroupArray[pushIndex].push(message);
         } else {
+          console.log("Last: " + message.type);
           messageGroupArray[++pushIndex] = new Array();
           messageGroupArray[pushIndex].push(message);
         }
