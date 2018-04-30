@@ -73,19 +73,13 @@ export class ChatboxComponent implements AfterViewInit {
     document.getElementById('myModal').style.display = "block";
   }
 
-  //parse link to a html element
+  //find URLs in message
   detectURLInMessage(message) {
-    let fstSplitWord = /\[\[/gi;
-    let sndSplitWord = /\]\]/gi;
-
-    if(message.search(fstSplitWord) != -1 && message.search(sndSplitWord) != -1) {
-
-      let split1 = message.split(fstSplitWord);    
-      let split2 = split1[1].split(sndSplitWord); 
-      let split3 = split2[0].split(",");
-
-      return split1[0] + "<a target=\"_blank\" href=" + split3[1].trim() + ">" + split3[0].trim() + "</a>" + split2[1];
-    } else return message;
+    while(message.search(/\[\[/gi) != -1 || message.search(/\]\]/gi) != -1) {
+      let linkInfo = message.match(/\[\[(.+?)\]\]/)[1];    
+      let split1 = linkInfo.split(",");
+      message = message.replace("[[" + linkInfo + "]]", "<a target=\"_blank\" href=" + split1[1].trim() + ">" + split1[0].trim() + "</a>");
+    }
+    return message;
   }
-
 }
