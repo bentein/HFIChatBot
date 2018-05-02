@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
     padding: 0;
     background-image: url("assets/background.png");
@@ -18,4 +21,24 @@ body {
 
 .no-padding {
     padding: 0;
+}
+
+.chat-message {
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+.title-bar-title {
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+#inputDiv {
+    font-family: 'Roboto';
+    font-size: 16px; 
+}
+
+.alternativ-btn {
+    font-size: 16px;
+    font-family: 'Roboto'; 
 }
