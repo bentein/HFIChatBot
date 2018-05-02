@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
 .chat {
   display: inline-block;
   padding: 5px 8px 6px;
@@ -162,4 +165,9 @@ div.image-received-wrapper > span:only-of-type {
 .image-received:hover {
   opacity: 0.7;
   cursor: pointer;
+}
+
+.chat-message {
+  font-family: 'Roboto';
+  font-size: 16px;
 }
