@@ -55,6 +55,7 @@ export class DataManagerService {
 
   // calls DialogFlow api and delete alternativ-btns
   sendQuery(query: string) {
+    this.alternativesHandler.deleteAllAlternatives();
     this.http.sendQuery(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
@@ -87,11 +88,7 @@ export class DataManagerService {
   //split image and text
   splitImageAndText(message) {
     let splitt = message.split(/.image/gi);
-    console.log(splitt[0].length);
-    console.log(splitt[0]);
-    console.log(splitt[1].trim());
     if(splitt[0].length !== 0) {
-      console.log("dsgsfsdf");
       this.addMessage(new Message(splitt[0].trim(), 'received'));
     };
     this.addMessage(new Message(splitt[1].trim(), 'image-received'));
@@ -103,7 +100,9 @@ export class DataManagerService {
 
   addMessages(responses) {
     for (let i = 0; i < responses.length; i++) {
-      let message: string = responses[i].speech;
+      let message = responses[i].speech;
+
+      console.log(message);
 
       message = this.alternativesHandler.checkForAlternatives(message);
 
