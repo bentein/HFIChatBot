@@ -22,6 +22,7 @@
 div.sent-wrapper {
   margin-left: 50px;
   display: block;
+  
 }
 
 div.sent-wrapper > span {
@@ -47,7 +48,7 @@ div.sent-wrapper > span:only-of-type {
 }
 
 div.received-wrapper {
-  margin-right: 50px;
+  margin-right: 0px;
   display: block;
 }
 
@@ -158,6 +159,9 @@ div.image-received-wrapper > span:only-of-type {
 .sent {
   color: white;
   background-color: rgb(64, 128, 255);
+
+  max-width:250px;
+  word-wrap:break-word;
 }
 
 .image-received:hover {
