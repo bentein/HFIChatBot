@@ -41,6 +41,11 @@ export class DataManagerService {
 
   // toggles whether chat box is visible
   toggleChatBox() {
+
+    if(this.messages.length == 0) {
+      this.sendEvent("Welcome");
+    }
+
     this.disableTooltips();
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
@@ -53,10 +58,21 @@ export class DataManagerService {
     }
   }
 
+  sendEvent(query: string) {
+    this.http.sendEvent(query).subscribe((ret: any) => {
+      console.log(ret);
+      let responses: any = ret.result.fulfillment.messages;
+      this.context.setContexts(ret.result.contexts);
+      this.addMessages(responses);
+      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
+    });
+  }
+
   // calls DialogFlow api and delete alternativ-btns
   sendQuery(query: string) {
     this.alternativesHandler.deleteAllAlternatives();
     this.http.sendQuery(query).subscribe((ret: any) => {
+      console.log(ret);
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
@@ -69,7 +85,9 @@ export class DataManagerService {
     if (typeof message === "string") {
       let d = new Date();
       message = new Message(message, 'sent');
+      console.log("TTTTT");
     }
+
     if (message.content !== "") {
       this.pushMessage(message);
       this.newMessages = true;
@@ -101,8 +119,6 @@ export class DataManagerService {
   addMessages(responses) {
     for (let i = 0; i < responses.length; i++) {
       let message = responses[i].speech;
-
-      console.log(message);
 
       message = this.alternativesHandler.checkForAlternatives(message);
 
@@ -185,10 +201,8 @@ export class DataManagerService {
 
   getTime() {
     let d = new Date();
-
     let hh = (d.getHours() < 10 ? '0' : '') + d.getHours();
     let mm = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-
     let ret = hh + ":" + mm;
 
     return ret;
