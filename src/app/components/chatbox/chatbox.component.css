@@ -47,7 +47,7 @@ div.sent-wrapper > span:only-of-type {
 }
 
 div.received-wrapper {
-  margin-right: 50px;
+  margin-right: 0px;
   display: block;
 }
 
