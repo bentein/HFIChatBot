@@ -1,36 +1,58 @@
 .alternatives-wrapper {
     display: flex;
-    justify-content: space-between;
-    margin: 0px;
+    justify-content: space-around;
+    margin-top: 5px;
+    flex-flow: wrap;
     overflow: hidden;
 }
 
 /* Btn container */
 .button-container {
-    padding: 0px;
-    margin-top: 10px;
-    width: 100%;
     text-align: center;
-
     height: 30px;
+    padding: 1px 2px;
+    flex-grow: 1;
 }
 
 /* Alternativ btn  */
 .alternativ-btn {
     height: 100%;
-    width: 90%;
+    width: 100%;
 
     color: white;
     background-color: rgb(81, 192, 137);
     border: 15px;
-    border-radius: 15px;
+    border-radius: 15px;  
+}
 
+.alt-btn-animation2 {
+    animation: test2 .1s forwards ease-in;
+}
+
+@keyframes test2 {
+    0% {
+        height: 30px;
+    }
+    100% {
+        height: 0px;
+    }
 }
 
 /* Alternativ btn hover */
 .alternativ-btn:hover {
     background-color: rgb(89, 212, 151);
-
-    color: white;
 }
 
+.alt-btn-animation {
+    animation: test .1s forwards ease-in; 
+}
+
+@keyframes test {
+    0% {
+        opacity: 1;
+
+    }
+    100% {
+        opacity: 0;
+    }
+}

@@ -7,6 +7,20 @@
   margin: 0.5px 0px;
 }
 
+.chat-animation {
+  animation: zoom .1s forwards ease-out;
+}
+
+@keyframes zoom {
+  from {
+    transform:scale(0);
+  } 
+  to {
+    transform:scale(1);
+  }
+}
+
+
 .profile-image-wrapper {
   margin-bottom: 2px;
   margin-right: 5px;

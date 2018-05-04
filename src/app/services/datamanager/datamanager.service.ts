@@ -70,7 +70,7 @@ export class DataManagerService {
 
   // calls DialogFlow api and delete alternativ-btns
   sendQuery(query: string) {
-    this.alternativesHandler.deleteAllAlternatives();
+    // this.alternativesHandler.deleteAllAlternatives();
     this.http.sendQuery(query).subscribe((ret: any) => {
       console.log(ret);
       let responses: any = ret.result.fulfillment.messages;
