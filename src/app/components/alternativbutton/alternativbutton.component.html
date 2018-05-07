@@ -1,4 +1,4 @@
-<div class="alternatives-wrapper">
+<div class="alternatives-wrapper" *ngIf="!data.receivingMessages">
   <div class="button-container" *ngFor="let alternatives of alternativesHandler.alternatives;">
     <button #alternativ class="alternativ-btn" (click)="sendQuery(alternativ.innerText)">{{alternatives}}</button>
   </div>

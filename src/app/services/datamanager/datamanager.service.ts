@@ -28,6 +28,9 @@ export class DataManagerService {
   show: boolean;
   hideApplication: boolean;
 
+  timeout: number;
+  receivingMessages: boolean;
+
   // sets data from cookies if available
   constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
@@ -37,6 +40,8 @@ export class DataManagerService {
     this.newImage = false;
     this.show = false;
     this.hideApplication = false;
+    this.timeout = 1000;
+    this.receivingMessages = false;
   }
 
   // toggles whether chat box is visible
@@ -81,17 +86,27 @@ export class DataManagerService {
   }
 
   // adds message to data array
-  addMessage(message) {
+  addMessage(message, last?) {
+    this.receivingMessages = true;
+
     if (typeof message === "string") {
       let d = new Date();
       message = new Message(message, 'sent');
-      console.log("TTTTT");
     }
 
     if (message.content !== "") {
-      this.pushMessage(message);
-      this.newMessages = true;
-      Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
+      setTimeout(() => {
+        this.pushMessage(message);
+        this.newMessages = true;
+        Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
+        this.timeout -= 1000;
+        if (last) {
+          this.receivingMessages = false;
+        }
+      }, message.type == "sent"
+         ? 0
+         : this.timeout);
+      this.timeout += 1000;
     }
   }
 
@@ -117,6 +132,8 @@ export class DataManagerService {
   }
 
   addMessages(responses) {
+    this.receivingMessages = true;
+
     for (let i = 0; i < responses.length; i++) {
       let message = responses[i].speech;
 
@@ -138,6 +155,8 @@ export class DataManagerService {
 
       if(this.haveImage(message)) {
         this.splitImageAndText(message);
+      } else if (i === responses.length - 1){
+        this.addMessage(new Message(message, 'received'), true);
       } else {
         this.addMessage(new Message(message, 'received'));
       }

@@ -10,8 +10,13 @@
         <span *ngFor="let msg of group" class="chat chat-animation" [ngClass]="{'sent':msg.type==='sent','received':msg.type==='received','image-received':msg.type==='image-received'}" title="{{getTitle(msg)}}">
           <span *ngIf="msg.type!=='image-received'" [innerHTML]="detectURLInMessage(msg.content)" class="chat-message"></span>
           <img *ngIf="msg.type==='image-received'" class="image-received-wrapper" [src]="data.getImg(msg.content)" (click)="imgFullscreen(msg.content)">
-
+          
         </span>
+        <div class="typing-indicator" *ngIf="data.receivingMessages && last && group[0].type!=='sent'">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
     <div *ngIf="last">{{scrollToBottom()}}</div>
