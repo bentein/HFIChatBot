@@ -29,10 +29,13 @@ export class AlternativbuttonComponent implements OnInit {
       $(".button-container").toggleClass("alt-btn-animation2");
 
       // $(".alternativ-btn:contains('" + query + "')").toggleClass("alt-btn-animation");
-      setTimeout(() => {
-        this.alternativesHandler.deleteAllAlternatives();
-      }, 200);
+      
     }
+
+    setTimeout(() => {
+      this.alternativesHandler.deleteAllAlternatives();
+      console.log("Alt Slettet");
+    }, 200);
   }
 
 }

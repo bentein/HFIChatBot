@@ -38,8 +38,10 @@ export class ChatinputComponent implements AfterViewInit {
       $("#inputDiv").text("");
       this.data.addMessage(query);
       this.data.sendQuery(query);
-      console.log(query);
+      this.alternativHandler.deleteAllAlternatives();
     }
+
+    
   }
 
 }
