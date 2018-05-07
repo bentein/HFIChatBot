@@ -92,7 +92,6 @@ export class DataManagerService {
     if (typeof message === "string") {
       let d = new Date();
       message = new Message(message, 'sent');
-      console.log("TTTTT");
     }
 
     if (message.content !== "") {
