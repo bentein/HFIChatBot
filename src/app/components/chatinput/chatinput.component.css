@@ -27,3 +27,8 @@ hr {
   min-height:20px;
   padding:8px;
 }
+
+.btn {
+  position: absolute;
+  left: -9999px;
+}
