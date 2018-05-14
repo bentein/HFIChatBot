@@ -89,8 +89,6 @@ export class DataManagerService {
   addMessage(message, last?) {
     this.receivingMessages = true;
 
-    console.log(this.timeout);
-
     let counter = message.length;
 
     if (typeof message === "string") {
@@ -103,7 +101,6 @@ export class DataManagerService {
         this.pushMessage(message);
         this.newMessages = true;
         Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
-        console.log("Minus: " + this.timeout);
         this.timeout -= 1000;
         if (last) {
           this.receivingMessages = false;
@@ -112,7 +109,6 @@ export class DataManagerService {
          ? 0
          : this.timeout);
       this.timeout += 1000;
-      console.log("Pluss: " + this.timeout);
     }
   }
 
