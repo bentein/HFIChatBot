@@ -41,6 +41,12 @@ export class ConversationLogicService {
     return this.removeEventFromMessage(msg);
   }
 
+  hasEvent(msg:string) {
+    let $event = this.getEventFromMessage(msg);
+    if ($event && $event !== "") return true;
+    return false;
+  }
+
   private removeActionFromMessage(msg: string) {
     if (msg.includes('.action')) msg = msg.substr(0, msg.indexOf(".action"));
     return msg.trim();

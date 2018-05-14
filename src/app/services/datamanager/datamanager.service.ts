@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { findLast } from '@angular/compiler/src/directive_resolver';
 
+import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { ConversationLogicService } from '../conversationlogic/conversation-logic.service';
 import { ContextManagerService } from '../contextmanager/contextmanager.service';
 import { HttpService } from '../http/http.service';
+
+import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
 
 import { Message } from '../../classes/message';
 
@@ -12,10 +17,6 @@ import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
-import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
-import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { findLast } from '@angular/compiler/src/directive_resolver';
 
 @Injectable()
 export class DataManagerService {
@@ -71,6 +72,8 @@ export class DataManagerService {
       this.addMessages(responses);
       if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
+
+    this.receivingMessages = true;
   }
 
   // calls DialogFlow api and delete alternativ-btns
@@ -83,6 +86,8 @@ export class DataManagerService {
       this.addMessages(responses);
       if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
+
+    this.receivingMessages = true;
   }
 
   // adds message to data array
@@ -139,6 +144,8 @@ export class DataManagerService {
     for (let i = 0; i < responses.length; i++) {
       let message = responses[i].speech;
 
+      let hasEvent = this.convo.hasEvent(message);
+
       message = this.alternativesHandler.checkForAlternatives(message);
 
       message = this.convo.doEvent(message, (ret: any) => {
@@ -158,7 +165,7 @@ export class DataManagerService {
       if(this.haveImage(message)) {
         this.splitImageAndText(message);
       } else if (i === responses.length - 1){
-        this.addMessage(new Message(message, 'received'), true);
+        this.addMessage(new Message(message, 'received'), hasEvent ? false : true);
       } else {
         this.addMessage(new Message(message, 'received'));
       }
