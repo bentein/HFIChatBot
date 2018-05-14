@@ -16,6 +16,7 @@ import { AlternativbuttonComponent } from '../../components/alternativbutton/alt
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { findLast } from '@angular/compiler/src/directive_resolver';
+import { RatingReviewService } from '../ratingandreview/rating-review.service';
 
 @Injectable()
 export class DataManagerService {
@@ -32,7 +33,7 @@ export class DataManagerService {
   receivingMessages: boolean;
 
   // sets data from cookies if available
-  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
+  constructor(private mail:RatingReviewService, private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
@@ -46,6 +47,8 @@ export class DataManagerService {
 
   // toggles whether chat box is visible
   toggleChatBox() {
+
+    this.mail.sendMail();
 
     if(this.messages.length == 0) {
       this.sendEvent("Welcome");
