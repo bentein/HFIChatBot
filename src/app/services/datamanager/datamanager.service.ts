@@ -118,6 +118,13 @@ export class DataManagerService {
     }
   }
 
+  clearMessages() {
+    Cookie.set('messages', {});
+    this.messages = [];
+    this.separatedMessages = [];
+    this.http.generateNewSessionId();
+  }
+
   // check for image
   haveImage(message) {
     let re = /.image/gi;

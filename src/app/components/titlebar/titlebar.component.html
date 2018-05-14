@@ -4,7 +4,9 @@
       <i class="material-icons">chat_bubble_outline</i>
       <label class="title-bar-title">Chat med oss</label>
     </div>
+
     <div fxLayout="row" fxLayoutAlign="start center" class="close-label">
+      <i class="material-icons" (click)="clearHistory()">clear_all</i>
       <i class="material-icons" (click)="closeChatBox($event)">close</i>
     </div>
   </div>
