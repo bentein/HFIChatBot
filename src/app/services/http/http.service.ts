@@ -3,8 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ContextManagerService } from '../contextmanager/contextmanager.service';
 
+import '../../classes/secrets';
+
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
+import { API_KEY } from '../../classes/secrets';
 
 @Injectable()
 export class HttpService {
@@ -16,7 +19,7 @@ export class HttpService {
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     this.headers = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer 35ab7ad584cb4e2ba60341cd01f35d86'
+        'Authorization': 'Bearer ' + API_KEY
       })
     };
     this.url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";

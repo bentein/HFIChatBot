@@ -12,6 +12,7 @@ import { HttpService } from '../http/http.service';
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
 
 import { Message } from '../../classes/message';
+import { MESSAGE_DELAY } from '../../classes/constants';
 
 import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
@@ -41,7 +42,7 @@ export class DataManagerService {
     this.newImage = false;
     this.show = false;
     this.hideApplication = false;
-    this.timeout = 1000;
+    this.timeout = MESSAGE_DELAY;
     this.receivingMessages = false;
   }
 
@@ -106,14 +107,14 @@ export class DataManagerService {
         this.pushMessage(message);
         this.newMessages = true;
         Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
-        this.timeout -= 1000;
+        this.timeout -= MESSAGE_DELAY;
         if (last) {
           this.receivingMessages = false;
         }
       }, message.type == "sent"
          ? 0
          : this.timeout);
-      this.timeout += 1000;
+      this.timeout += MESSAGE_DELAY;
     }
   }
 
