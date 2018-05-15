@@ -18,14 +18,14 @@ export class TitlebarComponent implements OnInit {
     this.data.toggleChatBox();
   }
 
-  clearHistory() {
-    event.stopPropagation();
+  clearHistory($event) {
+    $event.stopPropagation();
     this.data.clearMessages();
   }
 
   // Close 
   closeChatBox($event) {
-    event.stopPropagation();
+    $event.stopPropagation();
     this.data.hideApplication = true;
   }
 
