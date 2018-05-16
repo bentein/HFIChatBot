@@ -75,12 +75,12 @@ export class ChatboxComponent implements AfterViewInit {
 
   //find URLs in message
   detectURLInMessage(message) {
-    while(message.search(/\[\[/gi) != -1 || message.search(/\]\]/gi) != -1) {
+    while(message.search(/\[\[/gi) != -1 && message.search(/\]\]/gi) != -1) {
       let linkInfo = message.match(/\[\[(.+?)\]\]/)[1];    
       let split1 = linkInfo.split(",");
       message = message.replace("[[" + linkInfo + "]]", "<a target=\"_blank\" href=" + split1[1].trim() + ">" + split1[0].trim() + "</a>");
     }
 
-    return decodeURI(message);
+    return decodeURIComponent(message);
   }
 }

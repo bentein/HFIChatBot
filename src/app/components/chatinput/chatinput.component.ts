@@ -37,7 +37,7 @@ export class ChatinputComponent implements AfterViewInit {
     query = query.trim();
     query = query.replace(/  /g," ");
     if(query !== "") {
-      query = encodeURI(query);
+      query = encodeURIComponent(query);
       $("#inputDiv").text("");
       this.data.addMessage(query);
       this.data.sendQuery(query);
