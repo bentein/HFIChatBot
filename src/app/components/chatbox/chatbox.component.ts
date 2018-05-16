@@ -81,6 +81,6 @@ export class ChatboxComponent implements AfterViewInit {
       message = message.replace("[[" + linkInfo + "]]", "<a target=\"_blank\" href=" + split1[1].trim() + ">" + split1[0].trim() + "</a>");
     }
 
-    return message;
+    return decodeURI(message);
   }
 }
