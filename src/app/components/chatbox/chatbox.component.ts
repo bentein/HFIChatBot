@@ -5,7 +5,6 @@ import { Message, getDay } from '../../classes/message';
 
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
-import * as _ from 'lodash';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
@@ -82,6 +81,6 @@ export class ChatboxComponent implements AfterViewInit {
       message = message.replace("[[" + linkInfo + "]]", "<a target=\"_blank\" href=" + split1[1].trim() + ">" + split1[0].trim() + "</a>");
     }
 
-    return _.escape(message);
+    return message;
   }
 }

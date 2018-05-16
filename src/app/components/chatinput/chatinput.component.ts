@@ -3,6 +3,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
 import { ConversationLogicService } from '../../services/conversationlogic/conversation-logic.service';
 
+import * as _ from 'lodash';
 import * as $ from 'jquery';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
@@ -32,6 +33,7 @@ export class ChatinputComponent implements AfterViewInit {
 
   // Send input message to dialogflow
   sendQuery(query) {
+    query = _.escape(query);
     query = query.trim();
     query = query.replace(/  /g," ");
     if(query !== "") {
