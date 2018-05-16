@@ -46,7 +46,4 @@ Thumbs.db
 
 # Secret file
 src/app/classes/secrets.ts
-./app/classes/secrets.ts
-secrets.ts
-src\app\classes\secrets.ts
-.\app\classes\secrets.ts
+src/app/classes/secrets.ts
