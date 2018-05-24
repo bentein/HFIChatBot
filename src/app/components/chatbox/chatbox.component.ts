@@ -6,6 +6,7 @@ import { Message, getDay } from '../../classes/message';
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
+import { ImageLogicService } from '../../services/imagemanager/image-logic.service';
 
 @Component({
   selector: 'chatbox',
@@ -14,7 +15,7 @@ import { AlternativButtonLogicService } from '../../services/alternativbuttonlog
 })
 export class ChatboxComponent implements AfterViewInit {
 
-  constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService) {}
+  constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService, private imgManager: ImageLogicService) {}
 
   ngAfterViewInit() {
     this.scrollToBottom(true);
@@ -33,8 +34,6 @@ export class ChatboxComponent implements AfterViewInit {
     setTimeout(() => { 
       this.scrollToBottom(true); 
     }, 100);
-
-
   }
 
   //Scroll chat-box to bootom.

@@ -14,6 +14,7 @@ import { ContextManagerService } from './services/contextmanager/contextmanager.
 import { HttpService } from './services/http/http.service'
 import { AlternativButtonLogicService } from './services/alternativbuttonlogic/alternativ-button-logic.service';
 import { AlternativbuttonComponent } from './components/alternativbutton/alternativbutton.component';
+import { ImageLogicService } from './services/imagemanager/image-logic.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlternativbuttonComponent } from './components/alternativbutton/alterna
     DataManagerService,
     ConversationLogicService,
     ContextManagerService,
-    AlternativButtonLogicService
+    AlternativButtonLogicService,
+    ImageLogicService
   ],
   bootstrap: [AppComponent]
 })

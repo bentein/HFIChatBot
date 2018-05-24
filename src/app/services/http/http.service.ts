@@ -23,11 +23,13 @@ export class HttpService {
     this.url = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
   }
 
+  // Send message
   sendQuery(query: string) {
     const url = this.url + "&query=" + query + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.headers);
   }
 
+  // Send event
   sendEvent($event: string) {
     const url = this.url + "&e=" + $event + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.headers);

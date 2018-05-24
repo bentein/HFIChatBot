@@ -18,6 +18,7 @@ import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
+import { ImageLogicService } from '../imagemanager/image-logic.service';
 
 @Injectable()
 export class DataManagerService {
@@ -34,7 +35,7 @@ export class DataManagerService {
   receivingMessages: boolean;
 
   // sets data from cookies if available
-  constructor(private http: HttpService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
+  constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
@@ -48,7 +49,6 @@ export class DataManagerService {
 
   // toggles whether chat box is visible
   toggleChatBox() {
-
     if(this.messages.length == 0) {
       this.sendEvent("Welcome");
     }
@@ -65,23 +65,20 @@ export class DataManagerService {
     }
   }
 
+  // Send event
   sendEvent(query: string) {
     this.http.sendEvent(query).subscribe((ret: any) => {
-      console.log(ret);
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
       if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
-
     this.receivingMessages = true;
   }
 
-  // calls DialogFlow api and delete alternativ-btns
+  // Send message
   sendQuery(query: string) {
-    // this.alternativesHandler.deleteAllAlternatives();
     this.http.sendQuery(query).subscribe((ret: any) => {
-      console.log(ret);
       let responses: any = ret.result.fulfillment.messages;
       this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
@@ -91,7 +88,7 @@ export class DataManagerService {
     this.receivingMessages = true;
   }
 
-  // adds message to data array
+  // Add message, set timeout between messages
   addMessage(message, last?) {
     this.receivingMessages = true;
 
@@ -118,32 +115,12 @@ export class DataManagerService {
     }
   }
 
+  // Clear all messages, set new session ID
   clearMessages() {
     Cookie.set('messages', {});
     this.messages = [];
     this.separatedMessages = [];
     this.http.generateNewSessionId();
-  }
-
-  // check for image
-  haveImage(message) {
-    let re = /.image/gi;
-    if(message.search(re) != -1) {
-      return true;
-    } else return false;
-  }
-
-  //split image and text
-  splitImageAndText(message) {
-    let splitt = message.split(/.image/gi);
-    if(splitt[0].length !== 0) {
-      this.addMessage(new Message(splitt[0].trim(), 'received'));
-    };
-    this.addMessage(new Message(splitt[1].trim(), 'image-received'));
-  }
-
-  getImg(img) {
-    return this._sanitizer.bypassSecurityTrustResourceUrl(img);
   }
 
   addMessages(responses) {
@@ -170,8 +147,10 @@ export class DataManagerService {
         console.log(ret);
       });
 
-      if(this.haveImage(message)) {
-        this.splitImageAndText(message);
+      if(this.imgManager.messageHaveImage(message)) {
+        let tmp = this.imgManager.splitImageAndText(message);
+        if(tmp.text !== undefined) {this.addMessage(tmp.text); }
+        this.addMessage(tmp.image);
       } else if (i === responses.length - 1){
         this.addMessage(new Message(message, 'received'), hasEvent ? false : true);
       } else {
