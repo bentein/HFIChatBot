@@ -30,19 +30,15 @@
     background-color: rgb(89, 212, 151);
 }
 
-.alt-btn-out {
-    animation: test2 .1s forwards ease-in;
+.alt-btn-in {
+    animation: btn-in-animation .1s forwards ease-in; 
 }
 
-@keyframes test2 {
+@keyframes btn-in-animation {
     0% {
         transform: scale(0) 
     }
     100% {
         transform: scale(1) 
     }
-}
-
-.alt-btn-in {
-    animation: test2 .1s backwards ease-in; 
 }

@@ -19,12 +19,9 @@ export class ImageLogicService {
     splitImageAndText(message) {
       let splitt = message.split(/.image/gi);
       let text, image;
-      if(splitt[0].length !== 0) {
-        text = new Message(splitt[0].trim(), 'received');
-      };
+      if(splitt[0].length !== 0) { text = new Message(splitt[0].trim(), 'received'); };
       image = new Message(splitt[1].trim(), 'image-received');
-      let both = {text, image}
-      return both;
+      return {text, image};
     }
 
     //Sanitize image
