@@ -15,7 +15,7 @@ import { ImageLogicService } from '../../services/imagemanager/image-logic.servi
 })
 export class ChatboxComponent implements AfterViewInit {
 
-  constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService, private imgManager: ImageLogicService) {}
+  constructor(private data: DataManagerService, private imgManager: ImageLogicService, private alternativHandler: AlternativButtonLogicService) {}
 
   ngAfterViewInit() {
     this.scrollToBottom(true);
@@ -49,6 +49,7 @@ export class ChatboxComponent implements AfterViewInit {
     this.data.updateTooltips();
   }
   
+  //Return title
   getTitle(message:Message) {
     let ret = "";
 

@@ -31,7 +31,7 @@ export class ChatinputComponent implements AfterViewInit {
     });
   }
 
-  // Send input message to dialogflow
+  // Send input message
   sendQuery(query) {
     query = _.escape(query);
     query = query.trim();

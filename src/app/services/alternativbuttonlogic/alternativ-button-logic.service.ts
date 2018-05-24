@@ -49,6 +49,7 @@ export class AlternativButtonLogicService {
     return message;
   }
 
+  // Toggle alt-btns
   toggleShow() {
     this.show = this.toggleShow ? true : false;
   }

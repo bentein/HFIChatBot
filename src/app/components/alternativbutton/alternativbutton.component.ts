@@ -25,17 +25,14 @@ export class AlternativbuttonComponent implements OnInit {
       this.data.addMessage(query);
       this.data.sendQuery(query);
 
-      $(".alternativ-btn").toggleClass("alt-btn-animation");
-      $(".button-container").toggleClass("alt-btn-animation2");
-
-      // $(".alternativ-btn:contains('" + query + "')").toggleClass("alt-btn-animation");
-      
+      $(".alternativ-btn").toggleClass("alt-btn-out");
+      $(".alternativ-btn").toggleClass("alt-btn-in");
     }
 
     setTimeout(() => {
       this.alternativesHandler.deleteAllAlternatives();
       console.log("Alt Slettet");
-    }, 200);
+    }, 100);
   }
 
 }

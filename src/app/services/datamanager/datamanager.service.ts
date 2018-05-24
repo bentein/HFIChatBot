@@ -123,6 +123,7 @@ export class DataManagerService {
     this.http.generateNewSessionId();
   }
 
+  // Add messages, check for alt-btns, images, event, action, etc.
   addMessages(responses) {
     this.receivingMessages = true;
 
@@ -143,8 +144,6 @@ export class DataManagerService {
         let responses: any = ret.result.fulfillment.messages;
         this.addMessages(responses);
         if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
-
-        console.log(ret);
       });
 
       if(this.imgManager.messageHaveImage(message)) {
@@ -200,6 +199,7 @@ export class DataManagerService {
     });
   }
 
+  // Enable tooltips
   enableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -207,6 +207,7 @@ export class DataManagerService {
     });
   }
 
+  // Disable tooltips
   disableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -214,6 +215,7 @@ export class DataManagerService {
     });
   }
 
+  // Return time, hh:mm
   getTime() {
     let d = new Date();
     let hh = (d.getHours() < 10 ? '0' : '') + d.getHours();
@@ -223,6 +225,7 @@ export class DataManagerService {
     return ret;
   }
 
+  // Separate Messages into groups. "mage-received, reveived, sent"
   separateMessages() {
     let messageGroupArray = [];
     let l = this.messages.length;

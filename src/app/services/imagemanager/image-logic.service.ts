@@ -15,7 +15,7 @@ export class ImageLogicService {
       } else return false;
     }
   
-    // //split image and text
+    // split image and text
     splitImageAndText(message) {
       let splitt = message.split(/.image/gi);
       let text, image;
@@ -27,9 +27,8 @@ export class ImageLogicService {
       return both;
     }
 
-
-  
-    getImg(img) {
+    //Sanitize image
+    sanitizeImage(img) {
       return this._sanitizer.bypassSecurityTrustResourceUrl(img);
     }
 

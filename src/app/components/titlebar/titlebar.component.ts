@@ -20,6 +20,7 @@ export class TitlebarComponent implements OnInit {
   }
 
 
+  // Clear chat history
   clearHistory($event) {
     $event.stopPropagation();
     this.data.clearMessages();

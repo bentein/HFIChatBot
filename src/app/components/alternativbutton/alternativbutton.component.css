@@ -25,34 +25,24 @@
     border-radius: 15px;  
 }
 
-.alt-btn-animation2 {
-    animation: test2 .1s forwards ease-in;
-}
-
-@keyframes test2 {
-    0% {
-        height: 30px;
-    }
-    100% {
-        height: 0px;
-    }
-}
-
 /* Alternativ btn hover */
 .alternativ-btn:hover {
     background-color: rgb(89, 212, 151);
 }
 
-.alt-btn-animation {
-    animation: test .1s forwards ease-in; 
+.alt-btn-out {
+    animation: test2 .1s forwards ease-in;
 }
 
-@keyframes test {
+@keyframes test2 {
     0% {
-        opacity: 1;
-
+        transform: scale(0) 
     }
     100% {
-        opacity: 0;
+        transform: scale(1) 
     }
+}
+
+.alt-btn-in {
+    animation: test2 .1s backwards ease-in; 
 }
