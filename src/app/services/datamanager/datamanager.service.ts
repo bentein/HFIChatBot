@@ -6,7 +6,6 @@ import { findLast } from '@angular/compiler/src/directive_resolver';
 
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { ConversationLogicService } from '../conversationlogic/conversation-logic.service';
-import { ContextManagerService } from '../contextmanager/contextmanager.service';
 import { HttpService } from '../http/http.service';
 
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
@@ -35,7 +34,7 @@ export class DataManagerService {
   receivingMessages: boolean;
 
   // sets data from cookies if available
-  constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
+  constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
@@ -49,10 +48,6 @@ export class DataManagerService {
 
   // toggles whether chat box is visible
   toggleChatBox() {
-    if(this.messages.length == 0) {
-      this.sendEvent("Welcome");
-    }
-
     this.disableTooltips();
     if (this.show) {
       let $elem = $("#chat-container").toggleClass("slideUp");
@@ -62,6 +57,9 @@ export class DataManagerService {
       }, 200);
     } else {
       this.show = this.show ? false : true;
+      if(this.messages.length == 0) {
+        this.sendEvent("Welcome");
+      }
     }
   }
 
@@ -69,20 +67,17 @@ export class DataManagerService {
   sendEvent(query: string) {
     this.http.sendEvent(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
-      this.context.setContexts(ret.result.contexts);
       this.addMessages(responses);
-      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
+
     this.receivingMessages = true;
   }
 
   // Send message
   sendQuery(query: string) {
     this.http.sendQuery(query).subscribe((ret: any) => {
-      let responses: any = ret.result.fulfillment.messages;
-      this.context.setContexts(ret.result.contexts);
+      let responses: any = ret;
       this.addMessages(responses);
-      if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
     });
 
     this.receivingMessages = true;
@@ -117,7 +112,7 @@ export class DataManagerService {
 
   // Clear all messages, set new session ID
   clearMessages() {
-    Cookie.set('messages', {});
+    Cookie.set('messages', []);
     this.messages = [];
     this.separatedMessages = [];
     this.http.generateNewSessionId();
@@ -128,19 +123,16 @@ export class DataManagerService {
     this.receivingMessages = true;
 
     for (let i = 0; i < responses.length; i++) {
-      let message = responses[i].speech;
+      let message = responses[i];
+      if (typeof message !== "string") {
+        message = responses[i].speech;
+      }
 
       let hasEvent = this.convo.hasEvent(message);
 
       message = this.alternativesHandler.checkForAlternatives(message);
 
       message = this.convo.doEvent(message, (ret: any) => {
-        let responses: any = ret.result.fulfillment.messages;
-        this.addMessages(responses);
-        if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
-      });
-
-      message = this.convo.doAction(message, (ret: any) => {
         let responses: any = ret.result.fulfillment.messages;
         this.addMessages(responses);
         if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
