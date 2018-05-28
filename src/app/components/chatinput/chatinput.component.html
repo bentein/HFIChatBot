@@ -4,6 +4,6 @@
     <div #inputDiv id="inputDiv" contenteditable="true" class="input-div word-break"></div>
   </div>
   <div class="button-container" fxLayout="column" fxLayoutAlign="start stretch">
-    <button class="btn" (click)="sendQuery(inputDiv.innerText)"></button>
+    <button id="sendButton" class="btn" (click)="sendQuery(inputDiv.innerText)"></button>
    </div>
 </div>

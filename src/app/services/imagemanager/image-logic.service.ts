@@ -5,10 +5,10 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 @Injectable()
 export class ImageLogicService {
 
-  constructor(private _sanitizer:DomSanitizer) { }
+  constructor(private sanitizer:DomSanitizer) { }
 
     // check for image
-    messageHaveImage(message) {
+    messageHasImage(message) {
       let re = /.image/gi;
       if(message.search(re) != -1) {
         return true;
@@ -26,7 +26,7 @@ export class ImageLogicService {
 
     //Sanitize image
     sanitizeImage(img) {
-      return this._sanitizer.bypassSecurityTrustResourceUrl(img);
+      return this.sanitizer.bypassSecurityTrustResourceUrl(img);
     }
 
 }

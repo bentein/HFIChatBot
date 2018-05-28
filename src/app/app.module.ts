@@ -12,6 +12,7 @@ import { ChatinputComponent } from './components/chatinput/chatinput.component';
 import { ConversationLogicService } from './services/conversationlogic/conversation-logic.service';
 import { ContextManagerService } from './services/contextmanager/contextmanager.service';
 import { HttpService } from './services/http/http.service'
+import { UtilService } from './services/util/util.service'
 import { AlternativButtonLogicService } from './services/alternativbuttonlogic/alternativ-button-logic.service';
 import { AlternativbuttonComponent } from './components/alternativbutton/alternativbutton.component';
 import { ImageLogicService } from './services/imagemanager/image-logic.service';
@@ -32,6 +33,7 @@ import { ImageLogicService } from './services/imagemanager/image-logic.service';
   ],
   providers: [
     HttpService,
+    UtilService,
     DataManagerService,
     ConversationLogicService,
     ContextManagerService,

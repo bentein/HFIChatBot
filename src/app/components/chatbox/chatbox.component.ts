@@ -3,7 +3,6 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 
 import { Message, getDay } from '../../classes/message';
 
-import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 import { ImageLogicService } from '../../services/imagemanager/image-logic.service';
@@ -20,7 +19,7 @@ export class ChatboxComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.scrollToBottom(true);
 
-    $(".chat-box").on('scroll', () => {
+    document.querySelector(".chat-box").addEventListener("scroll", () => {
       const elems:any = document.querySelectorAll('.tippy-popper');
       for (let i = 0; i < elems.length; i++ ) {
         const instance = elems[i]._tippy;
@@ -38,11 +37,12 @@ export class ChatboxComponent implements AfterViewInit {
 
   //Scroll chat-box to bootom.
   scrollToBottom(force?) {
+    var container = document.querySelector('.chat-box');
     if (force) {
-      $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+      container.scrollTop = container.scrollHeight;
     } else if (this.data.newMessages) {
       setTimeout(() => {
-        $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
+        container.scrollTop = container.scrollHeight;
         this.setMessagesRead();
       },0);
     }

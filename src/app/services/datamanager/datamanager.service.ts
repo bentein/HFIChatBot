@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { ConversationLogicService } from '../conversationlogic/conversation-logic.service';
 import { ImageLogicService } from '../imagemanager/image-logic.service';
+import { UtilService } from '../util/util.service';
 import { HttpService } from '../http/http.service';
 
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
@@ -14,15 +15,12 @@ import { AlternativbuttonComponent } from '../../components/alternativbutton/alt
 import { Message } from '../../classes/message';
 import { MESSAGE_DELAY } from '../../classes/constants';
 
-import * as $ from 'jquery';
-import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
 
 @Injectable()
 export class DataManagerService {
   messages;
-  imageURLs;
   separatedMessages;
 
   newMessages: boolean;
@@ -35,12 +33,11 @@ export class DataManagerService {
 
   sessionStorage: Storage;
 
-  // sets data from cookies if available
-  constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
+  // sets data from storage if available
+  constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer, private util: UtilService) {
     this.sessionStorage = window.sessionStorage;
 
     this.messages = this.sessionStorage.getItem("messages") ? JSON.parse(this.sessionStorage.getItem("messages")) : [];
-    this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
     this.newImage = false;
@@ -54,8 +51,8 @@ export class DataManagerService {
   toggleChatBox() {
     this.disableTooltips();
     if (this.show) {
-      let $elem = $("#chat-container").toggleClass("slideUp");
-      $elem.toggleClass("slideDown");
+      this.util.toggleClass("#chat-container", "slideUp");
+      this.util.toggleClass("#chat-container", "slideDown");
       setTimeout(() => {
         this.show = this.show ? false : true;
       }, 200);
@@ -139,7 +136,7 @@ export class DataManagerService {
         if (ret.result.metadata.endConversation) this.http.generateNewSessionId();
       });
 
-      if(this.imgManager.messageHaveImage(message)) {
+      if(this.imgManager.messageHasImage(message)) {
         let tmp = this.imgManager.splitImageAndText(message);
         if(tmp.text !== undefined) {this.addMessage(tmp.text); }
         this.addMessage(tmp.image);

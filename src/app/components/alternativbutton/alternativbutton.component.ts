@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
-import * as $ from 'jquery';
+import { UtilService } from '../../services/util/util.service';
 
 @Component({
   selector: 'alternativbuttons',
@@ -12,7 +12,7 @@ export class AlternativbuttonComponent implements OnInit {
 
   query:any;
 
-  constructor(private data:DataManagerService, private alternativesHandler:AlternativButtonLogicService) { }
+  constructor(private data:DataManagerService, private alternativesHandler:AlternativButtonLogicService, private util: UtilService) { }
 
   ngOnInit() {
   }
@@ -25,7 +25,7 @@ export class AlternativbuttonComponent implements OnInit {
       this.data.addMessage(query);
       this.data.sendQuery(query);
 
-      $(".alternativ-btn").toggleClass("alt-btn-in");
+      this.util.toggleClass(".alternativ-btn", "alt-btn-in");
     }
 
     setTimeout(() => {

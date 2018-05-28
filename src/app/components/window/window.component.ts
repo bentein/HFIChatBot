@@ -1,6 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'window',
@@ -12,7 +11,7 @@ export class WindowComponent implements AfterViewInit {
   constructor(private data:DataManagerService) { }
 
   ngAfterViewInit() {
-    $(document).keydown((e) => {
+    document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
         this.closeModal();
       }

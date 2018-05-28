@@ -4,7 +4,6 @@ import { DataManagerService } from '../../services/datamanager/datamanager.servi
 import { ConversationLogicService } from '../../services/conversationlogic/conversation-logic.service';
 
 import * as _ from 'lodash';
-import * as $ from 'jquery';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
@@ -18,16 +17,16 @@ export class ChatinputComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $("#inputDiv").keypress((e) => {
-      if (e.keyCode == 13) {
-        $(".btn").click();
-      } 
-      return e.which != 13;
-    });
-    $("#inputDiv").keydown((e) => {
+    document.getElementById("inputDiv").addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
         this.data.toggleChatBox();
       }
+      if (e.keyCode == 13) {
+        document.getElementById("sendButton").click();
+        if(!e.shiftKey) {
+          e.preventDefault();
+        }
+      } 
     });
   }
 
@@ -38,7 +37,7 @@ export class ChatinputComponent implements AfterViewInit {
     query = query.replace(/  /g," ");
     if(query !== "") {
       query = encodeURIComponent(query);
-      $("#inputDiv").text("");
+      document.querySelector("#inputDiv").innerHTML = "";
       this.data.addMessage(query);
       this.data.sendQuery(query);
       this.alternativHandler.deleteAllAlternatives();

@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ContextManagerService } from '../contextmanager/contextmanager.service';
 
-import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import { API_KEY } from '../../classes/secrets';
 
