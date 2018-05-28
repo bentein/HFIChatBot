@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { findLast } from '@angular/compiler/src/directive_resolver';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 import { AlternativButtonLogicService } from '../alternativbuttonlogic/alternativ-button-logic.service';
 import { ConversationLogicService } from '../conversationlogic/conversation-logic.service';
+import { ImageLogicService } from '../imagemanager/image-logic.service';
 import { HttpService } from '../http/http.service';
 
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
@@ -17,7 +18,6 @@ import * as $ from 'jquery';
 import * as Cookie from 'js-cookie';
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
-import { ImageLogicService } from '../imagemanager/image-logic.service';
 
 @Injectable()
 export class DataManagerService {
@@ -70,7 +70,6 @@ export class DataManagerService {
       this.addMessages(responses);
     });
 
-    this.receivingMessages = true;
   }
 
   // Send message
@@ -79,8 +78,6 @@ export class DataManagerService {
       let responses: any = ret;
       this.addMessages(responses);
     });
-
-    this.receivingMessages = true;
   }
 
   // Add message, set timeout between messages
