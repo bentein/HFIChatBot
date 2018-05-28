@@ -94,6 +94,11 @@ export class DataManagerService {
       this.http.generateNewSessionId();
     }
 
+    if (message.content.includes(".feedback")) {
+      message.content = message.content.replace(".feedback", "").trim();
+      this.http.prependToNextQuery("feedback - ");
+    }
+
     if (message.content !== "") {
       setTimeout(() => {
         this.pushMessage(message);

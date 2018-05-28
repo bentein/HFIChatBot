@@ -16,6 +16,8 @@ export class HttpService {
   url;
   eventurl;
 
+  preQuery: string;
+
   localStorage: Storage;
   sessionStorage: Storage;
   
@@ -39,11 +41,13 @@ export class HttpService {
     this.url = "https://pjjkc7v3qg.execute-api.eu-west-1.amazonaws.com/test";
     this.eventurl = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
 
+    this.preQuery = "";
   }
 
   // Send message
   sendQuery(query: string) {
-    const url = `${this.url}?query=${query}&sessionId=${this.sessionId}&userId=${this.userId}`;
+    const url = `${this.url}?query=${this.preQuery}${query}&sessionId=${this.sessionId}&userId=${this.userId}`;
+    this.preQuery = "";
     return this.http.get(url, this.queryHeaders);
   }
 
@@ -51,6 +55,10 @@ export class HttpService {
   sendEvent($event: string) {
     const url = this.eventurl + "&e=" + $event + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.eventHeaders);
+  }
+
+  prependToNextQuery(prepend: string) {
+    this.preQuery = prepend;
   }
 
   // generate session ID as uuid
