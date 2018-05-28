@@ -13,7 +13,7 @@ import { HttpService } from '../http/http.service';
 import { AlternativbuttonComponent } from '../../components/alternativbutton/alternativbutton.component';
 
 import { Message } from '../../classes/message';
-import { MESSAGE_DELAY } from '../../classes/constants';
+import { MESSAGE_DELAY, NEW_SESSION_STRING } from '../../classes/constants';
 
 import * as uuid from 'uuid';
 import * as tippy from 'tippy.js';
@@ -85,11 +85,13 @@ export class DataManagerService {
   addMessage(message, last?) {
     this.receivingMessages = true;
 
-    let counter = message.length;
-
     if (typeof message === "string") {
-      let d = new Date();
       message = new Message(message, 'sent');
+    }
+
+    if (message.content.includes(NEW_SESSION_STRING)) {
+      message.content = message.content.replace(NEW_SESSION_STRING, "").trim();
+      this.http.generateNewSessionId();
     }
 
     if (message.content !== "") {
