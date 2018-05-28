@@ -28,6 +28,7 @@ export class ConversationLogicService {
 
   }
 
+  // Get action, send event, remove event and action from message.
   doAction(msg: string, callback: Function) {
     let $action = this.getActionFromMessage(msg);
     let $events = this.getActionEventsFromMessage(msg);
@@ -35,32 +36,38 @@ export class ConversationLogicService {
     return this.removeActionFromMessage(msg);
   }
 
+  // Send event and remove event from message.
   doEvent(msg:string, callback) {
     let $event = this.getEventFromMessage(msg);
     if ($event && $event !== "") this.http.sendEvent($event).subscribe(callback);
     return this.removeEventFromMessage(msg);
   }
 
+  // Check if message have event
   hasEvent(msg:string) {
     let $event = this.getEventFromMessage(msg);
     if ($event && $event !== "") return true;
     return false;
   }
 
+  // Remove action from message and return message
   private removeActionFromMessage(msg: string) {
     if (msg.includes('.action')) msg = msg.substr(0, msg.indexOf(".action"));
     return msg.trim();
   }
 
+  // Remove given event from message and return message
   private removeEventFromMessage(msg: string) {
     if (msg.includes('.event')) msg = msg.substr(0, msg.indexOf(".event"));
     return msg.trim();
   }
 
+  // Return action function
   private getActionFunction(action: string) {
     return this.actions[action];
   }
 
+  // Return event 
   private getEventFromMessage(msg: string) {
     if (msg.includes('.event')) {
       let index = msg.indexOf(".event");
@@ -70,6 +77,7 @@ export class ConversationLogicService {
     return "";
   }
 
+  // Return action string
   private getActionFromMessage(msg: string) {
     if (msg.includes('.action')) {
       let index = msg.indexOf(".action");
@@ -79,6 +87,7 @@ export class ConversationLogicService {
     return "";
   }
 
+  // Return action attributes
   private getActionEventsFromMessage(msg: string) {
     if (msg.includes('.action')) {
       let index = msg.indexOf(".action");

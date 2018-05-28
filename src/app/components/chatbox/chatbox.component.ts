@@ -6,6 +6,7 @@ import { Message, getDay } from '../../classes/message';
 import * as $ from 'jquery';
 import * as tippy from 'tippy.js';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
+import { ImageLogicService } from '../../services/imagemanager/image-logic.service';
 
 @Component({
   selector: 'chatbox',
@@ -14,7 +15,7 @@ import { AlternativButtonLogicService } from '../../services/alternativbuttonlog
 })
 export class ChatboxComponent implements AfterViewInit {
 
-  constructor(private data: DataManagerService, private alternativHandler: AlternativButtonLogicService) {}
+  constructor(private data: DataManagerService, private imgManager: ImageLogicService, private alternativHandler: AlternativButtonLogicService) {}
 
   ngAfterViewInit() {
     this.scrollToBottom(true);
@@ -33,8 +34,6 @@ export class ChatboxComponent implements AfterViewInit {
     setTimeout(() => { 
       this.scrollToBottom(true); 
     }, 100);
-
-
   }
 
   //Scroll chat-box to bootom.
@@ -50,6 +49,7 @@ export class ChatboxComponent implements AfterViewInit {
     this.data.updateTooltips();
   }
   
+  //Return title
   getTitle(message:Message) {
     let ret = "";
 
@@ -75,11 +75,11 @@ export class ChatboxComponent implements AfterViewInit {
 
   //find URLs in message
   detectURLInMessage(message) {
-    while(message.search(/\[\[/gi) != -1 || message.search(/\]\]/gi) != -1) {
+    while(message.search(/\[\[/gi) != -1 && message.search(/\]\]/gi) != -1) {
       let linkInfo = message.match(/\[\[(.+?)\]\]/)[1];    
       let split1 = linkInfo.split(",");
       message = message.replace("[[" + linkInfo + "]]", "<a target=\"_blank\" href=" + split1[1].trim() + ">" + split1[0].trim() + "</a>");
     }
-    return message;
+    return decodeURIComponent(message);
   }
 }

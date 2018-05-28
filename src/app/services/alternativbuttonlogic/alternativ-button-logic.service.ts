@@ -6,36 +6,30 @@ import * as Cookie from 'js-cookie';
 @Injectable()
 export class AlternativButtonLogicService {
 
-  message: string;
   alternatives;
-  show: boolean;
 
   constructor() { 
-    this.message = "";
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
-    this.show = this.alternatives === [] ? false : true;
   }
 
   //Delete all alternatives
   deleteAllAlternatives() {
     this.alternatives = [];
     Cookie.set('alternatives', this.alternatives);
-    if(this.show) { this.toggleShow() };
   }
 
   //Create new Alternatives and delete old ones
   receiveNewAlternatives(newAlternatives) {
     this.deleteAllAlternatives();
     this.parseAlternatives(newAlternatives);
-    if(!this.show) { this.toggleShow() };
   }
 
-  //Parse all alternatives
+  //Parse all alternatives and set cookie
   parseAlternatives(newAlternatives) {
     newAlternatives = newAlternatives.trim();
-    let allAlternatives = newAlternatives.split(" | ");
+    let allAlternatives = newAlternatives.split("|");
     for(let i = 0; i < allAlternatives.length; i++) {
-      this.alternatives.push(allAlternatives[i]);
+      this.alternatives.push(allAlternatives[i].trim());
     }
     Cookie.set('alternatives', this.alternatives);
   }
@@ -50,9 +44,4 @@ export class AlternativButtonLogicService {
       }
     return message;
   }
-
-  toggleShow() {
-    this.show = this.toggleShow ? true : false;
-  }
-
 }

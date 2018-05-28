@@ -49,7 +49,7 @@
 }
 
 /* The Modal */
-.modal {
+.modal-chatbot {
   display: none; 
   position: fixed; 
   z-index: 1;
@@ -63,7 +63,7 @@
 }
 
 /* Modal Content (image) */
-.modal-content {
+.modal-content-chatbot {
   margin: auto;
   display: block;
   max-width: 90%;
@@ -71,7 +71,7 @@
 }
 
 /* Modal Animation */
-.modal-content {    
+.modal-content-chatbot {    
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.4s;
   animation-name: zoom;
@@ -89,7 +89,7 @@
 }
 
 /* Close Modal Button */
-.close-modal {
+.close-modal-chatbot {
   position: absolute;
   top: 15px;
   right: 35px;
@@ -99,7 +99,7 @@
   transition: 0.3s;
 }
 
-.close-modal:hover, .close-modal:focus {
+.close-modal-chatbot:hover, .close-modal:focus {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;

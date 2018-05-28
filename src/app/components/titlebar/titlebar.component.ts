@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { DataManagerService } from '../../services/datamanager/datamanager.service';
-import { AlternativbuttonComponent } from '../alternativbutton/alternativbutton.component';
 import { AlternativButtonLogicService } from '../../services/alternativbuttonlogic/alternativ-button-logic.service';
 
 @Component({
@@ -20,6 +19,8 @@ export class TitlebarComponent implements OnInit {
     this.data.toggleChatBox();
   }
 
+
+  // Clear chat history
   clearHistory($event) {
     $event.stopPropagation();
     this.data.clearMessages();
