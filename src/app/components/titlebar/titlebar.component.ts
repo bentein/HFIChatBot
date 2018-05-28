@@ -14,23 +14,28 @@ export class TitlebarComponent implements OnInit {
 
   ngOnInit() {}
 
-  // Toogle chatbox 
+  // Toogle chatbox, show variable in DataManagerService false | true.
   toggleChatBox($event) {
     this.data.toggleChatBox();
   }
 
 
-  // Clear chat history
+  // Clear chat history. Delete all messages and alternativ-buttons.
   clearHistory($event) {
     $event.stopPropagation();
     this.data.clearMessages();
     this.altHandler.deleteAllAlternatives();
   }
 
-  // Close 
+  // Close. Hide the application.
   closeChatBox($event) {
     event.stopPropagation();
     this.data.hideApplication = true;
+  }
+
+  feedback($event) {
+    event.stopPropagation();
+    this.data.sendEvent("feedback");
   }
 
 }
