@@ -11,6 +11,9 @@ export class WindowComponent implements AfterViewInit {
 
   constructor(private data:DataManagerService) { }
 
+  /**
+   * keyCode 27 aka Escape, close Modal. Set display to none. 
+   */
   ngAfterViewInit() {
     $(document).keydown((e) => {
       if (e.keyCode == 27) {
@@ -19,7 +22,9 @@ export class WindowComponent implements AfterViewInit {
     });
   }
 
-  //Close Modal
+  /**
+   * Close Modal. Set display to none. 
+   */
   closeModal() {
     document.getElementById('myModal').style.display = "none";
   }

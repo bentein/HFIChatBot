@@ -12,19 +12,30 @@ export class AlternativButtonLogicService {
     this.alternatives = Cookie.getJSON('alternatives') ? Cookie.getJSON('alternatives') : [];
   }
 
-  //Delete all alternatives
+  /**
+   * Delete all alternatives data. Update cookie. 
+   */
   deleteAllAlternatives() {
     this.alternatives = [];
     Cookie.set('alternatives', this.alternatives);
   }
 
-  //Create new Alternatives and delete old ones
+  /**
+   * Delete all alternatives data and Update cookie. 
+   * Find all alternatives. Push them to "alternatives". Update cookie. 
+   * @param {string} newAlternatives A string containing message and new alternatives.
+   */
   receiveNewAlternatives(newAlternatives) {
     this.deleteAllAlternatives();
     this.parseAlternatives(newAlternatives);
   }
 
-  //Parse all alternatives and set cookie
+  /**
+   * Split alternatives in string with char "|". 
+   * Push all alternatives to "alternatives". Trim. 
+   * Update cookie. 
+   * @param {string} newAlternatives A string containing message and new alternatives
+   */
   parseAlternatives(newAlternatives) {
     newAlternatives = newAlternatives.trim();
     let allAlternatives = newAlternatives.split("|");
@@ -34,7 +45,12 @@ export class AlternativButtonLogicService {
     Cookie.set('alternatives', this.alternatives);
   }
 
-  //Check if message contains alternatives. If so, make alternatives
+  /**
+   * Check if string contains word ".options".
+   * If so, split message and alternatives. Make alternatives, return message.
+   * If not, return message. 
+   * @param {string} message A string containing message and new alternatives.
+   */
   checkForAlternatives(message) {
     let re = /.options/gi;
       if(message.search(re) != -1) {

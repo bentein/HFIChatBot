@@ -23,31 +23,44 @@ import { ImageLogicService } from '../imagemanager/image-logic.service';
 @Injectable()
 export class DataManagerService {
   messages;
-  imageURLs;
   separatedMessages;
 
   newMessages: boolean;
-  newImage: boolean;
   show: boolean;
   hideApplication: boolean;
 
   timeout: number;
   receivingMessages: boolean;
 
-  // sets data from cookies if available
+  /**
+   * this.message - Set cookie data or empty if there is none. 
+   * this.separatedMessage - Divide messages into groups based on sent, received, and order. 
+   * this.newMessage - True if last message is not "read". Otherwise false.
+   * this.show - False to hide chatbox and inputbox. True to show chatbox and inputbox.
+   * this.hideApplication - False to show application. True to hide application. 
+   * this.timeout - Global time variable in seconds. 
+   * this.receivingMessage  - True if message is received, but not displayed yet. Otherwise false. 
+   * @param {HttpClient} http 
+   * @param {ImageLogicService} imgManager 
+   * @param {ConversationLogicService} convo 
+   * @param {ContextManagerService} context 
+   * @param {AlternativButtonLogicService} alternativesHandler 
+   * @param {DomSanitizer} _sanitizer 
+   */
   constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private context: ContextManagerService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
-    this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
-    this.newImage = false;
     this.show = false;
     this.hideApplication = false;
     this.timeout = MESSAGE_DELAY;
     this.receivingMessages = false;
   }
 
-  // toggles whether chat box is visible
+  /** 
+   * Toggle visibility of chatbox.
+   * If chatbox is visible, show is true, otherwise false. 
+   */
   toggleChatBox() {
     if(this.messages.length == 0) {
       this.sendEvent("Welcome");
@@ -65,7 +78,12 @@ export class DataManagerService {
     }
   }
 
-  // Send event
+  /**
+   * Send an event to Dialogflow. 
+   * When respond is received, set context(s) and add message(s) to the chatbox. 
+   * If endConversation, get new sessionId. 
+   * @param {string} query Name of the event
+   */
   sendEvent(query: string) {
     this.http.sendEvent(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
@@ -76,7 +94,12 @@ export class DataManagerService {
     this.receivingMessages = true;
   }
 
-  // Send message
+  /**
+   * Send a string to Dialogflow. 
+   * When respond is received, set context(s) and add message(s) to the chatbox.
+   * If endConversation, get new sessionId.
+   * @param {string} query 
+   */
   sendQuery(query: string) {
     this.http.sendQuery(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;
@@ -88,7 +111,13 @@ export class DataManagerService {
     this.receivingMessages = true;
   }
 
-  // Add message, set timeout between messages
+  /**
+   * Create object Message if "message" is a string. 
+   * Set timeout between each messge. When timer goes out, push message to this.messages. 
+   * @param {string} message A message sent from Dialogflow
+   * @param {Message} message Message object containing message from Dialgflow, date, type and time. 
+   * @param {any} last? 
+   */
   addMessage(message, last?) {
     this.receivingMessages = true;
 
@@ -115,7 +144,11 @@ export class DataManagerService {
     }
   }
 
-  // Clear all messages, set new session ID
+  /**
+   * Clear cookie data for cookie "messages".
+   * Delete all messages by deleting data in this.messages and this.saparetedMessages. 
+   * Get new sessionId.
+   */
   clearMessages() {
     Cookie.set('messages', {});
     this.messages = [];
@@ -123,7 +156,11 @@ export class DataManagerService {
     this.http.generateNewSessionId();
   }
 
-  // Add messages, check for alt-btns, images, event, action, etc.
+  /**
+   * Save data from responses in this.messages and this.separatedMessage based on message state. 
+   * Message state is defines by event, action, alternativ-buttons, images, received and sent. 
+   * @param {any} responses 
+   */
   addMessages(responses) {
     this.receivingMessages = true;
 
@@ -158,6 +195,11 @@ export class DataManagerService {
     }
   }
 
+  /**
+   * Add message to this.messages.
+   * Add message to this.separatedMessages based on it's type and previous group type. 
+   * @param {Message} message Containing message, time, date, and type. 
+   */
   private pushMessage(message:Message) {
     this.messages.push(message);
 
@@ -199,7 +241,9 @@ export class DataManagerService {
     });
   }
 
-  // Enable tooltips
+  /**
+   * Enable tooltips.
+   */
   enableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -207,7 +251,9 @@ export class DataManagerService {
     });
   }
 
-  // Disable tooltips
+  /**
+   * Disable tooltips
+   */
   disableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -215,17 +261,21 @@ export class DataManagerService {
     });
   }
 
-  // Return time, hh:mm
+  /** 
+   * Return time, hh:mm
+   */
   getTime() {
     let d = new Date();
     let hh = (d.getHours() < 10 ? '0' : '') + d.getHours();
     let mm = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
     let ret = hh + ":" + mm;
-
     return ret;
   }
 
-  // Separate Messages into groups. "mage-received, reveived, sent"
+  /**
+   * Separate messages in this.message into groups. Based on type and previous group type.
+   * Return grouping.
+   */
   separateMessages() {
     let messageGroupArray = [];
     let l = this.messages.length;
