@@ -10,13 +10,23 @@ import { API_KEY } from '../../classes/secrets';
 @Injectable()
 export class HttpService {
   sessionId;
+  userId;
+
   queryHeaders;
   eventHeaders;
   url;
   eventurl;
 
+  localStorage: Storage;
+  sessionStorage: Storage;
+  
   constructor(private http: HttpClient, private context: ContextManagerService) {
-    this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
+    this.localStorage = window.localStorage;
+    this.sessionStorage = window.sessionStorage;
+
+    this.sessionId = this.sessionStorage.getItem("sessionId") ? this.sessionStorage.getItem("sessionId") : this.generateNewSessionId();
+    this.userId = this.localStorage.getItem("userId") ? this.localStorage.getItem("userId") : this.generateNewUserId();
+
     this.queryHeaders = {
       headers: new HttpHeaders({
         'Content-type': 'application/json; charset=utf-8'
@@ -29,11 +39,12 @@ export class HttpService {
     };
     this.url = "https://pjjkc7v3qg.execute-api.eu-west-1.amazonaws.com/test";
     this.eventurl = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
+
   }
 
   // Send message
   sendQuery(query: string) {
-    const url = this.url + "?query=" + query + "&sessionId=" + this.sessionId;
+    const url = `${this.url}?query=${query}&sessionId=${this.sessionId}&userId=${this.userId}`;
     return this.http.get(url, this.queryHeaders);
   }
 
@@ -46,8 +57,14 @@ export class HttpService {
   // generate session ID as uuid
   generateNewSessionId() {
     this.sessionId = uuid.v4();
-    Cookie.set('sessionId', this.sessionId);
+    this.sessionStorage.setItem("sessionId", this.sessionId);
     return this.sessionId;
+  }
+
+  generateNewUserId() {
+    this.userId = uuid.v4();
+    this.localStorage.setItem("userId", this.userId);
+    return this.userId;
   }
 
 }

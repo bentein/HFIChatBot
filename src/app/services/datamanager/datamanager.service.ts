@@ -33,9 +33,13 @@ export class DataManagerService {
   timeout: number;
   receivingMessages: boolean;
 
+  sessionStorage: Storage;
+
   // sets data from cookies if available
   constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
-    this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
+    this.sessionStorage = window.sessionStorage;
+
+    this.messages = this.sessionStorage.getItem("messages") ? JSON.parse(this.sessionStorage.getItem("messages")) : [];
     this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
@@ -95,7 +99,7 @@ export class DataManagerService {
       setTimeout(() => {
         this.pushMessage(message);
         this.newMessages = true;
-        Cookie.set('messages', this.messages.slice(Math.max(this.messages.length - 20, 0)));
+        this.sessionStorage.setItem("messages", JSON.stringify(this.messages));
         this.timeout -= MESSAGE_DELAY;
         if (last) {
           this.receivingMessages = false;
@@ -109,7 +113,7 @@ export class DataManagerService {
 
   // Clear all messages, set new session ID
   clearMessages() {
-    Cookie.set('messages', []);
+    this.sessionStorage.setItem("messages", JSON.stringify([]));
     this.messages = [];
     this.separatedMessages = [];
     this.http.generateNewSessionId();
