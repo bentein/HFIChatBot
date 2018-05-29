@@ -35,7 +35,14 @@ export class ChatinputComponent implements AfterViewInit {
     });
   }
 
-  // Send input message
+  /**
+   * Escape and trim input text. 
+   * Encode URIComponent.
+   * Add to message array.
+   * Send message to Dialogflow agent.
+   * Delete all alternativ-buttons and alternativ-button cookies. 
+   * @param {string} query The text from the input-box.
+  */
   sendQuery(query) {
     query = _.escape(query);
     query = query.trim();

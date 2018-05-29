@@ -11,7 +11,10 @@ export class ContextManagerService {
 
   }
 
-  // Find context attribute
+  /**
+   * Check if given attribute is available and not empty. If it is, return true, else false. 
+   * @param {string} attribute Name of an context
+   */
   hasContextAttribute(attribute: string) {
     for (let i = 0; i < this.contexts.length; i++) {
       if (this.contexts[i].parameters[attribute] !== "") return true;
@@ -19,7 +22,11 @@ export class ContextManagerService {
     return false;
   }
 
-  // Check context attribute and value
+  /**
+   * Check if given attribute is expected value. If it is, return true, else false.
+   * @param {string} attribute Name of an context
+   * @param {string} value Value of an context
+   */
   contextAttributeIs(attribute: string, value: string) {
     for (let i = 0; i < this.contexts.length; i++) {
       if (this.contexts[i].parameters[attribute] === value) return true;
@@ -27,7 +34,10 @@ export class ContextManagerService {
     return false;
   }
 
-  // Set action
+  /**
+   * Set "context" data. 
+   * @param contexts 
+   */
   setContexts(contexts) {
     this.contexts = contexts;
   }
