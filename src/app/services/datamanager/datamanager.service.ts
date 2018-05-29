@@ -81,6 +81,10 @@ export class DataManagerService {
     });
   }
 
+  prependToNextQuery(prepend: string) {
+    this.http.prependToNextQuery(prepend);
+  }
+
   // Add message, set timeout between messages
   addMessage(message, last?) {
     this.receivingMessages = true;
@@ -96,7 +100,7 @@ export class DataManagerService {
 
     if (message.content.includes(".feedback")) {
       message.content = message.content.replace(".feedback", "").trim();
-      this.http.prependToNextQuery("feedback - ");
+      this.prependToNextQuery("feedback - ");
     }
 
     if (message.content !== "") {

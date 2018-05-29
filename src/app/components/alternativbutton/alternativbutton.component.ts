@@ -21,6 +21,7 @@ export class AlternativbuttonComponent implements OnInit {
   sendQuery(query) {
     query = query.trim();
     query = query.replace(/ /g, " ");
+    this.data.prependToNextQuery("");
     if(query !== "") {
       this.data.addMessage(query);
       this.data.sendQuery(query);
