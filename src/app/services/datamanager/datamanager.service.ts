@@ -24,7 +24,6 @@ export class DataManagerService {
   separatedMessages;
 
   newMessages: boolean;
-  newImage: boolean;
   show: boolean;
   hideApplication: boolean;
 
@@ -33,21 +32,36 @@ export class DataManagerService {
 
   sessionStorage: Storage;
 
-  // sets data from storage if available
+  /**
+   * this.sessionStorage - Storage 
+   * this.message - Set data from storage or empty list if their is none.
+   * this.separatedMessage - Divide messages into groups based on sent, received, and order. 
+   * this.newMessage - True if last message is not "read". Otherwise false.
+   * this.show - False to hide chatbox and inputbox. True to show chatbox and inputbox.
+   * this.hideApplication - False to show application. True to hide application. 
+   * this.timeout - Global time variable in seconds. 
+   * this.receivingMessage  - True if message is received, but not displayed yet. Otherwise false. 
+   * @param {HttpClient} http 
+   * @param {ImageLogicService} imgManager 
+   * @param {ConversationLogicService} convo 
+   * @param {ContextManagerService} context 
+   * @param {AlternativButtonLogicService} alternativesHandler 
+   * @param {DomSanitizer} _sanitizer 
+   */
   constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer, private util: UtilService) {
     this.sessionStorage = window.sessionStorage;
-
     this.messages = this.sessionStorage.getItem("messages") ? JSON.parse(this.sessionStorage.getItem("messages")) : [];
     this.separatedMessages = this.separateMessages();
     this.newMessages = false;
-    this.newImage = false;
     this.show = false;
     this.hideApplication = false;
     this.timeout = MESSAGE_DELAY;
     this.receivingMessages = false;
   }
 
-  // toggles whether chat box is visible
+  /** 
+   * Toggle visibility of chatbox.
+   */
   toggleChatBox() {
     this.disableTooltips();
     if (this.show) {
@@ -64,7 +78,11 @@ export class DataManagerService {
     }
   }
 
-  // Send event
+   /**
+   * Send an event to Dialogflow and waiting for callback.
+   * When respond is received, add it to the chatbox.
+   * @param {string} query Name of the event
+   */
   sendEvent(query: string) {
     this.http.sendEvent(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;

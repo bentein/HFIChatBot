@@ -28,7 +28,12 @@ export class ConversationLogicService {
 
   }
 
-  // Get action, send event, remove event and action from message.
+  /**
+   * Find action and events in the message. Execute action request
+   * if avaiable and return message without action. 
+   * @param {string} msg A message containing action and events.
+   * @param {Function} callback
+   */
   doAction(msg: string, callback: Function) {
     let $action = this.getActionFromMessage(msg);
     let $events = this.getActionEventsFromMessage(msg);
@@ -36,38 +41,57 @@ export class ConversationLogicService {
     return this.removeActionFromMessage(msg);
   }
 
-  // Send event and remove event from message.
+  /**
+   * Find event in message and execute request if available. Return message without event. 
+   * @param {string} msg A message containing action and events.
+   * @param {Function} callback
+   */
   doEvent(msg:string, callback) {
     let $event = this.getEventFromMessage(msg);
     if ($event && $event !== "") this.http.sendEvent($event).subscribe(callback);
     return this.removeEventFromMessage(msg);
   }
 
-  // Check if message have event
+   /**
+   * Check if their is an event in the message. If it is, return true, else false.
+   * @param {string} msg A message from Dialogflow
+   */
   hasEvent(msg:string) {
     let $event = this.getEventFromMessage(msg);
     if ($event && $event !== "") return true;
     return false;
   }
 
-  // Remove action from message and return message
+   /**
+   * Removes action from message and returns it. 
+   * @param {string} msg A message from Dialogflow.
+   */
   private removeActionFromMessage(msg: string) {
     if (msg.includes('.action')) msg = msg.substr(0, msg.indexOf(".action"));
     return msg.trim();
   }
 
-  // Remove given event from message and return message
+  /**
+   * Removes event from message and returns it.
+   * @param {string} msg A message from Dialogflow. 
+   */
   private removeEventFromMessage(msg: string) {
     if (msg.includes('.event')) msg = msg.substr(0, msg.indexOf(".event"));
     return msg.trim();
   }
 
-  // Return action function
+  /**  
+   * Returns action method with given name(action: string).
+   * @param {strng} msg A message from Dialogflow. 
+   */ 
   private getActionFunction(action: string) {
     return this.actions[action];
   }
 
-  // Return event 
+  /** 
+   * Returns a string with event. 
+   * @param {string} msg A message from Dialogflow. 
+  */
   private getEventFromMessage(msg: string) {
     if (msg.includes('.event')) {
       let index = msg.indexOf(".event");
@@ -77,7 +101,10 @@ export class ConversationLogicService {
     return "";
   }
 
-  // Return action string
+  /** 
+   * Returns a event string if it exist.
+   * @param {string} msg A message from Dialogflow. 
+  */
   private getActionFromMessage(msg: string) {
     if (msg.includes('.action')) {
       let index = msg.indexOf(".action");
@@ -87,7 +114,10 @@ export class ConversationLogicService {
     return "";
   }
 
-  // Return action attributes
+  /** 
+   * Returns an array with all events included in the action if exist. 
+   * @param {string} msg A message from Dialogflow. 
+  */
   private getActionEventsFromMessage(msg: string) {
     if (msg.includes('.action')) {
       let index = msg.indexOf(".action");
