@@ -22,6 +22,26 @@ export class HttpService {
   localStorage: Storage;
   sessionStorage: Storage;
   
+
+  /**
+   * this.sessionId - get value from Cookie or get a new sessionID.
+   * this.headers - Holds API KEY for the bot.
+   * this.url - root URL for the API request.
+   * @param http 
+   * @param context 
+   */
+  /**
+   * ths.localStorage - local storage
+   * this.sessionStorage - session storage
+   * this.sessionId - session id
+   * this.userId - user id
+   * this.queryHeaders - Headers for backend request. 
+   * this.eventHeaders - Headers for bot. Hods bot authorization information.
+   * this.url - backend URL.
+   * this.eventurl - bot URL.
+   * @param http 
+   * @param context 
+   */
   constructor(private http: HttpClient, private context: ContextManagerService) {
     this.localStorage = window.localStorage;
     this.sessionStorage = window.sessionStorage;
@@ -45,14 +65,21 @@ export class HttpService {
     this.preQuery = "";
   }
 
-  // Send message
+
+  /**
+   * Send message request to backend.
+   * @param {string} query Message which are to be sent to Dialogflow
+   */
   sendQuery(query: string) {
     const url = `${this.url}?query=${this.preQuery}${query}&sessionId=${this.sessionId}&userId=${this.userId}`;
     this.preQuery = "";
     return this.http.get(url, this.queryHeaders);
   }
 
-  // Send event
+  /**
+   * Send event request to bot
+   * @param {string} $event Name of the event whch are to be requested.
+   */
   sendEvent($event: string) {
     const url = this.eventurl + "&e=" + $event + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.eventHeaders);
@@ -62,13 +89,20 @@ export class HttpService {
     this.preQuery = prepend;
   }
 
-  // generate session ID as uuid
+  /**
+   * Generates a new sessionId and then return it. 
+   * Update storage
+   */
   generateNewSessionId() {
     this.sessionId = uuid.v4();
     this.sessionStorage.setItem("sessionId", this.sessionId);
     return this.sessionId;
   }
 
+   /**
+   * Generates a new userId and then return it. 
+   * Update storage
+   */
   generateNewUserId() {
     this.userId = uuid.v4();
     this.localStorage.setItem("userId", this.userId);

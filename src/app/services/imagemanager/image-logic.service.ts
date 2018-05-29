@@ -7,7 +7,10 @@ export class ImageLogicService {
 
   constructor(private sanitizer:DomSanitizer) { }
 
-    // check for image
+    /**
+     * Checks if message includes an image
+     * @param {string} message 
+     */
     messageHasImage(message) {
       let re = /.image/gi;
       if(message.search(re) != -1) {
@@ -15,7 +18,10 @@ export class ImageLogicService {
       } else return false;
     }
   
-    // split image and text
+    /**
+     * Splits message and image into it's own Message object. 
+     * @param {string} message 
+     */
     splitImageAndText(message) {
       let splitt = message.split(/.image/gi);
       let text, image;
@@ -24,7 +30,10 @@ export class ImageLogicService {
       return {text, image};
     }
 
-    //Sanitize image
+    /**
+     * Sanitize the image URL.
+     * @param {string} img 
+     */
     sanitizeImage(img) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(img);
     }

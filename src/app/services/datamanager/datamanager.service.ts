@@ -79,7 +79,7 @@ export class DataManagerService {
   }
 
    /**
-   * Send an event to Dialogflow and waiting for callback.
+   * Request event from Dialogflow.
    * When respond is received, add it to the chatbox.
    * @param {string} query Name of the event
    */
@@ -91,7 +91,11 @@ export class DataManagerService {
 
   }
 
-  // Send message
+  /**
+   * Request message to Dialogflow.
+   * When respond is received, add it to the chatbox. 
+   * @param {string} query 
+   */
   sendQuery(query: string) {
     this.http.sendQuery(query).subscribe((ret: any) => {
       let responses: any = ret;
@@ -99,11 +103,21 @@ export class DataManagerService {
     });
   }
 
+  /**
+   * 
+   * @param prepend 
+   */
   prependToNextQuery(prepend: string) {
     this.http.prependToNextQuery(prepend);
   }
 
-  // Add message, set timeout between messages
+ /**
+   * Create object Message if "message" is a string. 
+   * Set timeout between each messge. When timer goes out, push message to this.messages. 
+   * @param {string} message A message sent from Dialogflow
+   * @param {Message} message Message object containing message from Dialgflow, date, type and time. 
+   * @param {any} last? 
+   */
   addMessage(message, last?) {
     this.receivingMessages = true;
 
@@ -137,7 +151,11 @@ export class DataManagerService {
     }
   }
 
-  // Clear all messages, set new session ID
+  /**
+   * Clear cookie data for cookie "messages".
+   * Delete all messages by deleting data in this.messages and this.saparetedMessages. 
+   * Get new sessionId.
+   */
   clearMessages() {
     this.sessionStorage.setItem("messages", JSON.stringify([]));
     this.messages = [];
@@ -145,7 +163,11 @@ export class DataManagerService {
     this.http.generateNewSessionId();
   }
 
-  // Add messages, check for alt-btns, images, event, action, etc.
+  /**
+   * Save data from responses in this.messages and this.separatedMessage based on message state. 
+   * Message state is defines by event, action, alternativ-buttons, images and type(received, sent).
+   * @param {any} responses 
+   */
   addMessages(responses) {
     this.receivingMessages = true;
 
@@ -177,6 +199,11 @@ export class DataManagerService {
     }
   }
 
+  /**
+   * Add message to this.messages.
+   * Add message to this.separatedMessages based on it's type and previous group type. 
+   * @param {Message} message Containing message, time, date, and type. 
+   */
   private pushMessage(message:Message) {
     this.messages.push(message);
 
@@ -218,7 +245,9 @@ export class DataManagerService {
     });
   }
 
-  // Enable tooltips
+  /**
+   * Enable tooltips.
+   */
   enableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -226,7 +255,9 @@ export class DataManagerService {
     });
   }
 
-  // Disable tooltips
+  /**
+   * Disable tooltips
+   */
   disableTooltips() {
     let tip:any = document.querySelectorAll(".sent");
     tip.forEach((el) => {
@@ -234,7 +265,9 @@ export class DataManagerService {
     });
   }
 
-  // Return time, hh:mm
+   /** 
+   * Return current time, hh:mm
+   */
   getTime() {
     let d = new Date();
     let hh = (d.getHours() < 10 ? '0' : '') + d.getHours();
@@ -244,7 +277,10 @@ export class DataManagerService {
     return ret;
   }
 
-  // Separate Messages into groups. "mage-received, reveived, sent"
+  /**
+   * Separate messages in this.message into groups. Based on type and previous group type.
+   * Return grouping array.
+   */
   separateMessages() {
     let messageGroupArray = [];
     let l = this.messages.length;
