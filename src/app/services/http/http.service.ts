@@ -5,6 +5,7 @@ import { ContextManagerService } from '../contextmanager/contextmanager.service'
 
 import * as uuid from 'uuid';
 import { API_KEY } from '../../classes/secrets';
+import { BACKEND_URL, DIALOGFLOW_EVENT_URL } from '../../classes/constants';
 
 @Injectable()
 export class HttpService {
@@ -38,8 +39,8 @@ export class HttpService {
         'Authorization': 'Bearer ' + API_KEY
       })
     };
-    this.url = "https://pjjkc7v3qg.execute-api.eu-west-1.amazonaws.com/test";
-    this.eventurl = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
+    this.url = BACKEND_URL;
+    this.eventurl = DIALOGFLOW_EVENT_URL;
 
     this.preQuery = "";
   }
