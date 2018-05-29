@@ -33,7 +33,21 @@ export class DataManagerService {
   timeout: number;
   receivingMessages: boolean;
 
-  // sets data from cookies if available
+  /**
+   * this.message - Set cookie data or empty if there is none. 
+   * this.separatedMessage - Divide messages into groups based on sent, received, and order. 
+   * this.newMessage - True if last message is not "read". Otherwise false.
+   * this.show - False to hide chatbox and inputbox. True to show chatbox and inputbox.
+   * this.hideApplication - False to show application. True to hide application. 
+   * this.timeout - Global time variable in seconds. 
+   * this.receivingMessage  - True if message is received, but not displayed yet. Otherwise false. 
+   * @param {HttpClient} http 
+   * @param {ImageLogicService} imgManager 
+   * @param {ConversationLogicService} convo 
+   * @param {ContextManagerService} context 
+   * @param {AlternativButtonLogicService} alternativesHandler 
+   * @param {DomSanitizer} _sanitizer 
+   */
   constructor(private http: HttpService, private imgManager: ImageLogicService, private convo: ConversationLogicService, private alternativesHandler:AlternativButtonLogicService, private _sanitizer:DomSanitizer) {
     this.messages = Cookie.getJSON('messages') ? Cookie.getJSON('messages') : [];
     this.imageURLs = Cookie.getJSON('imageURLs') ? Cookie.getJSON('imageURLs') : [];
@@ -46,7 +60,10 @@ export class DataManagerService {
     this.receivingMessages = false;
   }
 
-  // toggles whether chat box is visible
+  /** 
+   * Toggle visibility of chatbox.
+   * If chatbox is visible, show is true, otherwise false. 
+   */
   toggleChatBox() {
     this.disableTooltips();
     if (this.show) {
@@ -63,7 +80,12 @@ export class DataManagerService {
     }
   }
 
-  // Send event
+  /**
+   * Send an event to Dialogflow. 
+   * When respond is received, set context(s) and add message(s) to the chatbox. 
+   * If endConversation, get new sessionId. 
+   * @param {string} query Name of the event
+   */
   sendEvent(query: string) {
     this.http.sendEvent(query).subscribe((ret: any) => {
       let responses: any = ret.result.fulfillment.messages;

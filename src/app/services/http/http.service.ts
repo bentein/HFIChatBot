@@ -15,6 +15,13 @@ export class HttpService {
   url;
   eventurl;
 
+  /**
+   * this.sessionId - get value from Cookie or get a new sessionID.
+   * this.headers - Holds API KEY for the bot.
+   * this.url - root URL for the API request.
+   * @param http 
+   * @param context 
+   */
   constructor(private http: HttpClient, private context: ContextManagerService) {
     this.sessionId = Cookie.get('sessionId') ? Cookie.get('sessionId') : this.generateNewSessionId();
     this.queryHeaders = {
@@ -31,19 +38,28 @@ export class HttpService {
     this.eventurl = "https://api.dialogflow.com/v1/query?v=20150910&lang=no";
   }
 
-  // Send message
+  /**
+   * Send message request.
+   * @param {string} query Message which are to be sent to Dialogflow
+   */
   sendQuery(query: string) {
     const url = this.url + "?query=" + query + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.queryHeaders);
   }
 
-  // Send event
+  /**
+   * Send event request.
+   * @param {string} $event Name of the event whch are to be requested.
+   */
   sendEvent($event: string) {
     const url = this.eventurl + "&e=" + $event + "&sessionId=" + this.sessionId;
     return this.http.get(url, this.eventHeaders);
   }
 
-  // generate session ID as uuid
+  /**
+   * Generates a new sessionId and then return it. 
+   * Update cookie.
+   */
   generateNewSessionId() {
     this.sessionId = uuid.v4();
     Cookie.set('sessionId', this.sessionId);
