@@ -17,6 +17,11 @@ export class ChatboxComponent implements AfterViewInit {
 
   constructor(private data: DataManagerService, private imgManager: ImageLogicService, private alternativHandler: AlternativButtonLogicService) {}
 
+  /**
+   * Scroll to bottom of the chatbox. 
+   * Tooltips initiate.
+   * Set timeout for scrolling to buttom.
+  */
   ngAfterViewInit() {
     this.scrollToBottom(true);
 
@@ -36,7 +41,10 @@ export class ChatboxComponent implements AfterViewInit {
     }, 100);
   }
 
-  //Scroll chat-box to bootom.
+  /**
+   * Scroll chatbox to bottom.
+   * @param {any} force?
+  */
   scrollToBottom(force?) {
     if (force) {
       $('.chat-box').scrollTop($('.chat-box')[0].scrollHeight);
@@ -49,7 +57,10 @@ export class ChatboxComponent implements AfterViewInit {
     this.data.updateTooltips();
   }
   
-  //Return title
+  /**
+   * Return title. Day and Time
+   * @param {Message} message Message object.
+  */
   getTitle(message:Message) {
     let ret = "";
 
@@ -62,18 +73,27 @@ export class ChatboxComponent implements AfterViewInit {
     if (message.type === "sent") return ret;
   }
 
-  //Set new messages as false.  
+  /**
+   * New Message Read. Set newMessage to false. 
+  */
   setMessagesRead() {
     this.data.newMessages = false;
   }
 
-  //Set Modal Image Source and Displays Modal
+  /**
+   * Set Modal Image Source and show modal.
+   * @param {string} src URL for an image.
+  */
   imgFullscreen(src) {
     document.getElementById('modalImg').setAttribute('src', src);
     document.getElementById('myModal').style.display = "block";
   }
 
-  //find URLs in message
+ 
+  /**
+   * Find URLs in message, make hyperlink element as a string and set tekst. 
+   * @param {string} message A message displayed in the chatbox. 
+  */
   detectURLInMessage(message) {
     while(message.search(/\[\[/gi) != -1 && message.search(/\]\]/gi) != -1) {
       let linkInfo = message.match(/\[\[(.+?)\]\]/)[1];    

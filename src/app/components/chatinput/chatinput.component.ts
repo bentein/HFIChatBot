@@ -17,6 +17,10 @@ export class ChatinputComponent implements AfterViewInit {
   constructor(private data:DataManagerService, private alternativHandler:AlternativButtonLogicService) {
   }
 
+  /**
+   * keyCode 13 aka Enter to send message in input-box if focused.
+   * keyCode 27 aka Escape to close chatbox if input-box is focused.
+  */ 
   ngAfterViewInit() {
     $("#inputDiv").keypress((e) => {
       if (e.keyCode == 13) {
