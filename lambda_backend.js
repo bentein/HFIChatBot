@@ -1,10 +1,12 @@
-var AWS = require('aws-sdk');
+var express = require('express');
 var request = require('request');
+var app = express();
 
-exports.handler = (event, context, callback) => {
-    var sessionId = event.queryStringParameters['sessionId'];
-    var userId = event.queryStringParameters['userId'];
-    var query = event.queryStringParameters['query'];
+app.get('/', function(req, appRes) {
+    var sessionId = req.query.sessionId;
+    var userId = req.query.userId;
+    var query = req.query.query;
+
     var contexts = {};
     var retMsg = [];
     var endRun = false;
@@ -182,7 +184,7 @@ exports.handler = (event, context, callback) => {
         if (err) {
             return console.log(err);
         }
-        
+        let ret = JSON.parse(body);        
         let intent = ret.result.metadata.intentName;
         
         if (!queryLogged) {
@@ -190,8 +192,6 @@ exports.handler = (event, context, callback) => {
             queryLogged = true;
         }
         
-        console.log(res);
-        let ret = JSON.parse(body);
         setContexts(ret);
         let messages = ret.result.fulfillment.messages;
         
@@ -226,9 +226,11 @@ exports.handler = (event, context, callback) => {
             };
             
             logResponse(retMsg, intent);
-            callback(null, response);
+
+            appRes.setHeader('Content-Type', 'application/json');
+            appRes.send(JSON.stringify(retMsg));
         }
     }
 
     sendQuery(func);
-};
+}).listen(4280);
