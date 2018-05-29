@@ -17,7 +17,11 @@ export class AlternativbuttonComponent implements OnInit {
   ngOnInit() {
   }
 
-  //Send alternativ btn message to Dialogflow
+  /**
+   * Send alternativ-btn message to Dialogflow.
+   * Set timeout for deleting alternatives. 
+   * @param {string} query Text from the choosen alteternativ-button.
+  */
   sendQuery(query) {
     query = query.trim();
     query = query.replace(/ /g, " ");
