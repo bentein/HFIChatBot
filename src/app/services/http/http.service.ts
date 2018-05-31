@@ -22,14 +22,6 @@ export class HttpService {
   localStorage: Storage;
   sessionStorage: Storage;
   
-
-  /**
-   * this.sessionId - get value from Cookie or get a new sessionID.
-   * this.headers - Holds API KEY for the bot.
-   * this.url - root URL for the API request.
-   * @param http 
-   * @param context 
-   */
   /**
    * ths.localStorage - local storage
    * this.sessionStorage - session storage
